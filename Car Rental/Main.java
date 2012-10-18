@@ -1,32 +1,64 @@
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.util.List;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+class OrderListener implements ActionListener {
+	private Car car;
+	
+	public OrderListener(Car car) {
+		this.car = car;
+	}
+	
+	public void actionPerformed(ActionEvent e) {
+		Main.openCar(car);
+	}
+}
+
+class CarPreview extends JPanel {
+	public CarPreview(Car car) {
+		JLabel label = new JLabel(car.getTitle());
+		label.setIcon(new ImageIcon("car.jpg"));
+		this.add(label);
+		JButton button = new JButton("Order");
+		button.addActionListener(new OrderListener(car));
+		this.add(button);
+	}
+}
+
+class CarView extends JPanel {
+	public CarView(Car car) {
+		this.add(new JLabel("VIEW " + car.getTitle()));
+	}
+}
 
 class Main {
 	private static RentalSystem system = new RentalSystem();
-
+	private static CarsFrame carsFrame;
+	private static OrdersFrame ordersFrame;
+	
+	private static JFrame frame = new JFrame("Car rental");
+	
 	public static void main(String[] args) {
-		system.add(new Car("Nissan", "Red", 5, Car.WheelSide.LEFT, Car.Transmission.MANUAL, 10000));
+		Car test0 = new Car("Nissan", "Red", 5, Car.WheelSide.LEFT, Car.Transmission.MANUAL, 10000);
+		system.add(test0);
 		Car test = new Car("Ford", "Blue", 5, Car.WheelSide.RIGHT, Car.Transmission.MANUAL, 12000);
 		system.add(test);
-//		system.println();
 		try {
 			system.order(test, 1, "Donatas");
+			system.order(test0, 1, "Donatas");
 		}
 		catch (IllegalArgumentException e) {
 			System.out.println("Error while ordering: " + e.getMessage());
 		}
-//		system.println();
 		try {
 		system.giveBack(test);
 		}
@@ -39,46 +71,42 @@ class Main {
 			e1.printStackTrace();
 		}
 		
-		JFrame frame = new JFrame("Car rental");
-//		frame.setLayout(new GridLayout(0, 4));
 		
-		JPanel carsPanel = new JPanel();
-		List<Car> cars = system.getCars();
-		for (int k = 0; k < 5; ++k)
-			for (int i = 0; i < cars.size(); ++i) {
-				Car car = cars.get(i);
-				JPanel item = new JPanel();
-				item.setName("test");
-
-				JLabel label = new JLabel(car.getTitle());
-				item.add(label);
-				
-				JButton button = new JButton("Order");
-				item.add(button);
-				
-//				item.setBorder(new Border())
-				carsPanel.add(item);
-			}
-		frame.add(carsPanel);
-
-		JPanel filterPanel = new JPanel(new GridLayout(0, 2));
-		filterPanel.add(new JLabel("Wheel on"));
-		filterPanel.add(new JComboBox<String>());
-		
-		filterPanel.add(new JLabel("Transmission"));
-		filterPanel.add(new JTextField());
-		
-		filterPanel.add(new JLabel("Min seats"));
-		filterPanel.add(new JTextField());
-		JTextField field = new JTextField();
-		
-		filterPanel.add(new JLabel("Max price"));
-		filterPanel.add(new JTextField());
-		
-		filterPanel.add(new JPanel());
-		filterPanel.add(new JButton("Filter"));
-		frame.add(filterPanel, BorderLayout.LINE_END);
-		
+//		loadCarList(system.getCars());
+//		frame.add(carsPanel);
+		JTabbedPane pane = new JTabbedPane();
+		carsFrame = new CarsFrame(system.getCars());
+		pane.add("Search", carsFrame);
+//		pane.add("TEST", new JLabel("asd"));
+//		new OrdersFrame(system.getOrders());
+		ordersFrame = new OrdersFrame(system.getOrders());
+		pane.add("Orders", ordersFrame);
+		frame.add(pane);
+		frame.pack();
 		frame.setVisible(true);
+	}
+	
+	public static void openCar(Car car) {
+		System.out.println("Open " + car.getTitle());
+		CarFrame frame = new CarFrame(car);
+		frame.setVisible(true);
+	}
+	
+	public static void filter(int minSeats, Car.WheelSide wheelSide, Car.Transmission transmission, int maxPrice) {
+		carsFrame.setCars(system.getCars(minSeats, wheelSide, transmission, maxPrice));
+	}
+	
+	public static void order(Car car, int days, String customer) {
+		system.order(car, days, customer);
+		ordersFrame.update();
+		carsFrame.update();
+	}
+	
+	public static void showInvoice(Order order) {
+		new InvoiceFrame(order).setVisible(true);
+	}
+	
+	public static void giveBack(Order order) {
+		system.giveBack(order.getCar());
 	}
 }

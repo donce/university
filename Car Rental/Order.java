@@ -10,7 +10,7 @@ class Order {
 	private int price;
 	private String customer;
 	private Date date;
- 	
+	
 	public Order(Car car, int days, String customer) {
 		setDate(new Date());
 		setCar(car);
@@ -39,7 +39,12 @@ class Order {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-
+	
+	//TODO: make formatter for prices?
+	public String getPriceString() {
+		return "$" + String.format("%.2f", (float)price / 100);
+	}
+	
 	public String getCustomer() {
 		return customer;
 	}
@@ -64,4 +69,7 @@ class Order {
 		car.getTitle(), customer, days, (float)price / 100, df.format(date), df.format(c.getTime())));
 		
 	}
+	
+//	public void finish() {
+//	}
 }

@@ -1,7 +1,33 @@
 
 class Car {
-	enum Transmission {MANUAL, AUTOMATIC};
-	enum WheelSide {LEFT, RIGHT};
+	enum Transmission {
+		MANUAL("Manual"),
+		AUTOMATIC("Automatic");
+		
+		private String title;
+		
+		Transmission(String title) {
+			this.title = title;
+		}
+		
+		public String toString() {
+			return title;
+		}
+	};
+	enum WheelSide {
+		LEFT("Left"),
+		RIGHT("Right");
+
+		private String title;
+		
+		WheelSide(String title) {
+			this.title = title;
+		}
+
+		public String toString() {
+			return title;
+		}
+	};
 	
 	private String title;
 	private String color;
@@ -12,7 +38,6 @@ class Car {
 	
 	private final int wheels = 4;
 	
-
 	public Car() {
 		this("Golf", "black", 5, WheelSide.LEFT, Transmission.MANUAL, 5000);
 	}

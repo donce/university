@@ -18,40 +18,43 @@ class FilterFrame extends JPanel {
 	public FilterFrame() {
 		super();
 		GridBagLayout layout = new GridBagLayout();
-		GridBagConstraints c = new GridBagConstraints();
+		GridBagConstraints ca = new GridBagConstraints();
+		ca.gridx = 0;
+		ca.anchor = GridBagConstraints.WEST;
+		GridBagConstraints cb = new GridBagConstraints();
+		cb.gridx = 1;
+		cb.fill = GridBagConstraints.HORIZONTAL;
+		cb.anchor = GridBagConstraints.WEST;
 		super.setLayout(layout);
 		
-		//TODO: change enum
-		this.add(new JLabel("Wheel on"));
-		this.add(inputWheel = new JComboBox<String>(new String[] {"Any", "Left", "Right"}));
+		//TODO: change enum generation from toString()
+		this.add(new JLabel("Wheel on"), ca);
+		this.add(inputWheel = new JComboBox<String>(new String[] {"Any", "Left", "Right"}), cb);
 
-		c.gridy = 1;
-		this.add(new JLabel("Transmission"), c);
-		this.add(inputTransmission = new JComboBox<String>(new String[] {"Any", "Manual", "Automatic"}), c);
+		this.add(new JLabel("Transmission"), ca);
+		this.add(inputTransmission = new JComboBox<String>(new String[] {"Any", "Manual", "Automatic"}), cb);
 
-		c.gridy = 2;
-		this.add(new JLabel("Min seats"), c);
-		this.add(inputMinSeats = new JSpinner(), c);
+		this.add(new JLabel("Min seats"), ca);
+		this.add(inputMinSeats = new JSpinner(), cb);
 
-		c.gridy = 3;
-		this.add(new JLabel("Max price"), c);
-		this.add(inputMaxPrice = new JSpinner(), c);
+		this.add(new JLabel("Max price"), ca);
+		this.add(inputMaxPrice = new JSpinner(), cb);
 
 		JButton filterButton = new JButton("Filter");
 		filterButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int minSeats = (int)inputMinSeats.getValue();
-				Car.WheelSide wheelSide = inputWheel.getSelectedIndex() != 0 ? Car.WheelSide.values()[inputWheel.getSelectedIndex()] : null;
-				Car.Transmission transmission = inputTransmission.getSelectedIndex() != 0 ? Car.Transmission.values()[inputTransmission.getSelectedIndex()] : null;
+				Car.WheelSide wheelSide = inputWheel.getSelectedIndex() != 0 ? Car.WheelSide.values()[inputWheel.getSelectedIndex()-1] : null;
+				Car.Transmission transmission = inputTransmission.getSelectedIndex() != 0 ? Car.Transmission.values()[inputTransmission.getSelectedIndex()-1] : null;
 				int maxPrice = (int)inputMaxPrice.getValue();
 				if (maxPrice == 0)
 					maxPrice = -1;
 				Main.filter(minSeats, wheelSide, transmission, maxPrice);
 			}
 		});
-		c.gridy = 4;
-		c.gridx = 1;
-		this.add(filterButton, c);
+//		c.gridy = 4;
+//		c.gridx = 1;
+		this.add(filterButton, cb);
 	}
 }

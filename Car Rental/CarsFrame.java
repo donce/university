@@ -26,7 +26,7 @@ class CarsFrame extends JPanel {
 	public void update() {
 		panelCars.removeAll();
 		for (int i = 0; i < cars.size(); ++i)
-			panelCars.add(new CarPreview(cars.get(i)));
+			panelCars.add(new CarFrame(cars.get(i)));
 		if (cars.size() == 0)
 			panelCars.add(new JLabel("No cars found."));
 		updateUI();

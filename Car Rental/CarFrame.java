@@ -1,21 +1,17 @@
-import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
-import javax.swing.Action;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 
-class CarFrame extends JFrame {
+class CarFrame extends JPanel {
 	private Car car;
 
 	public Car getCar() {
@@ -23,7 +19,7 @@ class CarFrame extends JFrame {
 	}
 	
 	public CarFrame(Car _car) {
-		super("Order");
+//		super("Order");
 		this.car = _car;
 		GridBagLayout layout = new GridBagLayout();
 		super.setLayout(layout);
