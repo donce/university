@@ -51,9 +51,4 @@ class InvoiceFrame extends JFrame {
 		add(button, cb);
 		pack();
 	}
-	
-	//TODO
-	private void close() {
-		
-	}
 }

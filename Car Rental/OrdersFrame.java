@@ -1,16 +1,13 @@
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeListener;
 import java.text.DateFormat;
 import java.util.List;
 
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 
 class OrdersFrame extends JPanel {
@@ -40,11 +37,11 @@ class OrdersFrame extends JPanel {
 				Main.showInvoice(orders.get(table.getSelectedRow()));
 			}
 		});
-		this.add(button);
+		this.add(button, BorderLayout.PAGE_END);
 	}
 	
 	public OrdersFrame(List<Order> orders) {
-		super();
+		super(new BorderLayout());
 		this.orders = orders;
 		update();
 	}

@@ -7,19 +7,12 @@ import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
 
 
 class CarFrame extends JPanel {
 	private Car car;
 
-	public Car getCar() {
-		return car;
-	}
-	
 	public CarFrame(Car _car) {
-//		super("Order");
 		this.car = _car;
 		GridBagLayout layout = new GridBagLayout();
 		super.setLayout(layout);
@@ -56,25 +49,14 @@ class CarFrame extends JPanel {
 			this.add(new JLabel(titles.elementAt(i+1)), cb);
 		}
 
-		this.add(new JLabel("Days"), ca);
-		JSpinner spinnerDays = new JSpinner();
-		spinnerDays.setValue(1);
-		this.add(spinnerDays, cb);
-		this.add(new JLabel("Customer"), ca);
-		JTextField fieldCustomer = new JTextField(20);
-		this.add(fieldCustomer, cb);
 		
 		JButton orderButton = new JButton("Order");
 		orderButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Main.order(car, 5, "Donatas");
-//				System.out.println("ORDER");
-//				System.out.println(this.);
+				Main.order(car, (int)Main.carsFrame.customerForm.inputDays.getValue(), Main.carsFrame.customerForm.inputCustomer.getText());
 			}
 		});
 		this.add(orderButton, cb);
-//		this.add(panel);
-//		this.setLayout(new BoxL(this, BoxLayout.PAGE_AXIS));)));
 	}
 }
