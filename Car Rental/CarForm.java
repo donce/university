@@ -52,7 +52,10 @@ class CarForm extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Main.add(new Car(inputTitle.getText(), inputColor.getText(), (int)inputSeats.getValue(), WheelSide.values()[inputWheel.getSelectedIndex()], Transmission.values()[inputTransmission.getSelectedIndex()], (int)inputPrice.getValue()));
+				String title, color;
+				title = inputTitle.getText();
+				color = inputColor.getText();
+				Main.add((title.length() == 0) && (color.length() == 0) ? new Car() :new Car(title, color, (int)inputSeats.getValue(), WheelSide.values()[inputWheel.getSelectedIndex()], Transmission.values()[inputTransmission.getSelectedIndex()], (int)inputPrice.getValue()));
 			}
 		});
 		this.add(button, cb);

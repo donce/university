@@ -32,7 +32,7 @@ class RentalSystem {
 			Car car = cars.get(i);
 			if ((filterData.getMinSeats() == -1 || filterData.getMinSeats() <= car.getSeats()) && (filterData.getWheelSide() == null || filterData.getWheelSide() == car.getWheelSide())
 				&& (filterData.getTransmission() == null || filterData.getTransmission() == car.getTransmission())
-				&& (filterData.getMaxPrice() == -1 || filterData.getMaxPrice() <= car.getPrice()))
+				&& (filterData.getMaxPrice() == -1 || filterData.getMaxPrice() >= car.getPrice()))
 				list.add(car);
 		}
 		return list;

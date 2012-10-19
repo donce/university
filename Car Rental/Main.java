@@ -86,4 +86,9 @@ class Main {
 		system.add(car);
 		updateData();
 	}
+	
+	public static void remove(Car car) {
+		system.remove(car);
+		updateData();
+	}
 }

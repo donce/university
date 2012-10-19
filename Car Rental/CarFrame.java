@@ -51,6 +51,15 @@ class CarFrame extends JPanel {
 			this.add(new JLabel(titles.elementAt(i+1)), cb);
 		}
 
+
+		JButton removeButton = new JButton("Remove");
+		removeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Main.remove(car);
+			}
+		});
+		this.add(removeButton, ca);
 		
 		JButton orderButton = new JButton("Order");
 		orderButton.addActionListener(new ActionListener() {
