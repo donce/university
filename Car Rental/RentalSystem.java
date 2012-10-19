@@ -26,13 +26,13 @@ class RentalSystem {
 		return cars;
 	}
 
-	public List<Car> getCars(int minSeats, Car.WheelSide wheelSide, Car.Transmission transmission, int maxPrice) {
+	public List<Car> getCars(FilterData filterData) {
 		List<Car> list = new ArrayList<Car>();
 		for (int i = 0; i < cars.size(); ++i) {
 			Car car = cars.get(i);
-			if ((minSeats == -1 || minSeats <= car.getSeats()) && (wheelSide == null || wheelSide == car.getWheelSide())
-				&& (transmission == null || transmission == car.getTransmission())
-				&& (maxPrice == -1 || maxPrice <= car.getPrice()))
+			if ((filterData.getMinSeats() == -1 || filterData.getMinSeats() <= car.getSeats()) && (filterData.getWheelSide() == null || filterData.getWheelSide() == car.getWheelSide())
+				&& (filterData.getTransmission() == null || filterData.getTransmission() == car.getTransmission())
+				&& (filterData.getMaxPrice() == -1 || filterData.getMaxPrice() <= car.getPrice()))
 				list.add(car);
 		}
 		return list;
@@ -53,12 +53,10 @@ class RentalSystem {
 		order.println();
 	}
 	
-	public void giveBack(Car car) {
-		int index = orderedCars.indexOf(car);
-		if (index == -1)
-			throw new IllegalArgumentException("Car cannot be returned because it is not taken.");
-		orderedCars.remove(index);
-		cars.add(car);
+	public void giveBack(Order order) {
+		orderedCars.remove(order.getCar());
+		cars.add(order.getCar());
+		orders.remove(order);
 	}
 	
 	public void println() {

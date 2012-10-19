@@ -1,34 +1,35 @@
 
-class Car {
-	enum Transmission {
-		MANUAL("Manual"),
-		AUTOMATIC("Automatic");
-		
-		private String title;
-		
-		Transmission(String title) {
-			this.title = title;
-		}
-		
-		public String toString() {
-			return title;
-		}
-	};
-	enum WheelSide {
-		LEFT("Left"),
-		RIGHT("Right");
-
-		private String title;
-		
-		WheelSide(String title) {
-			this.title = title;
-		}
-
-		public String toString() {
-			return title;
-		}
-	};
+enum Transmission {
+	MANUAL("Manual"),
+	AUTOMATIC("Automatic");
 	
+	private String title;
+	
+	Transmission(String title) {
+		this.title = title;
+	}
+	
+	public String toString() {
+		return title;
+	}
+};
+
+enum WheelSide {
+	LEFT("Left"),
+	RIGHT("Right");
+
+	private String title;
+	
+	WheelSide(String title) {
+		this.title = title;
+	}
+
+	public String toString() {
+		return title;
+	}
+};
+	
+class Car {	
 	private String title;
 	private String color;
 	private int seats;
@@ -104,7 +105,7 @@ class Car {
 		System.out.println(String.format(
 				"\"%s\", color: %s, seats: %d, wheel on: %s, transmission: %s, price: %s per day.",
 				title, color, seats, (wheelSide == WheelSide.LEFT ? "left" : "right"),
-				(transmission == Transmission.AUTOMATIC ? "automatic" : "manual"), getPriceString()
+				(transmission == Transmission.AUTOMATIC ? "automatic" : "manual"), Money.toString(getPrice())
 		));
 	}
 }

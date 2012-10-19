@@ -40,11 +40,6 @@ class Order {
 		this.price = price;
 	}
 	
-	//TODO: make formatter for prices?
-	public String getPriceString() {
-		return "$" + String.format("%.2f", (float)price / 100);
-	}
-	
 	public String getCustomer() {
 		return customer;
 	}

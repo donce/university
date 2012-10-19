@@ -15,7 +15,7 @@ import javax.swing.event.ListSelectionListener;
 
 class OrdersFrame extends JPanel {
 	private List<Order> orders; 
-	JTable table;
+	private JTable table;
 	
 	public void update() {
 		//TODO: change data, not whole component
@@ -29,10 +29,9 @@ class OrdersFrame extends JPanel {
 			data[i][1] = df.format(order.getDate());
 			data[i][2] = order.getDays();
 			data[i][3] = order.getCustomer();
-			data[i][4] = order.getPriceString();
-			data[i][5] = new JButton();
+			data[i][4] = Money.toString(order.getPrice());
 		}
-		table = new JTable(data, new Object[] {"Car", "Date", "Days", "Customer", "Price", "Return"});
+		table = new JTable(data, new Object[] {"Car", "Date", "Days", "Customer", "Price"});
 		this.add(new JScrollPane(table));
 		JButton button = new JButton("Return");
 		button.addActionListener(new ActionListener() {

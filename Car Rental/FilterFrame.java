@@ -45,12 +45,12 @@ class FilterFrame extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int minSeats = (int)inputMinSeats.getValue();
-				Car.WheelSide wheelSide = inputWheel.getSelectedIndex() != 0 ? Car.WheelSide.values()[inputWheel.getSelectedIndex()-1] : null;
-				Car.Transmission transmission = inputTransmission.getSelectedIndex() != 0 ? Car.Transmission.values()[inputTransmission.getSelectedIndex()-1] : null;
+				WheelSide wheelSide = inputWheel.getSelectedIndex() != 0 ? WheelSide.values()[inputWheel.getSelectedIndex()-1] : null;
+				Transmission transmission = inputTransmission.getSelectedIndex() != 0 ? Transmission.values()[inputTransmission.getSelectedIndex()-1] : null;
 				int maxPrice = (int)inputMaxPrice.getValue();
 				if (maxPrice == 0)
 					maxPrice = -1;
-				Main.filter(minSeats, wheelSide, transmission, maxPrice);
+				Main.filter(new FilterData(minSeats, wheelSide, transmission, maxPrice));
 			}
 		});
 //		c.gridy = 4;

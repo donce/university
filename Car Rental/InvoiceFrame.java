@@ -13,9 +13,9 @@ class InvoiceFrame extends JFrame {
 	private Order order;
 	JButton button;
 	
-	public InvoiceFrame(Order order) {
+	public InvoiceFrame(Order _order) {
 		super("Invoice");
-		this.order = order;
+		this.order = _order;
 		GridBagLayout layout = new GridBagLayout();
 		super.setLayout(layout);
 		GridBagConstraints ca = new GridBagConstraints();
@@ -36,19 +36,19 @@ class InvoiceFrame extends JFrame {
 		add(new JLabel("Car"), ca);
 		add(new JLabel(order.getCar().getTitle()), cb);
 		add(new JLabel("Base price"), ca);
-		add(new JLabel(order.getPriceString()), cb);
+		add(new JLabel(Money.toString(order.getPrice())), cb);
 		add(new JLabel("Price for delay"), ca);
-		add(new JLabel(Float.toString(additionalDays * order.getCar().getPrice())), cb);//TODO: price string here
+		add(new JLabel(Money.toString((int)(additionalDays * order.getCar().getPrice()))), cb);
 		button = new JButton("OK");
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				Main.giveBack(this.order);
-//				this.close();
+				Main.giveBack(order);
+				dispose();
 				//TODO
 			}
 		});
-		add(new JButton("OK"), cb);
+		add(button, cb);
 		pack();
 	}
 	

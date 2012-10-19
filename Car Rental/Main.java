@@ -1,6 +1,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -48,9 +49,9 @@ class Main {
 	private static JFrame frame = new JFrame("Car rental");
 	
 	public static void main(String[] args) {
-		Car test0 = new Car("Nissan", "Red", 5, Car.WheelSide.LEFT, Car.Transmission.MANUAL, 10000);
+		Car test0 = new Car("Nissan", "Red", 5, WheelSide.LEFT, Transmission.MANUAL, 10000);
 		system.add(test0);
-		Car test = new Car("Ford", "Blue", 5, Car.WheelSide.RIGHT, Car.Transmission.MANUAL, 12000);
+		Car test = new Car("Ford", "Blue", 5, WheelSide.RIGHT, Transmission.MANUAL, 12000);
 		system.add(test);
 		try {
 			system.order(test, 1, "Donatas");
@@ -59,11 +60,11 @@ class Main {
 		catch (IllegalArgumentException e) {
 			System.out.println("Error while ordering: " + e.getMessage());
 		}
-		try {
-		system.giveBack(test);
-		}
-		catch (IllegalArgumentException e) {}
-		system.println();
+//		try {
+//		system.giveBack(test);
+//		}
+//		catch (IllegalArgumentException e) {}
+//		system.println();
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException | InstantiationException
@@ -75,7 +76,7 @@ class Main {
 //		loadCarList(system.getCars());
 //		frame.add(carsPanel);
 		JTabbedPane pane = new JTabbedPane();
-		carsFrame = new CarsFrame(system.getCars());
+		carsFrame = new CarsFrame();
 		pane.add("Search", carsFrame);
 //		pane.add("TEST", new JLabel("asd"));
 //		new OrdersFrame(system.getOrders());
@@ -92,21 +93,30 @@ class Main {
 		frame.setVisible(true);
 	}
 	
-	public static void filter(int minSeats, Car.WheelSide wheelSide, Car.Transmission transmission, int maxPrice) {
-		carsFrame.setCars(system.getCars(minSeats, wheelSide, transmission, maxPrice));
+	public static void filter(FilterData filterData) {
+		carsFrame.setFilter(filterData);
+	}
+	
+	public static List<Car> getCars(FilterData filterData) {
+		return system.getCars(filterData);
 	}
 	
 	public static void order(Car car, int days, String customer) {
 		system.order(car, days, customer);
-		ordersFrame.update();
-		carsFrame.update();
+		updateData();
 	}
-	
+	//TODO: add new car
 	public static void showInvoice(Order order) {
 		new InvoiceFrame(order).setVisible(true);
 	}
 	
+	private static void updateData() {
+		ordersFrame.update();
+		carsFrame.update();
+	}
+	
 	public static void giveBack(Order order) {
-		system.giveBack(order.getCar());
+		system.giveBack(order);
+		updateData();
 	}
 }
