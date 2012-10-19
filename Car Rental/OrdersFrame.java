@@ -34,7 +34,9 @@ class OrdersFrame extends JPanel {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Main.showInvoice(orders.get(table.getSelectedRow()));
+				int nr = table.getSelectedRow();
+				if (nr != -1)
+					Main.showInvoice(orders.get(nr));
 			}
 		});
 		this.add(button, BorderLayout.PAGE_END);

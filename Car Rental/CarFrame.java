@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,9 +20,10 @@ class CarFrame extends JPanel {
 //		JPanel panel = new JPanel();
 //		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 //		panel.add(new JLabel("Ordering"));
+        setBorder(BorderFactory.createTitledBorder(car.getTitle()));
 		Vector<String> titles = new Vector<String>();
-		titles.add("Title");
-		titles.add(car.getTitle());
+//		titles.add("Title");
+//		titles.add(car.getTitle());
 		titles.add("Wheel on");
 		titles.add(car.getWheelSide().toString());
 		titles.add("Transmission");

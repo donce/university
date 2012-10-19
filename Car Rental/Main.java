@@ -67,7 +67,7 @@ class Main {
 		system.order(car, days, customer);
 		updateData();
 	}
-	//TODO: add new car
+
 	public static void showInvoice(Order order) {
 		new InvoiceFrame(order).setVisible(true);
 	}

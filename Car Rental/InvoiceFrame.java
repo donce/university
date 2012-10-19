@@ -31,21 +31,22 @@ class InvoiceFrame extends JFrame {
 		float payDays = (float)diff / (1000*60*60*24);
 		if (payDays < order.getDays())
 			payDays = order.getDays();
-		float additionalDays = payDays - order.getDays();
+		int additionalPrice = (int)((payDays - order.getDays()) * order.getCar().getPrice());
 		
 		add(new JLabel("Car"), ca);
 		add(new JLabel(order.getCar().getTitle()), cb);
 		add(new JLabel("Base price"), ca);
 		add(new JLabel(Money.toString(order.getPrice())), cb);
 		add(new JLabel("Price for delay"), ca);
-		add(new JLabel(Money.toString((int)(additionalDays * order.getCar().getPrice()))), cb);
+		add(new JLabel(Money.toString(additionalPrice)), cb);
+		add(new JLabel("Total price"), ca);
+		add(new JLabel(Money.toString(additionalPrice + order.getPrice())), cb);
 		button = new JButton("OK");
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Main.giveBack(order);
 				dispose();
-				//TODO
 			}
 		});
 		add(button, cb);
