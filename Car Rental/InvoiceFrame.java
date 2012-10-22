@@ -13,8 +13,19 @@ class InvoiceFrame extends JFrame {
 	private Order order;
 	JButton button;
 	
-	public InvoiceFrame(Order _order) {
+	RentalSystemWindow systemWindow;
+	
+	private ActionListener buttonListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			systemWindow.giveBack(order);
+			dispose();
+		}
+	};
+	
+	public InvoiceFrame(Order _order, RentalSystemWindow systemWindow) {
 		super("Invoice");
+		this.systemWindow = systemWindow;
 		this.order = _order;
 		GridBagLayout layout = new GridBagLayout();
 		super.setLayout(layout);
@@ -42,13 +53,7 @@ class InvoiceFrame extends JFrame {
 		add(new JLabel("Total price"), ca);
 		add(new JLabel(Money.toString(additionalPrice + order.getPrice())), cb);
 		button = new JButton("OK");
-		button.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Main.giveBack(order);
-				dispose();
-			}
-		});
+		button.addActionListener(buttonListener);
 		add(button, cb);
 		pack();
 	}

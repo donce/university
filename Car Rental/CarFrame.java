@@ -13,17 +13,29 @@ import javax.swing.JPanel;
 class CarFrame extends JPanel {
 	private Car car;
 
-	public CarFrame(Car _car) {
+	private RentalSystemWindow systemWindow;
+	
+	ActionListener orderListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			systemWindow.order(car, systemWindow.carsFrame.getInputDays(), systemWindow.carsFrame.getInputCustomer());
+		}
+	};
+	
+	private ActionListener removeListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			systemWindow.remove(car);
+		}
+	};
+	
+	public CarFrame(Car _car, RentalSystemWindow systemWindow) {
 		this.car = _car;
+		this.systemWindow = systemWindow;
 		GridBagLayout layout = new GridBagLayout();
 		super.setLayout(layout);
-//		JPanel panel = new JPanel();
-//		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-//		panel.add(new JLabel("Ordering"));
         setBorder(BorderFactory.createTitledBorder(car.getTitle()));
 		Vector<String> titles = new Vector<String>();
-//		titles.add("Title");
-//		titles.add(car.getTitle());
 		titles.add("Wheel on");
 		titles.add(car.getWheelSide().toString());
 		titles.add("Transmission");
@@ -31,7 +43,7 @@ class CarFrame extends JPanel {
 		titles.add("Color");
 		titles.add(car.getColor());
 		titles.add("Price");
-		titles.add(car.getPriceString());
+		titles.add(Money.toString(car.getPrice()));
 		titles.add("Seats");
 		titles.add(Integer.toString(car.getSeats()));
 		titles.add("Wheels");
@@ -53,21 +65,11 @@ class CarFrame extends JPanel {
 
 
 		JButton removeButton = new JButton("Remove");
-		removeButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Main.remove(car);
-			}
-		});
+		removeButton.addActionListener(removeListener);
 		this.add(removeButton, ca);
 		
 		JButton orderButton = new JButton("Order");
-		orderButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Main.order(car, (int)Main.carsFrame.customerForm.inputDays.getValue(), Main.carsFrame.customerForm.inputCustomer.getText());
-			}
-		});
+		orderButton.addActionListener(orderListener);
 		this.add(orderButton, cb);
 	}
 }

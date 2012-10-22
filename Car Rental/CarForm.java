@@ -18,9 +18,22 @@ class CarForm extends JPanel {
 	private JComboBox<String> inputTransmission;
 	private JSpinner inputSeats;
 	private JSpinner inputPrice;
+	
+	RentalSystemWindow systemWindow;
 
-	public CarForm() {
+	private ActionListener buttonListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			String title, color;
+			title = inputTitle.getText();
+			color = inputColor.getText();
+			systemWindow.add((title.length() == 0) && (color.length() == 0) ? new Car() :new Car(title, color, (int)inputSeats.getValue(), WheelSide.values()[inputWheel.getSelectedIndex()], Transmission.values()[inputTransmission.getSelectedIndex()], (int)inputPrice.getValue()));
+		}
+	};
+	
+	public CarForm(RentalSystemWindow systemWindow) {
 		super(new GridBagLayout());
+		this.systemWindow = systemWindow;
 		GridBagConstraints ca = new GridBagConstraints();
 		ca.gridx = 0;
 		ca.anchor = GridBagConstraints.WEST;
@@ -48,16 +61,7 @@ class CarForm extends JPanel {
 		this.add(inputPrice = new JSpinner(), cb);
 
 		JButton button = new JButton("Add");
-		button.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String title, color;
-				title = inputTitle.getText();
-				color = inputColor.getText();
-				Main.add((title.length() == 0) && (color.length() == 0) ? new Car() :new Car(title, color, (int)inputSeats.getValue(), WheelSide.values()[inputWheel.getSelectedIndex()], Transmission.values()[inputTransmission.getSelectedIndex()], (int)inputPrice.getValue()));
-			}
-		});
+		button.addActionListener(buttonListener);
 		this.add(button, cb);
 	}
 }

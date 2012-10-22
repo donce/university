@@ -93,9 +93,6 @@ class Car {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public String getPriceString() {
-		return "$" + String.format("%.2f", (float)price / 100);
-	}
 
 	public int getWheels() {
 		return wheels;
@@ -104,8 +101,7 @@ class Car {
 	public void println() {
 		System.out.println(String.format(
 				"\"%s\", color: %s, seats: %d, wheel on: %s, transmission: %s, price: %s per day.",
-				title, color, seats, (wheelSide == WheelSide.LEFT ? "left" : "right"),
-				(transmission == Transmission.AUTOMATIC ? "automatic" : "manual"), Money.toString(getPrice())
+				title, color, seats, wheelSide.toString(), transmission.toString(), Money.toString(getPrice())
 		));
 	}
 }

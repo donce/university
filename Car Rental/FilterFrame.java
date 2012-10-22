@@ -15,8 +15,23 @@ class FilterFrame extends JPanel {
 	private JComboBox<String> inputTransmission;
 	private JSpinner inputMinSeats;
 	private JSpinner inputMaxPrice;
-	public FilterFrame() {
-		super();
+	private RentalSystemWindow systemWindow;
+	
+	private ActionListener buttonListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int minSeats = (int)inputMinSeats.getValue();
+			WheelSide wheelSide = inputWheel.getSelectedIndex() != 0 ? WheelSide.values()[inputWheel.getSelectedIndex()-1] : null;
+			Transmission transmission = inputTransmission.getSelectedIndex() != 0 ? Transmission.values()[inputTransmission.getSelectedIndex()-1] : null;
+			int maxPrice = (int)inputMaxPrice.getValue();
+			if (maxPrice == 0)
+				maxPrice = -1;
+			systemWindow.filter(new FilterData(minSeats, wheelSide, transmission, maxPrice));
+		}
+	};
+	
+	public FilterFrame(RentalSystemWindow systemWindow) {
+		this.systemWindow = systemWindow;
 		GridBagLayout layout = new GridBagLayout();
 		GridBagConstraints ca = new GridBagConstraints();
 		ca.gridx = 0;
@@ -41,18 +56,7 @@ class FilterFrame extends JPanel {
 		this.add(inputMaxPrice = new JSpinner(), cb);
 
 		JButton filterButton = new JButton("Filter");
-		filterButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int minSeats = (int)inputMinSeats.getValue();
-				WheelSide wheelSide = inputWheel.getSelectedIndex() != 0 ? WheelSide.values()[inputWheel.getSelectedIndex()-1] : null;
-				Transmission transmission = inputTransmission.getSelectedIndex() != 0 ? Transmission.values()[inputTransmission.getSelectedIndex()-1] : null;
-				int maxPrice = (int)inputMaxPrice.getValue();
-				if (maxPrice == 0)
-					maxPrice = -1;
-				Main.filter(new FilterData(minSeats, wheelSide, transmission, maxPrice));
-			}
-		});
+		filterButton.addActionListener(buttonListener);
 //		c.gridy = 4;
 //		c.gridx = 1;
 		this.add(filterButton, cb);
