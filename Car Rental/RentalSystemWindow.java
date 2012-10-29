@@ -12,6 +12,7 @@ class RentalSystemWindow extends JFrame {
 	
 	public RentalSystemWindow() {
 		this(new RentalSystem());
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public RentalSystemWindow(RentalSystem system) {
