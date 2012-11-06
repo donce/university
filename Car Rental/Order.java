@@ -67,7 +67,12 @@ class Order {
 	public void println() {
 		System.out.println(toString());
 	}
-	
-//	public void finish() {
-//	}
+
+	@Override public boolean equals(Object o) {
+		if (!(o instanceof Order))
+			return false;
+		Order a = (Order)o;
+		return (car == a.car) && (days == a.days) && (price == a.price) &&
+				(customer == a.customer) && (date == a.date);
+	}
 }

@@ -109,4 +109,12 @@ class Car {
 	public void println() {
 		System.out.println(toString());
 	}
+	
+	@Override public boolean equals(Object o) {
+		if (!(o instanceof Car))
+			return false;
+		Car c = (Car)o;
+		return (title == c.title) && (color == c.color) && (seats == c.seats) && (wheelSide == c.wheelSide) &&
+				(transmission == c.transmission) && (price == c.price);
+	}
 }
