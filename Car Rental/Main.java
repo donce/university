@@ -1,3 +1,5 @@
+import original.RentalSystemWindow;
+
 
 class Main {
 	
