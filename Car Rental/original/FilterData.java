@@ -1,3 +1,5 @@
+package original;
+
 
 class FilterData {
 	private int minSeats;

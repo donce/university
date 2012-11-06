@@ -1,12 +1,14 @@
+package original;
+
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+//import javax.swing.UIManager;
+//import javax.swing.UnsupportedLookAndFeelException;
 
 
-class RentalSystemWindow extends JFrame {
+public class RentalSystemWindow extends JFrame {
 	private RentalSystem system;
 	public CarsFrame carsFrame;
 	private OrdersFrame ordersFrame;

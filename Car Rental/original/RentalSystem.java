@@ -1,8 +1,9 @@
+package original;
+
 import java.util.ArrayList;
 import java.util.List;
 
-
-class RentalSystem {
+public class RentalSystem {
 	private List<Car> cars;
 	private List<Car> orderedCars;
 	private List<Order> orders;

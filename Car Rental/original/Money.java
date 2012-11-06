@@ -1,3 +1,5 @@
+package original;
+
 
 class Money {
 	public static String toString(int money) {
