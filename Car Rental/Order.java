@@ -54,15 +54,18 @@ class Order {
 		this.date = date;
 	}
 	
-	public void println() {
+	@Override public String toString() {
 		Locale locale = Locale.getDefault();
 		DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, locale);
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
 		c.add(Calendar.DAY_OF_MONTH, days);
-		System.out.println(String.format("Order \"%s\" by %s, %d days for $%.2f [from %s to %s]",
-		car.getTitle(), customer, days, (float)price / 100, df.format(date), df.format(c.getTime())));
-		
+		return String.format("Order \"%s\" by %s, %d days for $%.2f [from %s to %s]",
+		car.getTitle(), customer, days, (float)price / 100, df.format(date), df.format(c.getTime()));
+	}
+	
+	public void println() {
+		System.out.println(toString());
 	}
 	
 //	public void finish() {

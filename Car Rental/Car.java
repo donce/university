@@ -98,10 +98,15 @@ class Car {
 		return wheels;
 	}
 	
-	public void println() {
-		System.out.println(String.format(
+	@Override public String toString() {
+		return String.format(
 				"\"%s\", color: %s, seats: %d, wheel on: %s, transmission: %s, price: %s per day.",
 				title, color, seats, wheelSide.toString(), transmission.toString(), Money.toString(getPrice())
-		));
+		);
+
+	}
+	
+	public void println() {
+		System.out.println(toString());
 	}
 }

@@ -5,6 +5,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+
 class RentalSystemWindow extends JFrame {
 	private RentalSystem system;
 	public CarsFrame carsFrame;
@@ -22,12 +23,12 @@ class RentalSystemWindow extends JFrame {
 		system.add(test0);
 		Car test = new Car("Ford", "Blue", 5, WheelSide.RIGHT, Transmission.MANUAL, 12000);
 		system.add(test);
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException
-				| IllegalAccessException | UnsupportedLookAndFeelException e1) {
-			e1.printStackTrace();
-		}
+//		try {
+//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//		} catch (ClassNotFoundException | InstantiationException
+//				| IllegalAccessException | UnsupportedLookAndFeelException e1) {
+//			e1.printStackTrace();
+//		}
 		
 		JTabbedPane pane = new JTabbedPane();
 		carsFrame = new CarsFrame(this);
