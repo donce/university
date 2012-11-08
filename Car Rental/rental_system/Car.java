@@ -1,4 +1,4 @@
-package original;
+package rental_system;
 
 
 enum Transmission {
@@ -31,7 +31,7 @@ enum WheelSide {
 	}
 };
 	
-class Car {	
+public class Car {	
 	private String title;
 	private String color;
 	private int seats;

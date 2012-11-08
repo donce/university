@@ -1,4 +1,4 @@
-package original;
+package rental_system;
 
 import java.util.List;
 
@@ -9,13 +9,13 @@ import javax.swing.JTabbedPane;
 
 
 public class RentalSystemWindow extends JFrame {
-	private RentalSystem system;
+	protected RentalSystem system;
 	public CarsFrame carsFrame;
 	private OrdersFrame ordersFrame;
+	protected JTabbedPane pane;
 	
 	public RentalSystemWindow() {
 		this(new RentalSystem());
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public RentalSystemWindow(RentalSystem system) {
@@ -32,13 +32,14 @@ public class RentalSystemWindow extends JFrame {
 //			e1.printStackTrace();
 //		}
 		
-		JTabbedPane pane = new JTabbedPane();
+		pane = new JTabbedPane();
 		carsFrame = new CarsFrame(this);
 		pane.add("Search", carsFrame);
 		ordersFrame = new OrdersFrame(system.getOrders(), this);
 		pane.add("Orders", ordersFrame);
 		pane.add("Cars", new CarForm(this));
 		add(pane);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 		setVisible(true);
 	}
@@ -60,7 +61,7 @@ public class RentalSystemWindow extends JFrame {
 		new InvoiceFrame(order, this).setVisible(true);
 	}
 	
-	private void updateData() {
+	protected void updateData() {
 		ordersFrame.update();
 		carsFrame.update();
 	}

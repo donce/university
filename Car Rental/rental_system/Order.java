@@ -1,4 +1,4 @@
-package original;
+package rental_system;
 
 import java.text.DateFormat;
 import java.util.Calendar;

@@ -1,4 +1,4 @@
-package original;
+package rental_system;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
