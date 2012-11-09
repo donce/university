@@ -1,7 +1,7 @@
 package rental_system;
 
 
-class FilterData {
+public class FilterData {
 	private int minSeats;
 	private WheelSide wheelSide;
 	private Transmission transmission;

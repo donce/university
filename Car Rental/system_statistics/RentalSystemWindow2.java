@@ -5,8 +5,8 @@ import rental_system.*;
 
 public class RentalSystemWindow2 extends RentalSystemWindow {
 	
-	private RentTimeChart rentTimeChart = null;
-	private MyBarChart myBarChart = null;
+	private PieChart rentTimeChart = null;
+	private BarChart myBarChart = null;
 	
 	public RentalSystemWindow2() {
 		this(new RentalSystem2());
@@ -15,9 +15,10 @@ public class RentalSystemWindow2 extends RentalSystemWindow {
 	public RentalSystemWindow2(Object systemObject) {
 		super((RentalSystem)systemObject);
 		if (systemObject instanceof RentalSystem2) {
-			rentTimeChart = new RentTimeChart();
+			RentalSystem2 system = (RentalSystem2)systemObject;
+			rentTimeChart = new PieChart(system);
 			pane.add("Rent duration chart", rentTimeChart);
-			myBarChart = new MyBarChart();
+			myBarChart = new BarChart(system);
 			pane.add("Cars chart", myBarChart);
 		}
 	}
@@ -25,8 +26,8 @@ public class RentalSystemWindow2 extends RentalSystemWindow {
 	@Override protected void updateData() {
 		super.updateData();
 		if (system instanceof RentalSystem2) {
-			rentTimeChart.setData(((RentalSystem2) system).getRentTimeStatistics());
-			myBarChart.setData(((RentalSystem2) system).getCarStatistics());
+			rentTimeChart.update();
+			myBarChart.update();
 		}
 	}
 }

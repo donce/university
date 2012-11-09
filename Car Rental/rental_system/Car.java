@@ -1,35 +1,5 @@
 package rental_system;
 
-
-enum Transmission {
-	MANUAL("Manual"),
-	AUTOMATIC("Automatic");
-	
-	private String title;
-	
-	Transmission(String title) {
-		this.title = title;
-	}
-	
-	public String toString() {
-		return title;
-	}
-};
-
-enum WheelSide {
-	LEFT("Left"),
-	RIGHT("Right");
-
-	private String title;
-	
-	WheelSide(String title) {
-		this.title = title;
-	}
-
-	public String toString() {
-		return title;
-	}
-};
 	
 public class Car {	
 	private String title;

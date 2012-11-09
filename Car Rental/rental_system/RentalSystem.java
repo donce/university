@@ -51,7 +51,6 @@ public class RentalSystem {
 		orderedCars.add(car);
 		Order order = new Order(car, days, customer);
 		orders.add(order);
-		order.println();
 	}
 	
 	public void giveBack(Order order) {

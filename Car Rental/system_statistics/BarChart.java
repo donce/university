@@ -10,19 +10,18 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.general.PieDataset;
 
-//TODO: rename chart, title
-public class MyBarChart extends ChartPanel {
+public class BarChart extends ChartPanel {
+	private RentalSystem2 system;
 	
-	public MyBarChart() {
+	public BarChart(RentalSystem2 system) {
 		super(null);
-		setData(null);
-		//TODO: Add first update?
+		this.system = system;
+		update();
 	}
 	
-	public void setData(Set<Map.Entry<String, Integer>> set) {
+	public void update() {
+		Set<Map.Entry<String, Integer>> set = system.getCarStatistics();
 		CategoryDataset dataset = new DefaultCategoryDataset();
 		if (set != null) {
 			Iterator<Map.Entry<String, Integer>> it = set.iterator();
