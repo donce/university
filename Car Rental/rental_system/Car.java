@@ -116,7 +116,7 @@ public class Car {
 		if (!(o instanceof Car))
 			return false;
 		Car c = (Car)o;
-		return (title == c.title) && (color == c.color) && (seats == c.seats) && (wheelSide == c.wheelSide) &&
-				(transmission == c.transmission) && (price == c.price);
+		return (title.equals(c.title)) && (color.equals(c.color)) && (seats == c.seats) && (wheelSide.equals(c.wheelSide)) &&
+				(transmission.equals(c.transmission)) && (price == c.price);
 	}
 }

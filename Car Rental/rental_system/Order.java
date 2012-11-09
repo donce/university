@@ -74,7 +74,8 @@ class Order {
 		if (!(o instanceof Order))
 			return false;
 		Order a = (Order)o;
-		return (car == a.car) && (days == a.days) && (price == a.price) &&
-				(customer == a.customer) && (date == a.date);
+		return (car.equals(a.car)) && (days == a.days) && (price == a.price) &&
+				(customer.equals(a.customer)) && (date.equals(a.date));
 	}
+	
 }
