@@ -1,0 +1,3 @@
+﻿57. Nuskaityti vieną failą. Sukurti 4 stekus, kurių elementai eilutės. Į pirmąjį patalpinti žodžius 
+prasidedančius priebalse, į antrąjį-balse, į trečiąjį-skaitmeniu. Apjungti į ketvirtąjį. Suskaičiuoti 
+juose žodžius ir simbolius. Rezultatus išvesti į atskirus failus.  
