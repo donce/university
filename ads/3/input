@@ -1,0 +1,11 @@
+100 15
+200 5
+10
+30
+
+
+Input format:
+dayAmount dayError
+cost costError
+markup
+days
