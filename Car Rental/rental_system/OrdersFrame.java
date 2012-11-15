@@ -42,7 +42,6 @@ class OrdersFrame extends JPanel {
 			data[i][4] = Money.toString(order.getPrice());
 		}
 		table = new JTable(data, new Object[] {"Car", "Date", "Days", "Customer", "Price"});
-//		table.set
 		this.add(new JScrollPane(table));
 		JButton button = new JButton("Return");
 		button.addActionListener(buttonListener);

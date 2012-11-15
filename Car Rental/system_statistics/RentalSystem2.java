@@ -14,7 +14,8 @@ public class RentalSystem2 extends RentalSystem {
 //	private List<Integer> orderedDays = new ArrayList<Integer>();
 	private List<Integer> orderedDays = new ArrayList<Integer>();
 	
-	@Override public void order(Car car, int days, String customer) {
+	@Override
+	public void order(Car car, int days, Customer customer) {
 		 super.order(car, days, customer);
 		 orderedDays.add(days);
 	 }
@@ -35,7 +36,8 @@ public class RentalSystem2 extends RentalSystem {
 		return carTitles.entrySet();
 	}
 
-	@Override public void add(Car car) {
+	@Override
+	public void add(Car car) {
 		super.add(car);
 		Integer value = carTitles.get(car.getTitle());
 		if (value == null)
@@ -43,7 +45,8 @@ public class RentalSystem2 extends RentalSystem {
 		carTitles.put(car.getTitle(), value+1);
 	}
 	
-	@Override public void remove(Car car) {
+	@Override
+	public void remove(Car car) {
 		super.remove(car);
 		String title = car.getTitle();
 		Integer value = carTitles.get(title);

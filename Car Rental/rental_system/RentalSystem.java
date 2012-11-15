@@ -7,25 +7,36 @@ public class RentalSystem {
 	private List<Car> cars;
 	private List<Car> orderedCars;
 	private List<Order> orders;
+	private List<Customer> customers;
 	
 	public RentalSystem() {
 		cars = new ArrayList<Car>();
 		orderedCars = new ArrayList<Car>();
 		orders = new ArrayList<Order>();
+		customers = new ArrayList<Customer>();
 	}
 	
 	public void add(Car car) {
 		cars.add(car);
 	}
-	
 	public void remove(Car car) {
 		if (!cars.remove(car) && !orderedCars.remove(car))
 			throw new IllegalArgumentException("Car being removed does not exist.");
 	}
-	
 	public List<Car> getCars() {
 		return cars;
 	}
+	
+	public void add(Customer customer) {
+		customers.add(customer);
+	}
+	public void remove(Customer customer) {
+		customers.remove(customer);
+	}
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+	
 
 	public List<Car> getCars(FilterData filterData) {
 		List<Car> list = new ArrayList<Car>();
@@ -43,7 +54,7 @@ public class RentalSystem {
 		return orders;
 	}
 	
-	public void order(Car car, int days, String customer) {
+	public void order(Car car, int days, Customer customer) {
 		int index = cars.indexOf(car);
 		if (index == -1)
 			throw new IllegalArgumentException("Car is not available.");

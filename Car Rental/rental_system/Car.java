@@ -70,7 +70,8 @@ public class Car {
 		return wheels;
 	}
 	
-	@Override public String toString() {
+	@Override
+	public String toString() {
 		return String.format(
 				"\"%s\", color: %s, seats: %d, wheel on: %s, transmission: %s, price: %s per day.",
 				title, color, seats, wheelSide.toString(), transmission.toString(), Money.toString(getPrice())
@@ -82,7 +83,8 @@ public class Car {
 		System.out.println(toString());
 	}
 	
-	@Override public boolean equals(Object o) {
+	@Override
+	public boolean equals(Object o) {
 		if (!(o instanceof Car))
 			return false;
 		Car c = (Car)o;

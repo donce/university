@@ -10,10 +10,10 @@ class Order {
 	private Car car;
 	private int days;
 	private int price;
-	private String customer;
+	private Customer customer;
 	private Date date;
 	
-	public Order(Car car, int days, String customer) {
+	public Order(Car car, int days, Customer customer) {
 		setDate(new Date());
 		setCar(car);
 		setDays(days);
@@ -42,10 +42,10 @@ class Order {
 		this.price = price;
 	}
 	
-	public String getCustomer() {
+	public Customer getCustomer() {
 		return customer;
 	}
-	public void setCustomer(String customer) {
+	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
 
@@ -56,7 +56,8 @@ class Order {
 		this.date = date;
 	}
 	
-	@Override public String toString() {
+	@Override
+	public String toString() {
 		Locale locale = Locale.getDefault();
 		DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, locale);
 		Calendar c = Calendar.getInstance();
@@ -70,7 +71,8 @@ class Order {
 		System.out.println(toString());
 	}
 
-	@Override public boolean equals(Object o) {
+	@Override
+	public boolean equals(Object o) {
 		if (!(o instanceof Order))
 			return false;
 		Order a = (Order)o;

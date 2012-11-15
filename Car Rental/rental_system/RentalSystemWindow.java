@@ -52,7 +52,7 @@ public class RentalSystemWindow extends JFrame {
 		return system.getCars(filterData);
 	}
 	
-	public void order(Car car, int days, String customer) {
+	public void order(Car car, int days, Customer customer) {
 		system.order(car, days, customer);
 		updateData();
 	}
@@ -78,6 +78,11 @@ public class RentalSystemWindow extends JFrame {
 	
 	public void remove(Car car) {
 		system.remove(car);
+		updateData();
+	}
+	
+	public void add(Customer customer) {
+		system.add(customer);
 		updateData();
 	}
 }

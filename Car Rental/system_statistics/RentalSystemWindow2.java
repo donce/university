@@ -23,7 +23,8 @@ public class RentalSystemWindow2 extends RentalSystemWindow {
 		}
 	}
 	
-	@Override protected void updateData() {
+	@Override
+	protected void updateData() {
 		super.updateData();
 		if (system instanceof RentalSystem2) {
 			rentTimeChart.update();

@@ -15,7 +15,7 @@ class CarsFrame extends JPanel {
 	private JPanel panelCars = new JPanel(new FlowLayout(FlowLayout.LEFT));
 //	private JPanel panelCars = new JPanel(new GridBagLayout());
 	private FilterData filterData = new FilterData();
-	private CustomerForm customerForm = new CustomerForm();
+	private CustomerForm customerForm;
 	private RentalSystemWindow systemWindow;
 	
 	//TODO: ScrollPane for car list(FlowLayout in JScrollPane?)
@@ -25,6 +25,7 @@ class CarsFrame extends JPanel {
 		JPanel leftPanel = new JPanel();
 		JPanel filterFrame = new FilterFrame(systemWindow);
 		filterFrame.setAlignmentX(Component.LEFT_ALIGNMENT);
+		customerForm = new CustomerForm(systemWindow.system);
 		customerForm.setAlignmentX(Component.LEFT_ALIGNMENT);
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
 		leftPanel.add(filterFrame);//TODO: top vertical align for filterPanel
@@ -48,14 +49,14 @@ class CarsFrame extends JPanel {
 			panelCars.add(new CarFrame(cars.get(i), systemWindow));
 		if (cars.size() == 0)
 			panelCars.add(new JLabel("No cars found."));
-		updateUI();
+		customerForm.update();
 	}
 	
 	public int getInputDays() {
 		return (int)customerForm.inputDays.getValue();
 	}
 	
-	public String getInputCustomer() {
-		return customerForm.inputCustomer.getText();
+	public Customer getInputCustomer() {
+		return ((Customer)customerForm.inputCustomer.getSelectedItem());
 	}
 }
