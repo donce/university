@@ -17,7 +17,6 @@ import javax.swing.table.DefaultTableModel;
 
 
 class OrdersFrame extends JPanel {
-//	private List<Order> orders;
 	private Collection<Order> orders;
 	private JTable table = new JTable();
 	private JComboBox<String> comboBox;
@@ -30,6 +29,19 @@ class OrdersFrame extends JPanel {
 			int nr = table.getSelectedRow();
 			if (nr != -1)
 				systemWindow.showInvoice((Order)orders.toArray()[nr]);
+		}
+	};
+	
+	private ActionListener filterListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			RentalSystem system = systemWindow.system;
+			int nr = comboBox.getSelectedIndex();
+			if (nr == 0)
+				orders = system.getOrders();
+			else
+				orders = system.getOrders(system.getCustomers().get(nr-1));
+			updateTable();
 		}
 	};
 	
@@ -60,19 +72,6 @@ class OrdersFrame extends JPanel {
 			stringC[i] = iter.next().toString();
 		
 		comboBox.setModel(new JComboBox<String>(stringC).getModel());
-//		((DefaultComboBoxModel<String>)comboBox.getModel()).
-		comboBox.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				RentalSystem system = systemWindow.system;
-				int nr = comboBox.getSelectedIndex();
-				if (nr == 0)
-					orders = system.getOrders();
-				else
-					orders = system.getOrders(system.getCustomers().get(nr-1));
-				updateTable();
-			}
-		});
 		
 		JButton button = new JButton("Return");
 		button.addActionListener(buttonListener);
@@ -84,9 +83,9 @@ class OrdersFrame extends JPanel {
 	public OrdersFrame(RentalSystemWindow systemWindow) {
 		super(new BorderLayout());
 		this.systemWindow = systemWindow;
-//		this.orders = systemWindow.system.getOrders();
 		add(new JScrollPane(table));
 		comboBox = new JComboBox<String>();
+		comboBox.addActionListener(filterListener);
 		add(comboBox, BorderLayout.PAGE_START);
 		update();
 	}

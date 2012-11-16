@@ -71,7 +71,7 @@ public class RentalSystem {
 		customerOrders.put(customer, new HashSet<Order>());
 	}
 	public void remove(Customer customer) {
-		if (customer == null)
+		if (customer == null || !customers.contains(customer) || !customerOrders.containsKey(customer))
 			throw new IllegalArgumentException();
 		customers.remove(customer);
 		customerOrders.remove(customer);
