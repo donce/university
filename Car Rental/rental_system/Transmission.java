@@ -1,7 +1,13 @@
 package rental_system;
 
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlEnumValue;
+
+@XmlEnum
 public enum Transmission {
+	@XmlEnumValue("manual")
 	MANUAL("Manual"),
+	@XmlEnumValue("automatic")
 	AUTOMATIC("Automatic");
 	
 	private String title;

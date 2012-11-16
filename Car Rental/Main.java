@@ -9,16 +9,16 @@ import rental_system.RentalSystem;
 import rental_system.RentalSystemWindow;
 import rental_system.Transmission;
 import rental_system.WheelSide;
-import system_statistics.RentalSystem2;
-import system_statistics.RentalSystemWindow2;
+import system_additions.RentalSystem3;
+import system_additions.RentalSystemWindow3;
 
 
 class Main {
 	
 	public static void main(String[] args) {
-		RentalSystem2 system = new RentalSystem2();
+		RentalSystem3 system = new RentalSystem3("cars.xml");
 		generate(system);
-		RentalSystemWindow window = new RentalSystemWindow2(system);
+		RentalSystemWindow window = new RentalSystemWindow3(system);
 		window.setVisible(true);
 	}
 

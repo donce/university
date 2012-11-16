@@ -61,10 +61,10 @@ class Order {
 		Locale locale = Locale.getDefault();
 		DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM, locale);
 		Calendar c = Calendar.getInstance();
-		c.setTime(date);
+		c.setTime(getDate());
 		c.add(Calendar.DAY_OF_MONTH, days);
 		return String.format("Order \"%s\" by %s, %d days for $%.2f [from %s to %s]",
-		car.getTitle(), customer, days, (float)price / 100, df.format(date), df.format(c.getTime()));
+		getCar().getTitle(), getCustomer(), getDays(), (float)getPrice() / 100, df.format(getDate()), df.format(c.getTime()));
 	}
 	
 	public void println() {
@@ -76,8 +76,8 @@ class Order {
 		if (!(o instanceof Order))
 			return false;
 		Order a = (Order)o;
-		return (car.equals(a.car)) && (days == a.days) && (price == a.price) &&
-				(customer.equals(a.customer)) && (date.equals(a.date));
+		return (getCar().equals(a.getCar())) && (getDays() == a.getDays()) && (getPrice() == a.getPrice()) &&
+				(getCustomer().equals(a.getCustomer())) && (getDate().equals(a.getDate()));
 	}
 	
 }

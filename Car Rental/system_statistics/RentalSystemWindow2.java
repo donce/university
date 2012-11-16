@@ -12,8 +12,8 @@ public class RentalSystemWindow2 extends RentalSystemWindow {
 		this(new RentalSystem2());
 	}
 
-	public RentalSystemWindow2(Object systemObject) {
-		super((RentalSystem)systemObject);
+	public RentalSystemWindow2(RentalSystem systemObject) {
+		super(systemObject);
 		if (systemObject instanceof RentalSystem2) {
 			RentalSystem2 system = (RentalSystem2)systemObject;
 			rentTimeChart = new PieChart(system);

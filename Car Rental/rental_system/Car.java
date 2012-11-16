@@ -1,7 +1,10 @@
 package rental_system;
 
-	
-public class Car {	
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+public class Car {
 	private String title;
 	private String color;
 	private int seats;
@@ -27,6 +30,7 @@ public class Car {
 	public String getTitle() {
 		return title;
 	}
+	@XmlAttribute
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -34,6 +38,7 @@ public class Car {
 	public String getColor() {
 		return color;
 	}
+	@XmlAttribute
 	public void setColor(String color) {
 		this.color = color;
 	}
@@ -41,6 +46,7 @@ public class Car {
 	public int getSeats() {
 		return seats;
 	}
+	@XmlAttribute
 	public void setSeats(int seats) {
 		this.seats = seats;
 	}
@@ -48,6 +54,7 @@ public class Car {
 	public WheelSide getWheelSide() {
 		return wheelSide;
 	}
+	@XmlAttribute(name="wheel_side")
 	public void setWheelSide(WheelSide wheelSide) {
 		this.wheelSide = wheelSide;
 	}
@@ -55,6 +62,7 @@ public class Car {
 	public Transmission getTransmission() {
 		return transmission;
 	}
+	@XmlAttribute
 	public void setTransmission(Transmission transmission) {
 		this.transmission = transmission;
 	}
@@ -62,6 +70,7 @@ public class Car {
 	public int getPrice() {
 		return price;
 	}
+	@XmlAttribute
 	public void setPrice(int price) {
 		this.price = price;
 	}
@@ -74,7 +83,8 @@ public class Car {
 	public String toString() {
 		return String.format(
 				"\"%s\", color: %s, seats: %d, wheel on: %s, transmission: %s, price: %s per day.",
-				title, color, seats, wheelSide.toString(), transmission.toString(), Money.toString(getPrice())
+				getTitle(), getColor(), getSeats(), getWheelSide().toString(),
+				getTransmission().toString(), Money.toString(getPrice())
 		);
 
 	}
@@ -88,7 +98,8 @@ public class Car {
 		if (!(o instanceof Car))
 			return false;
 		Car c = (Car)o;
-		return (title.equals(c.title)) && (color.equals(c.color)) && (seats == c.seats) && (wheelSide.equals(c.wheelSide)) &&
-				(transmission.equals(c.transmission)) && (price == c.price);
+		return (getTitle().equals(c.getTitle())) && (getColor().equals(c.getColor())) &&
+				(getSeats() == c.getSeats()) && (getWheelSide().equals(c.getWheelSide())) &&
+				(getTransmission().equals(c.getTransmission())) && (getPrice() == c.getPrice());
 	}
 }

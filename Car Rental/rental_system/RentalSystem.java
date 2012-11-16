@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+
 public class RentalSystem {
 	private List<Car> cars;
 	private List<Car> orderedCars;
@@ -86,18 +87,18 @@ public class RentalSystem {
 		int index = cars.indexOf(car);
 		if (index == -1)
 			throw new IllegalArgumentException("Car is not available.");
-		cars.remove(index);
+		getCars().remove(index);
 		orderedCars.add(car);
 		Order order = new Order(car, days, customer);
-		orders.add(order);
+		getOrders().add(order);
 		customerOrders.get(customer).add(order);
 	}
 	public void giveBack(Order order) {
 		if (order == null)
 			throw new IllegalArgumentException();
 		orderedCars.remove(order.getCar());
-		cars.add(order.getCar());
-		orders.remove(order);
+		getCars().add(order.getCar());
+		getOrders().remove(order);
 	}
 	public List<Order> getOrders() {
 		return orders;
@@ -110,8 +111,9 @@ public class RentalSystem {
 	
 	public void println() {
 		System.out.println("All cars:");
-		for (int i = 0; i < cars.size(); ++i) {
-			cars.get(i).println();
+		for (int i = 0; i < getCars().size(); ++i) {
+			getCars().get(i).println();
 		}
 	}
+	
 }
