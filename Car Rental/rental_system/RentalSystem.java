@@ -23,29 +23,19 @@ public class RentalSystem {
 	}
 	
 	public void add(Car car) {
+		if (car == null)
+			throw new IllegalArgumentException();
 		cars.add(car);
 	}
 	public void remove(Car car) {
+		if (car == null)
+			throw new IllegalArgumentException();
 		if (!cars.remove(car) && !orderedCars.remove(car))
 			throw new IllegalArgumentException("Car being removed does not exist.");
 	}
 	public List<Car> getCars() {
-		return cars;
+		return getCars(new FilterData());
 	}
-	
-	public void add(Customer customer) {
-		customers.add(customer);
-		customerOrders.put(customer, new HashSet<Order>());
-	}
-	public void remove(Customer customer) {
-		customers.remove(customer);
-		customerOrders.remove(customer);
-	}
-	public List<Customer> getCustomers() {
-		return customers;
-	}
-	
-
 	public List<Car> getCars(FilterData filterData) {
 		List<Car> list = new ArrayList<Car>();
 		for (int i = 0; i < cars.size(); ++i) {
@@ -58,11 +48,41 @@ public class RentalSystem {
 		return list;
 	}
 	
-	public List<Order> getOrders() {
-		return orders;
+	public void add(Customer customer) throws InvalidFormDataException {
+		if (customer == null)
+			throw new IllegalArgumentException();
+		
+		if (customer.getFirstName().isEmpty())
+			throw new InvalidFormDataException("First name", "cannot be empty");
+		if (customer.getLastName().isEmpty())
+			throw new InvalidFormDataException("Last name", "cannot be empty");
+		if (customer.getCountry().isEmpty())
+			throw new InvalidFormDataException("Country", "cannot be empty");
+		if (customer.getCity().isEmpty())
+			throw new InvalidFormDataException("City", "cannot be empty");
+		if (customer.getStreet().isEmpty())
+			throw new InvalidFormDataException("Street", "cannot be empty");
+		if (customer.getNumberA() <= 0)
+			throw new InvalidFormDataException("Number", "cannot be negative or zero");
+		if (customer.getNumberB() < 0)
+			throw new InvalidFormDataException("Number2", "cannot be negative");
+		
+		customers.add(customer);
+		customerOrders.put(customer, new HashSet<Order>());
 	}
-	
+	public void remove(Customer customer) {
+		if (customer == null)
+			throw new IllegalArgumentException();
+		customers.remove(customer);
+		customerOrders.remove(customer);
+	}
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+
 	public void order(Car car, int days, Customer customer) {
+		if (car == null || days <= 0 || customer == null)
+			throw new IllegalArgumentException();
 		int index = cars.indexOf(car);
 		if (index == -1)
 			throw new IllegalArgumentException("Car is not available.");
@@ -72,11 +92,20 @@ public class RentalSystem {
 		orders.add(order);
 		customerOrders.get(customer).add(order);
 	}
-	
 	public void giveBack(Order order) {
+		if (order == null)
+			throw new IllegalArgumentException();
 		orderedCars.remove(order.getCar());
 		cars.add(order.getCar());
 		orders.remove(order);
+	}
+	public List<Order> getOrders() {
+		return orders;
+	}
+	public Set<Order> getOrders(Customer customer) {
+		if (customer == null)
+			throw new IllegalArgumentException();
+		return customerOrders.get(customer);
 	}
 	
 	public void println() {

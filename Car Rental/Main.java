@@ -4,6 +4,7 @@ import java.util.Random;
 import rental_system.Car;
 import rental_system.Customer;
 import rental_system.FilterData;
+import rental_system.InvalidFormDataException;
 import rental_system.RentalSystem;
 import rental_system.RentalSystemWindow;
 import rental_system.Transmission;
@@ -23,16 +24,18 @@ class Main {
 
 	private static void generate(RentalSystem system) {
 		String[] cars = {"Golf", "BMW", "Audi", "Opel", "Mazda", "Ferrari"};
-		String[] firstNames = {"Donatas", "Marius", "Rytis", "Vidmantas", "Ugnė", "Karolis"};
-		String[] lastNames = {"Pavardenis", "Pavardžius", "Pavardienius", "Pavadžius", "Pavardėnaitė", "Pavardenis"};
+		String[] firstNames = {"Donatas", "Marius", "Rytis", "Vidmantas", "Karolis"};
+		String[] lastNames = {"Pavardenis", "Pavardžius", "Pavardienius", "Pavadžius", "Pavardenis"};
 		String[] colors = {"Red", "Blue", "Yellow", "Black", "White", "Green"};
 		int[] seats = {5, 2};
 		Random rand = new Random(System.currentTimeMillis());
 		
 		//customers
 		for (int i = 0; i < Math.min(firstNames.length, lastNames.length); ++i)
-			system.add(new Customer(firstNames[i], lastNames[i], "Lithuania", "Vilnius", "Naugarduko", 10, 2));
-		
+			try {
+				system.add(new Customer(firstNames[i], lastNames[i], "Lithuania", "Vilnius", "Naugarduko", 10, 2));
+			}
+			catch (InvalidFormDataException e) {}
 		//cars
 		for (int i = 0; i < 20; ++i) {
 			system.add(new Car(cars[rand.nextInt(cars.length)],

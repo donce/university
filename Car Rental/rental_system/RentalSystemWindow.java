@@ -3,6 +3,7 @@ package rental_system;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 //import javax.swing.UIManager;
 //import javax.swing.UnsupportedLookAndFeelException;
@@ -20,6 +21,8 @@ public class RentalSystemWindow extends JFrame {
 	
 	public RentalSystemWindow(RentalSystem system) {
 		super("Car rental system");
+		if (system == null)
+			throw new IllegalArgumentException();
 		this.system = system;
 		Car test0 = new Car("Nissan", "Red", 5, WheelSide.LEFT, Transmission.MANUAL, 10000);
 		system.add(test0);
@@ -34,8 +37,8 @@ public class RentalSystemWindow extends JFrame {
 		
 		pane = new JTabbedPane();
 		carsFrame = new CarsFrame(this);
-		pane.add("Search", carsFrame);
-		ordersFrame = new OrdersFrame(system.getOrders(), this);
+		pane.add("Cars", carsFrame);
+		ordersFrame = new OrdersFrame(this);
 		pane.add("Orders", ordersFrame);
 		add(pane);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,8 +85,15 @@ public class RentalSystemWindow extends JFrame {
 		updateData();
 	}
 	
-	public void add(Customer customer) {
-		system.add(customer);
+	public boolean add(Customer customer) {
+		try {
+			system.add(customer);
+		}
+		catch (InvalidFormDataException e) {
+			JOptionPane.showMessageDialog(null, e.getUserMessage());
+			return false;
+		}
 		updateData();
+		return true;
 	}
 }

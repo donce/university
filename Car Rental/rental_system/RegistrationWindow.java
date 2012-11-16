@@ -25,11 +25,12 @@ class RegistrationWindow extends JFrame {
 	private ActionListener registerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			systemWindow.add(new Customer(
+			if (systemWindow.add(new Customer(
 					inputFirstName.getText(), inputLastName.getText(),
 					inputCountry.getText(), inputCity.getText(), inputStreet.getText(),
 					(int)inputNumberA.getValue(), (int)inputNumberB.getValue()
-			));
+			)))
+				dispose();
 		}
 	};
 	
