@@ -12,7 +12,8 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 class RegistrationWindow extends JFrame {
-
+	private RentalSystemWindow systemWindow;
+	
 	private JTextField inputFirstName = new JTextField(20);
 	private JTextField inputLastName = new JTextField(20);
 	private JTextField inputCountry = new JTextField(20);
@@ -21,8 +22,20 @@ class RegistrationWindow extends JFrame {
 	private JSpinner inputNumberA = new JSpinner();
 	private JSpinner inputNumberB = new JSpinner();
 	
-	public RegistrationWindow() {
+	private ActionListener registerListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			systemWindow.add(new Customer(
+					inputFirstName.getText(), inputLastName.getText(),
+					inputCountry.getText(), inputCity.getText(), inputStreet.getText(),
+					(int)inputNumberA.getValue(), (int)inputNumberB.getValue()
+			));
+		}
+	};
+	
+	public RegistrationWindow(RentalSystemWindow systemWindow) {
 		super("Registration");
+		this.systemWindow = systemWindow;
 
 		GridBagLayout layout = new GridBagLayout();
 		GridBagConstraints ca = new GridBagConstraints();
@@ -58,15 +71,11 @@ class RegistrationWindow extends JFrame {
 		cb.gridx = 1;
 		
 		JButton buttonCreate = new JButton("Register");
-		buttonCreate.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
+		buttonCreate.addActionListener(registerListener);
 		add(buttonCreate, cb);
 		
 		pack();
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 }

@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -34,6 +35,7 @@ class FilterFrame extends JPanel {
 	
 	public FilterFrame(RentalSystemWindow systemWindow) {
 		this.systemWindow = systemWindow;
+		setBorder(BorderFactory.createTitledBorder("Filter"));
 		GridBagLayout layout = new GridBagLayout();
 		GridBagConstraints ca = new GridBagConstraints();
 		ca.gridx = 0;

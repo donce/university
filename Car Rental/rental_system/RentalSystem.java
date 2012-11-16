@@ -1,13 +1,19 @@
 package rental_system;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class RentalSystem {
 	private List<Car> cars;
 	private List<Car> orderedCars;
 	private List<Order> orders;
 	private List<Customer> customers;
+	
+	private Map<Customer, Set<Order>> customerOrders = new HashMap<Customer, Set<Order>>();
 	
 	public RentalSystem() {
 		cars = new ArrayList<Car>();
@@ -29,9 +35,11 @@ public class RentalSystem {
 	
 	public void add(Customer customer) {
 		customers.add(customer);
+		customerOrders.put(customer, new HashSet<Order>());
 	}
 	public void remove(Customer customer) {
 		customers.remove(customer);
+		customerOrders.remove(customer);
 	}
 	public List<Customer> getCustomers() {
 		return customers;
@@ -62,6 +70,7 @@ public class RentalSystem {
 		orderedCars.add(car);
 		Order order = new Order(car, days, customer);
 		orders.add(order);
+		customerOrders.get(customer).add(order);
 	}
 	
 	public void giveBack(Order order) {

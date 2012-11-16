@@ -7,13 +7,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 
-class CarForm extends JPanel {
+class CarForm extends JFrame {
 	private JTextField inputTitle;
 	private JTextField inputColor;
 	private JComboBox<String> inputWheel;
@@ -21,7 +21,7 @@ class CarForm extends JPanel {
 	private JSpinner inputSeats;
 	private JSpinner inputPrice;
 	
-	RentalSystemWindow systemWindow;
+	private RentalSystemWindow systemWindow;
 
 	private ActionListener buttonListener = new ActionListener() {
 		@Override
@@ -30,11 +30,13 @@ class CarForm extends JPanel {
 			title = inputTitle.getText();
 			color = inputColor.getText();
 			systemWindow.add((title.length() == 0) && (color.length() == 0) ? new Car() :new Car(title, color, (int)inputSeats.getValue(), WheelSide.values()[inputWheel.getSelectedIndex()], Transmission.values()[inputTransmission.getSelectedIndex()], (int)inputPrice.getValue()));
+			dispose();
 		}
 	};
 	
 	public CarForm(RentalSystemWindow systemWindow) {
-		super(new GridBagLayout());
+		super("Add car");
+		this.setLayout(new GridBagLayout());
 		this.systemWindow = systemWindow;
 		GridBagConstraints ca = new GridBagConstraints();
 		ca.gridx = 0;
@@ -65,5 +67,8 @@ class CarForm extends JPanel {
 		JButton button = new JButton("Add");
 		button.addActionListener(buttonListener);
 		this.add(button, cb);
+		pack();
+		setLocationRelativeTo(null);
+		setVisible(true);
 	}
 }

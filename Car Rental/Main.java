@@ -15,7 +15,6 @@ import system_statistics.RentalSystemWindow2;
 class Main {
 	
 	public static void main(String[] args) {
-		//TODO: change cars list to table?
 		RentalSystem2 system = new RentalSystem2();
 		generate(system);
 		RentalSystemWindow window = new RentalSystemWindow2(system);

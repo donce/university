@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -14,20 +15,28 @@ import javax.swing.JSpinner;
 
 
 class CustomerForm extends JPanel {
-	private RentalSystem system;
+	private RentalSystemWindow systemWindow;
 	public JSpinner inputDays;
 	public JComboBox<Customer> inputCustomer;
 	
 	public void update() {
-		inputCustomer.removeAll();
-		Iterator<Customer> it = system.getCustomers().iterator();
+		inputCustomer.removeAllItems();
+		Iterator<Customer> it = systemWindow.system.getCustomers().iterator();
 		while (it.hasNext())
 			inputCustomer.addItem(it.next());
 	}
 	
-	public CustomerForm(RentalSystem system) {
+	private ActionListener registerListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new RegistrationWindow(systemWindow);
+		}
+	};
+	
+	public CustomerForm(RentalSystemWindow systemWindow) {
 		super(new GridBagLayout());
-		this.system = system;
+		this.systemWindow = systemWindow;
+		setBorder(BorderFactory.createTitledBorder("Order information"));
 		GridBagConstraints ca = new GridBagConstraints();
 		ca.anchor = GridBagConstraints.WEST;
 		ca.ipadx = 10;
@@ -46,12 +55,7 @@ class CustomerForm extends JPanel {
 		this.add(inputCustomer, cb);
 		
 		JButton buttonAdd = new JButton("Add");
-		buttonAdd.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new RegistrationWindow();
-			}
-		});
+		buttonAdd.addActionListener(registerListener);
 		cb.gridx = 2;
 		cb.gridy = 1;
 		this.add(buttonAdd, cb);

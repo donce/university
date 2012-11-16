@@ -1,39 +1,85 @@
 package rental_system;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 
 
 class CarsFrame extends JPanel {
 	private List<Car> cars;
-	private JPanel panelCars = new JPanel(new FlowLayout(FlowLayout.LEFT));
-//	private JPanel panelCars = new JPanel(new GridBagLayout());
+	private JScrollPane tablePane;
+	private JTable tableCars;
 	private FilterData filterData = new FilterData();
 	private CustomerForm customerForm;
 	private RentalSystemWindow systemWindow;
+
+	private Car getSelectedCar() {
+		int row = tableCars.getSelectedRow();
+		return row == -1 ? null : cars.get(row);
+	}
+
+	private ActionListener orderListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			Car car = getSelectedCar();
+			if (car != null)
+				systemWindow.order(car, (int)customerForm.inputDays.getValue(),
+						(Customer)customerForm.inputCustomer.getSelectedItem());
+		}
+	};
 	
-	//TODO: ScrollPane for car list(FlowLayout in JScrollPane?)
+	private ActionListener addListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			new CarForm(systemWindow);
+		}
+	};
+
+	private ActionListener removeListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			Car car = getSelectedCar();
+			if (car != null)
+				systemWindow.remove(car);
+		}
+	};
+	
 	public CarsFrame(RentalSystemWindow systemWindow) {
-		super(new BorderLayout());
+		super(new GridBagLayout());
 		this.systemWindow = systemWindow;
-		JPanel leftPanel = new JPanel();
+		
 		JPanel filterFrame = new FilterFrame(systemWindow);
-		filterFrame.setAlignmentX(Component.LEFT_ALIGNMENT);
-		customerForm = new CustomerForm(systemWindow.system);
-		customerForm.setAlignmentX(Component.LEFT_ALIGNMENT);
-		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-		leftPanel.add(filterFrame);//TODO: top vertical align for filterPanel
-		leftPanel.add(customerForm);
-		add(leftPanel, BorderLayout.LINE_START);
-//		JScrollPane pane = new JScrollPane(panelCars, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		add(panelCars);
-//		add(pane);
+		customerForm = new CustomerForm(systemWindow);
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.WEST;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		add(filterFrame, c);
+		c.gridy = 1;
+		add(customerForm, c);
+		
+		JButton buttonOrder = new JButton("Order"), buttonAdd = new JButton("Add"), buttonRemove = new JButton("Remove");
+		buttonOrder.addActionListener(orderListener);
+		buttonAdd.addActionListener(addListener);
+		buttonRemove.addActionListener(removeListener);
+		JPanel panel = new JPanel();
+		panel.setBorder(BorderFactory.createTitledBorder("Car"));
+		panel.add(buttonOrder);
+		panel.add(buttonAdd);
+		panel.add(buttonRemove);
+		c.gridy = 2;
+		c.anchor = GridBagConstraints.SOUTH;
+		add(panel, c);
+		
 		update();
 	}
 
@@ -43,20 +89,32 @@ class CarsFrame extends JPanel {
 	}
 	
 	public void update() {
-		panelCars.removeAll();
 		cars = systemWindow.getCars(filterData);
-		for (int i = 0; i < cars.size(); ++i)
-			panelCars.add(new CarFrame(cars.get(i), systemWindow));
-		if (cars.size() == 0)
-			panelCars.add(new JLabel("No cars found."));
+		Object[][] data = new Object[cars.size()][6];
+		Iterator<Car> it = cars.iterator();
+		for (int i = 0; it.hasNext(); ++i) {
+			Car car = it.next();
+			data[i][0] = car.getTitle();
+			data[i][1] = car.getWheelSide();
+			data[i][2] = car.getTransmission();
+			data[i][3] = car.getSeats();
+			data[i][4] = car.getColor();
+			data[i][5] = Money.toString(car.getPrice());
+		}
+		tableCars = new JTable(data, new Object[] {"Title", "Wheel side", "Transmission", "Seats", "Color", "Price"});
+		
+		if (tablePane != null)
+			remove(tablePane);
+		tablePane = new JScrollPane();
+		tablePane.setViewportView(tableCars);
+
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridy = 0;
+		c.gridheight = 3;
+		c.weightx = 1;
+		c.weighty = 1;
+		c.fill = GridBagConstraints.BOTH;
+		add(tablePane, c);
 		customerForm.update();
-	}
-	
-	public int getInputDays() {
-		return (int)customerForm.inputDays.getValue();
-	}
-	
-	public Customer getInputCustomer() {
-		return ((Customer)customerForm.inputCustomer.getSelectedItem());
 	}
 }

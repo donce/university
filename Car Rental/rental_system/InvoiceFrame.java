@@ -57,6 +57,9 @@ class InvoiceFrame extends JFrame {
 		button = new JButton("OK");
 		button.addActionListener(buttonListener);
 		add(button, cb);
+		
 		pack();
+		setLocationRelativeTo(null);
+		setVisible(true);
 	}
 }

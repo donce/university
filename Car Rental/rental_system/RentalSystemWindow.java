@@ -37,10 +37,11 @@ public class RentalSystemWindow extends JFrame {
 		pane.add("Search", carsFrame);
 		ordersFrame = new OrdersFrame(system.getOrders(), this);
 		pane.add("Orders", ordersFrame);
-		pane.add("Cars", new CarForm(this));
 		add(pane);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		pack();
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
@@ -58,7 +59,7 @@ public class RentalSystemWindow extends JFrame {
 	}
 
 	public void showInvoice(Order order) {
-		new InvoiceFrame(order, this).setVisible(true);
+		new InvoiceFrame(order, this);
 	}
 	
 	protected void updateData() {
