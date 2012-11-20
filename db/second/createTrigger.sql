@@ -5,7 +5,6 @@
 --patikrinti, ar AK su gimimo data sutampa?
 
 --jei deliver, kad būtų adresas
-
 CREATE FUNCTION DeliveryAddress()
 RETURNS "trigger" AS $$
 BEGIN
@@ -19,6 +18,6 @@ $$
 LANGUAGE 'plpgsql';
 
 CREATE TRIGGER DeliveryAddress
-BEFORE INSERT ON Purchase
+BEFORE INSERT OR UPDATE OF Is_deliver ON Purchase
 	FOR EACH ROW
 		EXECUTE PROCEDURE DeliveryAddress();

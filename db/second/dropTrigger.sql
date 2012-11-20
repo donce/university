@@ -1,3 +1,3 @@
-DROP TRIGGER DeliveryAddressTrigger ON Purchase;
+DROP TRIGGER DeliveryAddress ON Purchase;
 DROP FUNCTION DeliveryAddress();
 
