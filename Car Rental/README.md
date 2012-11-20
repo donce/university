@@ -1,7 +1,7 @@
 Car Rental System
 =================
 
-Task for OOP (*Object-oriented programming*) course.
+Task for OOP ( *Object-oriented programming* ) course.
 
 Used libraries:
 
