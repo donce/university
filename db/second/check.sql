@@ -8,4 +8,5 @@ INSERT INTO Customer (First_name, Last_name, Identification_code) VALUES ('Jonas
 -- Triggers
 
 INSERT INTO Purchase (Computer, Customer, Is_deliver) VALUES (1, 1, TRUE);
+INSERT INTO Customer (First_name, Last_name) VALUES ('Antanas', 'Antanaitis');
 

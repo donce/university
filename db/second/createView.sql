@@ -1,5 +1,5 @@
 CREATE VIEW ComputerComponent AS
-	SELECT Computer as Computer_ID, Computer.Title as Computer, Component as Component_ID, Manufacturer as Component_Manufacturer, Component.Title as Component, Price*Count as Total_price
+	SELECT Computer as Computer_ID, Computer.Title as Computer, Component as Component_ID, Manufacturer as Component_Manufacturer, Component.Title as Component, Count, Price*Count as Total_price
 	FROM Belonging
 	JOIN Component ON (Belonging.Component = Component.ID)
 	JOIN Computer ON (Belonging.Computer = Computer.ID);

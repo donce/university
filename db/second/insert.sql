@@ -48,5 +48,5 @@ INSERT INTO Customer(First_name, Last_name, Identification_code, Birthday, Addre
 --Purchases
 INSERT INTO Purchase (Computer, Customer, Is_deliver) VALUES
 (1, 1, FALSE),
-(1, 2, TRUE),
-(2, 2, FALSE);
+(2, 2, TRUE),
+(3, 2, FALSE);

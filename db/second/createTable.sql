@@ -43,5 +43,6 @@ CREATE TABLE Purchase
 	Customer   SMALLINT NOT NULL REFERENCES Customer
 								 ON DELETE SET NULL,
 	Date       TIMESTAMP     NOT NULL DEFAULT now(),
+	Price      NUMERIC(10, 2),
 	Is_deliver BOOLEAN  NOT NULL DEFAULT FALSE
 );
