@@ -30,7 +30,7 @@ CREATE TABLE Customer
 	ID                  SERIAL      NOT NULL PRIMARY KEY,
 	First_name          VARCHAR(30) NOT NULL,
 	Last_name           VARCHAR(30) NOT NULL,
-	Identification_code CHAR(11),
+	Identification_code BIGINT CHECK (Identification_code >= 10000000000 AND Identification_code <= 69999999999),
 	Birthday            DATE,
 	Address             VARCHAR(100)
 );
@@ -42,6 +42,6 @@ CREATE TABLE Purchase
 								 ON DELETE SET NULL,
 	Customer   SMALLINT NOT NULL REFERENCES Customer
 								 ON DELETE SET NULL,
-	Date       TIMESTAMP     NOT NULL DEFAULT CURRENT_DATE,
+	Date       TIMESTAMP     NOT NULL DEFAULT now(),
 	Is_deliver BOOLEAN  NOT NULL DEFAULT FALSE
 );

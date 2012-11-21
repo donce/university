@@ -4,7 +4,7 @@
 --sukuriant asmens koda - sukurti data?
 --patikrinti, ar AK su gimimo data sutampa?
 
---jei deliver, kad būtų adresas
+-- Customer with deliver has address
 CREATE FUNCTION DeliveryAddress()
 RETURNS "trigger" AS $$
 BEGIN
@@ -21,3 +21,19 @@ CREATE TRIGGER DeliveryAddress
 BEFORE INSERT OR UPDATE OF Is_deliver ON Purchase
 	FOR EACH ROW
 		EXECUTE PROCEDURE DeliveryAddress();
+
+CREATE FUNCTION CustomerIdentificationCodeBirthday()
+RETURNS "trigger" AS $$
+BEGIN
+	IF NEW.Identification_code IS NOT NULL THEN
+		
+	END IF;
+	RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER CustomerIdentificationCodeBirthday
+BEFORE INSERT OR UPDATE OF Identification_code, Birthday ON Customer
+	FOR EACH ROW
+		EXECUTE PROCEDURE CustomerIdentificationCodeBirthday();
