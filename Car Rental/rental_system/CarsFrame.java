@@ -13,9 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import system_additions.RentalSystem3;
+import system_additions.RentalSystemWindow3;
+import system_additions.SortFrame;
 
 
-class CarsFrame extends JPanel {
+public class CarsFrame extends JPanel {
 	private List<Car> cars;
 	private JScrollPane tablePane;
 	private JTable tableCars;
@@ -54,29 +57,49 @@ class CarsFrame extends JPanel {
 		}
 	};
 	
+	private ActionListener cloneListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			Car car = getSelectedCar();
+			if (car != null)
+				systemWindow.add(car.clone());
+		}
+	};
+	
 	public CarsFrame(RentalSystemWindow systemWindow) {
 		super(new GridBagLayout());
 		this.systemWindow = systemWindow;
 		
 		JPanel filterFrame = new FilterFrame(systemWindow);
 		customerForm = new CustomerForm(systemWindow);
-		GridBagConstraints c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.WEST;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		add(filterFrame, c);
-		c.gridy = 1;
-		add(customerForm, c);
 		
-		JButton buttonOrder = new JButton("Order"), buttonAdd = new JButton("Add"), buttonRemove = new JButton("Remove");
+		JButton buttonOrder = new JButton("Order"),
+				buttonAdd = new JButton("Add"),
+				buttonRemove = new JButton("Remove"),
+				buttonClone = new JButton("Dublicate");
 		buttonOrder.addActionListener(orderListener);
 		buttonAdd.addActionListener(addListener);
 		buttonRemove.addActionListener(removeListener);
+		buttonClone.addActionListener(cloneListener);
 		JPanel panel = new JPanel();
 		panel.setBorder(BorderFactory.createTitledBorder("Car"));
 		panel.add(buttonOrder);
 		panel.add(buttonAdd);
 		panel.add(buttonRemove);
-		c.gridy = 2;
+		panel.add(buttonClone);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.WEST;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weighty = 0.1;
+		c.gridx = 0;
+		c.anchor = GridBagConstraints.NORTH;
+		
+		add(filterFrame, c);
+		if (systemWindow instanceof RentalSystemWindow3 && systemWindow.system instanceof RentalSystem3)
+			add(new SortFrame((RentalSystemWindow3)systemWindow), c);
+		add(customerForm, c);
+		
 		c.anchor = GridBagConstraints.SOUTH;
 		add(panel, c);
 		
@@ -110,7 +133,7 @@ class CarsFrame extends JPanel {
 
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridy = 0;
-		c.gridheight = 3;
+		c.gridheight = 4;
 		c.weightx = 1;
 		c.weighty = 1;
 		c.fill = GridBagConstraints.BOTH;

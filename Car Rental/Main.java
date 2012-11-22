@@ -16,7 +16,7 @@ import system_additions.RentalSystemWindow3;
 class Main {
 	
 	public static void main(String[] args) {
-		RentalSystem3 system = new RentalSystem3("cars.xml");
+		RentalSystem system = new RentalSystem3("cars.xml");
 		generate(system);
 		RentalSystemWindow window = new RentalSystemWindow3(system);
 		window.setVisible(true);

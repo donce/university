@@ -31,4 +31,5 @@ public class RentalSystemWindow2 extends RentalSystemWindow {
 			myBarChart.update();
 		}
 	}
+	
 }

@@ -24,10 +24,6 @@ public class RentalSystemWindow extends JFrame {
 		if (system == null)
 			throw new IllegalArgumentException();
 		this.system = system;
-		Car test0 = new Car("Nissan", "Red", 5, WheelSide.LEFT, Transmission.MANUAL, 10000);
-		system.add(test0);
-		Car test = new Car("Ford", "Blue", 5, WheelSide.RIGHT, Transmission.MANUAL, 12000);
-		system.add(test);
 //		try {
 //			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //		} catch (ClassNotFoundException | InstantiationException
@@ -96,4 +92,5 @@ public class RentalSystemWindow extends JFrame {
 		updateData();
 		return true;
 	}
+	
 }

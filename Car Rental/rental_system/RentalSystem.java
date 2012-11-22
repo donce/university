@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class RentalSystem {
-	private List<Car> cars;
+	protected List<Car> cars;
 	private List<Car> orderedCars;
 	private List<Order> orders;
 	private List<Customer> customers;

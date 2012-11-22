@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Car {
+public class Car implements Comparable<Car> {
 	private String title;
 	private String color;
 	private int seats;
@@ -102,4 +102,15 @@ public class Car {
 				(getSeats() == c.getSeats()) && (getWheelSide().equals(c.getWheelSide())) &&
 				(getTransmission().equals(c.getTransmission())) && (getPrice() == c.getPrice());
 	}
+	
+	@Override
+	public Car clone() {
+		return new Car(getTitle(), getColor(), getSeats(), getWheelSide(), getTransmission(), getPrice());
+	}
+
+	@Override
+	public int compareTo(Car car) {
+		return getTitle().compareTo(car.getTitle());
+	}
+	
 }

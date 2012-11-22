@@ -61,8 +61,6 @@ class FilterFrame extends JPanel {
 
 		JButton filterButton = new JButton("Filter");
 		filterButton.addActionListener(buttonListener);
-//		c.gridy = 4;
-//		c.gridx = 1;
 		this.add(filterButton, cb);
 	}
 }

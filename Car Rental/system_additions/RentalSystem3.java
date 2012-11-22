@@ -2,6 +2,8 @@ package system_additions;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBContext;
@@ -10,6 +12,15 @@ import javax.xml.bind.Unmarshaller;
 
 import rental_system.Car;
 import system_statistics.RentalSystem2;
+
+class CarPriceComparator implements Comparator<Car> {
+
+	@Override
+	public int compare(Car c1, Car c2) {
+		int p1 = c1.getPrice(), p2 = c2.getPrice();
+		return (p1 > p2 ? 1 : (p1 < p2 ? -1 : 0));
+	}
+}
 
 public class RentalSystem3 extends RentalSystem2 {
 	
@@ -46,5 +57,12 @@ public class RentalSystem3 extends RentalSystem2 {
 		car.println();
 		return true;
 	}
-
+	
+	public void sortByTitle() {
+		Collections.sort(cars);
+	}
+	
+	public void sortByPrice() {
+		Collections.sort(cars, new CarPriceComparator());
+	}
 }
