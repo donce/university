@@ -1,6 +1,6 @@
 package rental_system;
 
-public class Customer {
+public class Customer implements Cloneable {
 	String firstName;
 	String lastName;
 	
@@ -76,10 +76,13 @@ public class Customer {
 		setNumberB(numberB);
 	}
 	
-	//TODO: empty constructor?
-	
 	@Override
 	public String toString() {
 		return getFirstName() + " " + getLastName();
+	}
+
+	@Override
+	public Customer clone() throws CloneNotSupportedException {
+		return (Customer)super.clone();
 	}
 }

@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Car implements Comparable<Car> {
+public class Car implements Comparable<Car>, Cloneable {
 	private String title;
 	private String color;
 	private int seats;
@@ -104,8 +104,8 @@ public class Car implements Comparable<Car> {
 	}
 	
 	@Override
-	public Car clone() {
-		return new Car(getTitle(), getColor(), getSeats(), getWheelSide(), getTransmission(), getPrice());
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
 
 	@Override

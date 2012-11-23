@@ -62,7 +62,11 @@ public class CarsFrame extends JPanel {
 		public void actionPerformed(ActionEvent arg0) {
 			Car car = getSelectedCar();
 			if (car != null)
-				systemWindow.add(car.clone());
+				try {
+					systemWindow.add((Car)car.clone());
+				} catch (CloneNotSupportedException e) {
+					System.out.println("Car clone not implemented.");
+				}
 		}
 	};
 	

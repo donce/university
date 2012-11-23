@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 
-class Order {
+class Order implements Cloneable {
 	private Car car;
 	private int days;
 	private int price;
@@ -79,5 +79,13 @@ class Order {
 		return (getCar().equals(a.getCar())) && (getDays() == a.getDays()) && (getPrice() == a.getPrice()) &&
 				(getCustomer().equals(a.getCustomer())) && (getDate().equals(a.getDate()));
 	}
-	
+
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		Order o = (Order)super.clone();
+		o.setCustomer(customer.clone());
+		o.setCar((Car)car.clone());
+		o.setDate((Date)date.clone());
+		return o;
+	}
 }
