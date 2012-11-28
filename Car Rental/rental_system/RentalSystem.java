@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 
@@ -115,6 +116,28 @@ public class RentalSystem implements Serializable {
 		for (int i = 0; i < getCars().size(); ++i) {
 			getCars().get(i).println();
 		}
+	}
+
+	public void generate() {
+		String[] firstNames = {"Donatas", "Marius", "Rytis", "Vidmantas", "Karolis"};
+		String[] lastNames = {"Pavardenis", "Pavardžius", "Pavardienius", "Pavadžius", "Pavardenis"};
+		Random rand = new Random(System.currentTimeMillis());
+		
+		//customers
+		for (int i = 0; i < Math.min(firstNames.length, lastNames.length); ++i)
+			try {
+				add(new Customer(firstNames[i], lastNames[i], "Lithuania", "Vilnius", "Naugarduko", 10, 2));
+			}
+			catch (InvalidFormDataException e) {}
+		
+		List<Customer> customers = getCustomers();
+		//orders
+		for (int i = 0; i < 10; ++i) {
+			order(getCars(new FilterData()).get(rand.nextInt(getCars(new FilterData()).size())),
+					1+rand.nextInt(14),
+					customers.get(rand.nextInt(customers.size())));
+		}
+		
 	}
 	
 }

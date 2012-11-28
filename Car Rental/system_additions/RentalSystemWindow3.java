@@ -20,9 +20,15 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 		super(system);
 		if (system instanceof RentalSystem3) {
 			JPanel panel = new JPanel();
-			JButton buttonXML = new JButton("Add cars from XML");
+			
+			JButton buttonXML = new JButton("Load cars from XML");
 			buttonXML.addActionListener(actionXML);
 			panel.add(buttonXML);
+			
+			JButton buttonGenerate = new JButton("Generate data");
+			buttonGenerate.addActionListener(actionGenerate);
+			panel.add(buttonGenerate);
+			
 			pane.add(panel, "Actions");
 		}
 	}
@@ -31,10 +37,22 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if (((RentalSystem3)system).loadCars("cars.xml"))
+			if (((RentalSystem3)system).loadCars("cars.xml")) {
+				updateData();
 				JOptionPane.showMessageDialog(null, "Cars were added successfully.");
+			}
 			else
 				JOptionPane.showMessageDialog(null, "Failed to load XML file!");
+		}
+	};
+	
+	private ActionListener actionGenerate = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			system.generate();
+			updateData();
+			JOptionPane.showMessageDialog(null, "Random data added successfully.");
 		}
 	};
 	
