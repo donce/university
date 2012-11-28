@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
+
 //import javax.swing.UIManager;
 //import javax.swing.UnsupportedLookAndFeelException;
 
@@ -21,6 +22,8 @@ public class RentalSystemWindow extends JFrame {
 	public CarsFrame carsFrame;
 	private OrdersFrame ordersFrame;
 	protected JTabbedPane pane;
+	
+	private final static String DATA_FILE = "data";
 	
 	public RentalSystemWindow() {
 		this(new RentalSystem());
@@ -57,12 +60,19 @@ public class RentalSystemWindow extends JFrame {
 		
 		@Override
 		public void windowOpened(WindowEvent arg0) {
-			loadSystem();
+			try {
+				loadSystem();
+			} catch (Exception e) {
+			}
 		}
 
 		@Override
 		public void windowClosing(WindowEvent arg0) {
-			saveSystem();
+			try {
+				saveSystem();
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null, "Can't save system state!");
+			}
 		}
 		
 		@Override
@@ -130,24 +140,18 @@ public class RentalSystemWindow extends JFrame {
 		return true;
 	}
 	
-	private void saveSystem() {
-		try {
-			ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("data"));
-			stream.writeObject(system);
-			stream.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	private void saveSystem() throws IOException {
+		FileOutputStream fileStream = new FileOutputStream(DATA_FILE);
+		ObjectOutputStream stream = new ObjectOutputStream(fileStream);
+		stream.writeObject(system);
+		stream.close();
 	}
 	
-	private void loadSystem() {
-		try {
-			ObjectInputStream stream = new ObjectInputStream(new FileInputStream("data"));
-			system = (RentalSystem)stream.readObject();
-			stream.close();
-		} catch (IOException|ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+	private void loadSystem() throws IOException, ClassNotFoundException {
+		FileInputStream fileStream = new FileInputStream(DATA_FILE);
+		ObjectInputStream stream = new ObjectInputStream(fileStream);
+		system = (RentalSystem)stream.readObject();
+		stream.close();
 		updateData();
 	}
 }
