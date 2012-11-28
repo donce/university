@@ -5,7 +5,6 @@ import system_statistics.RentalSystemWindow2;
 
 public class RentalSystemWindow3 extends RentalSystemWindow2 {
 	
-	
 	public RentalSystemWindow3() {
 		this(new RentalSystem3());
 	}

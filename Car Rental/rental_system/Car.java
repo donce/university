@@ -1,10 +1,12 @@
 package rental_system;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class Car implements Comparable<Car>, Cloneable {
+public class Car implements Comparable<Car>, Cloneable, Serializable {
 	private String title;
 	private String color;
 	private int seats;

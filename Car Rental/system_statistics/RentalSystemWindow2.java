@@ -26,7 +26,7 @@ public class RentalSystemWindow2 extends RentalSystemWindow {
 	@Override
 	protected void updateData() {
 		super.updateData();
-		if (system instanceof RentalSystem2) {
+		if (system instanceof RentalSystem2 && rentTimeChart != null) {
 			rentTimeChart.update();
 			myBarChart.update();
 		}

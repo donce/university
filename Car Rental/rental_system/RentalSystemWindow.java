@@ -1,5 +1,12 @@
 package rental_system;
 
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -30,6 +37,9 @@ public class RentalSystemWindow extends JFrame {
 //				| IllegalAccessException | UnsupportedLookAndFeelException e1) {
 //			e1.printStackTrace();
 //		}
+
+		addWindowListener(windowListener);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		pane = new JTabbedPane();
 		carsFrame = new CarsFrame(this);
@@ -37,11 +47,38 @@ public class RentalSystemWindow extends JFrame {
 		ordersFrame = new OrdersFrame(this);
 		pane.add("Orders", ordersFrame);
 		add(pane);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
+	}
+
+	private WindowListener windowListener = new WindowListener() {
+		
+		@Override
+		public void windowOpened(WindowEvent arg0) {
+			loadSystem();
+		}
+
+		@Override
+		public void windowClosing(WindowEvent arg0) {
+			saveSystem();
+		}
+		
+		@Override
+		public void windowIconified(WindowEvent arg0) {}
+		@Override
+		public void windowDeiconified(WindowEvent arg0) {}
+		@Override
+		public void windowDeactivated(WindowEvent arg0) {}
+		@Override
+		public void windowClosed(WindowEvent arg0) {}
+		@Override
+		public void windowActivated(WindowEvent arg0) {}
+	};
+
+	public RentalSystem getSystem() {
+		return system;
 	}
 	
 	public void filter(FilterData filterData) {
@@ -93,4 +130,24 @@ public class RentalSystemWindow extends JFrame {
 		return true;
 	}
 	
+	private void saveSystem() {
+		try {
+			ObjectOutputStream stream = new ObjectOutputStream(new FileOutputStream("data"));
+			stream.writeObject(system);
+			stream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void loadSystem() {
+		try {
+			ObjectInputStream stream = new ObjectInputStream(new FileInputStream("data"));
+			system = (RentalSystem)stream.readObject();
+			stream.close();
+		} catch (IOException|ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		updateData();
+	}
 }

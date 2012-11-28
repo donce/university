@@ -1,6 +1,8 @@
 package rental_system;
 
-public class Customer implements Cloneable {
+import java.io.Serializable;
+
+public class Customer implements Cloneable, Serializable {
 	String firstName;
 	String lastName;
 	

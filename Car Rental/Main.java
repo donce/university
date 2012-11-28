@@ -1,24 +1,13 @@
-import java.util.List;
-import java.util.Random;
-
-import rental_system.Customer;
-import rental_system.FilterData;
-import rental_system.InvalidFormDataException;
-import rental_system.RentalSystem;
-import rental_system.RentalSystemWindow;
-import system_additions.RentalSystem3;
 import system_additions.RentalSystemWindow3;
 
 
 class Main {
 	
 	public static void main(String[] args) {
-		RentalSystem system = new RentalSystem3("cars.xml");
-		generate(system);
-		RentalSystemWindow window = new RentalSystemWindow3(system);
-		window.setVisible(true);
+		new RentalSystemWindow3().setVisible(true);
 	}
 
+	/*
 	private static void generate(RentalSystem system) {
 		String[] firstNames = {"Donatas", "Marius", "Rytis", "Vidmantas", "Karolis"};
 		String[] lastNames = {"Pavardenis", "Pavardžius", "Pavardienius", "Pavadžius", "Pavardenis"};
@@ -40,5 +29,6 @@ class Main {
 		}
 		
 	}
+	*/
 	
 }

@@ -1,12 +1,13 @@
 package rental_system;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 
-class Order implements Cloneable {
+class Order implements Cloneable, Serializable {
 	private Car car;
 	private int days;
 	private int price;

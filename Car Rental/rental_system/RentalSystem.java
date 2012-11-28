@@ -1,5 +1,6 @@
 package rental_system;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 
-public class RentalSystem {
+public class RentalSystem implements Serializable {
 	protected List<Car> cars;
 	private List<Car> orderedCars;
 	private List<Order> orders;
