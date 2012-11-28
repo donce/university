@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.swing.JOptionPane;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -30,18 +29,6 @@ public class RentalSystem3 extends RentalSystem2 {
 			int p1 = c1.getPrice(), p2 = c2.getPrice();
 			return (p1 > p2 ? 1 : (p1 < p2 ? -1 : 0));
 		}
-	}
-	
-
-	public RentalSystem3() {
-		this(null);
-	}
-	
-	public RentalSystem3(String carsFile) {
-		super();
-		if (carsFile != null && !loadCars(carsFile))
-			JOptionPane.showMessageDialog(null, "Failed to load XML file!");
-				
 	}
 	
 	public boolean loadCars(String filename) {
