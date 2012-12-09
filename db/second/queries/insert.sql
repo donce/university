@@ -1,6 +1,6 @@
 --Components
 INSERT INTO Component VALUES
-(DEFAULT, 'Core i7', 'Intel', 500.00),
+(DEFAULT, 'Core i7', 'Intel', 499.99),
 (DEFAULT, 'Core i5', 'Intel', 300.00),
 (DEFAULT, 'Athlon II', 'AMD', 150.00),
 

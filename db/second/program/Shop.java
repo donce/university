@@ -32,8 +32,7 @@ public class Shop {
 	private ResultSet executeQuery(String query) {
 		try {
 			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("asd");
-			statement.close();
+			ResultSet rs = statement.executeQuery(query);
 			return rs;
 			
 		} catch (SQLException e) {
@@ -66,6 +65,22 @@ public class Shop {
 	
 	public void addComputer(String title, String description, int additionalPrice) {
 		
+	}
+	
+	private void printComponents() throws SQLException {
+		Table table = new Table(new String[] {"ID", "Title", "Manufacturer", "Price"});
+		ResultSet rs = executeQuery("SELECT id, title, manufacturer, price FROM Component;");
+		while (rs.next())
+			table.addRow(new String[] {Integer.toString(rs.getInt(1)), rs.getString(2), rs.getString(3), rs.getBigDecimal(4).toString()});
+		table.print();
+	}
+	
+	private void printComputers() throws SQLException {
+		Table table = new Table(new String[] {"ID", "Title", "Description", "Price"});
+		ResultSet rs = executeQuery("SELECT id, title, description, price FROM ComputerPrice;");
+		while (rs.next())
+			table.addRow(new String[] {Integer.toString(rs.getInt(1)), rs.getString(2), rs.getString(3), rs.getBigDecimal(4).toString()});
+		table.print();
 	}
 	
 }

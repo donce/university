@@ -33,9 +33,8 @@ public class Main {
 	private static Connection getConnection() {
 		Connection connection = null;
 		try {
-			System.out.println("a");
-			DriverManager.getConnection("");
-//			DriverManager.getConnection("jdbc:postgresql://pgsql.mif/biblio", "stud", "stud");
+			connection = DriverManager.getConnection("jdbc:postgresql://localhost/studentu", "doku9900", "testinispass");
+//			connection = DriverManager.getConnection("jdbc:postgresql://pgsql.mif/biblio", "stud", "stud");
 		} catch (SQLException e) {
 			System.out.println("Can't connect to server!");
 			return null;
@@ -63,7 +62,7 @@ public class Main {
 	public static void main(String[] args) {
 		loadDriver();
 		Connection connection = getConnection();
-//		if (connection != null) {
+		if (connection != null) {
 			Shop shop = new Shop(connection);
 			InputStreamReader streamReader = new InputStreamReader(System.in);
 			bufferedReader = new BufferedReader(streamReader);
@@ -123,6 +122,6 @@ public class Main {
 //				System.out.println("Error while closing connection!");
 //				e.printStackTrace();
 //			}
-//		}
+		}
 	}
 }
