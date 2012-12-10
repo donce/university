@@ -20,6 +20,8 @@ public class Main {
 		"Buy",
 		};
 	
+	private static final String DB_USER = "doku9900";
+	
 	private static void loadDriver() {
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -33,8 +35,7 @@ public class Main {
 	private static Connection getConnection() {
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection("jdbc:postgresql://localhost/studentu", "doku9900", "testinispass");
-//			connection = DriverManager.getConnection("jdbc:postgresql://pgsql.mif/biblio", "stud", "stud");
+			connection = DriverManager.getConnection("jdbc:postgresql://localhost/studentu", DB_USER, DB_USER);
 		} catch (SQLException e) {
 			System.out.println("Can't connect to server!");
 			return null;
