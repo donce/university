@@ -14,23 +14,17 @@ public class RentalSystem2 extends RentalSystem {
 	private List<Integer> orderedDays;
 	
 	public RentalSystem2() {
-		System.out.println("create");
 		orderedDays = new ArrayList<Integer>();
 	}
 	
 	@Override
 	public void order(Car car, int days, Customer customer) {
 		super.order(car, days, customer);
-		System.out.println(car.getTitle());
 		orderedDays.add(days);
-		System.out.println("add new");
-		System.out.println(orderedDays.size());
 	}
 	
 	public Set<Map.Entry<Integer, Integer>> getRentTimeStatistics() {
 		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
-		System.out.println("collect");
-		System.out.println(orderedDays.size());
 		for (int i = 0; i < orderedDays.size(); ++i) {
 			Integer now = orderedDays.get(i);
 			Integer value = map.get(now);

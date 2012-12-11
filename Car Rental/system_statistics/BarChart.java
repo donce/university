@@ -24,8 +24,6 @@ public class BarChart extends ChartPanel {
 	
 	public void update() {
 		Set<Map.Entry<String, Integer>> set = ((RentalSystem2)window.system).getCarStatistics();
-		System.out.println("statistics");
-		System.out.println(set.size());
 		CategoryDataset dataset = new DefaultCategoryDataset();
 		if (set != null) {
 			Iterator<Map.Entry<String, Integer>> it = set.iterator();

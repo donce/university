@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <orders>
 	<order>
-		<customer>
-			<firstname>Donatas</firstname>
-			<lastname>Pavardenis</lastname>
-		</customer>
-		<car>
-			
-		</car>
+		<customer>Donatas Pavardenis</customer>
+		<car>ABC000</car>
+		<days>2</days>
 	</order>
 </orders>

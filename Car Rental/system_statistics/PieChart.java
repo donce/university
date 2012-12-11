@@ -24,7 +24,6 @@ public class PieChart extends ChartPanel {
 
 	public void update() {
 		Set<Map.Entry<Integer, Integer>> set = ((RentalSystem2)window.system).getRentTimeStatistics();
-		System.out.println(set.size());
 		PieDataset dataset = new DefaultPieDataset();
 		if (set != null) {
 			Iterator<Map.Entry<Integer, Integer>> it = set.iterator();

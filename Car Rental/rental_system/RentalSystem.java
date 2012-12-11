@@ -17,7 +17,8 @@ public class RentalSystem implements Serializable {
 	private List<Customer> customers;
 	
 	private Map<Customer, Set<Order>> customerOrders = new HashMap<Customer, Set<Order>>();
-	private Set<String> carIds = new HashSet<String>();
+	//private Set<String> carIds = new HashSet<String>();
+	private Map<String, Car> carIds = new HashMap<>();
 	
 	public RentalSystem() {
 		cars = new ArrayList<Car>();
@@ -26,19 +27,31 @@ public class RentalSystem implements Serializable {
 		customers = new ArrayList<Customer>();
 	}
 	
+	public Customer getCustomer(String firstName, String lastName) {
+		for (Customer c : customers)
+			if (c.getFirstName().equals(firstName) && c.getLastName().equals(lastName))
+				return c;
+		return null;
+	}
+	
+	public Car getCar(String id) {
+		return carIds.get(id);
+	}
+	
 	public void add(Car car) {
 		if (car == null)
 			throw new NullPointerException();
-		if (carIds.contains(car.getId()))
+		if (carIds.containsKey(car.getId()))
 			throw new IllegalArgumentException();
 		cars.add(car);
-		carIds.add(car.getId());
+		carIds.put(car.getId(), car);
 	}
 	public void remove(Car car) {
 		if (car == null)
 			throw new IllegalArgumentException();
 		if (!cars.remove(car) && !orderedCars.remove(car))
 			throw new IllegalArgumentException("Car being removed does not exist.");
+		carIds.remove(car.getId());
 	}
 	public List<Car> getCars() {
 		return getCars(new FilterData());

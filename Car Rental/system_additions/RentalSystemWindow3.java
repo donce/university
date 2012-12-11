@@ -20,12 +20,13 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import orders.Consumer;
+import orders.Order;
+import orders.Orders;
+import orders.Producer;
+
 import rental_system.RentalSystem;
 import system_statistics.RentalSystemWindow2;
-import threads.Consumer;
-import threads.Order;
-import threads.Orders;
-import threads.Producer;
 
 public class RentalSystemWindow3 extends RentalSystemWindow2 {
 	private final static String DATA_FILE = "data";
@@ -164,7 +165,6 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 	};
 
 	private void saveSystem() throws IOException {
-		System.out.println("save");
 		FileOutputStream fileStream = new FileOutputStream(DATA_FILE);
 		ObjectOutputStream stream = new ObjectOutputStream(fileStream);
 		stream.writeObject(system);
@@ -172,7 +172,6 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 	}
 	
 	private void loadSystem() throws IOException, ClassNotFoundException {
-		System.out.println("load");
 		FileInputStream fileStream = new FileInputStream(DATA_FILE);
 		ObjectInputStream stream = new ObjectInputStream(fileStream);
 		system = (RentalSystem)stream.readObject();

@@ -3,14 +3,14 @@ package rental_system;
 import java.io.Serializable;
 
 public class Customer implements Cloneable, Serializable {
-	String firstName;
-	String lastName;
+	private String firstName;
+	private String lastName;
 	
-	String country;
-	String city;
-	String street;
-	int numberA;
-	int numberB;
+	private String country;
+	private String city;
+	private String street;
+	private int numberA;
+	private int numberB;
 	
 	public String getFirstName() {
 		return firstName;
