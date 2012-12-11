@@ -16,6 +16,7 @@ public enum WheelSide {
 		this.title = title;
 	}
 
+	@Override
 	public String toString() {
 		return title;
 	}

@@ -16,6 +16,7 @@ public enum Transmission {
 		this.title = title;
 	}
 	
+	@Override
 	public String toString() {
 		return title;
 	}

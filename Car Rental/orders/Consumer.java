@@ -48,14 +48,8 @@ public class Consumer extends Thread {
 				
 				window.order(car, order.getDays(), customer);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("Consumer was interrupted");
 			}
-			
-//			Car car = order.getCar();
-//			Customer customer = order.getCustomer();
-			
-//			window.order(car, order.getDays(), customer);
 		}
 	}
 	

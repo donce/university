@@ -41,7 +41,7 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 			loadSystem();
 		} catch (FileNotFoundException e) {
 		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Error loading system from file.");
 			e.printStackTrace();
 		}
 		if (system instanceof RentalSystem3) {
