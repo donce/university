@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Car implements Comparable<Car>, Cloneable, Serializable {
+	private String id;
 	private String title;
 	private String color;
 	private int seats;
@@ -17,16 +18,25 @@ public class Car implements Comparable<Car>, Cloneable, Serializable {
 	private final int wheels = 4;
 	
 	public Car() {
-		this("Golf", "black", 5, WheelSide.LEFT, Transmission.MANUAL, 5000);
+		this("AAA000", "Golf", "black", 5, WheelSide.LEFT, Transmission.MANUAL, 5000);
 	}
 	
-	public Car(String title, String color, int seats, WheelSide wheelSide, Transmission transmission, int price) {
+	public Car(String id, String title, String color, int seats, WheelSide wheelSide, Transmission transmission, int price) {
+		setId(id);
 		setTitle(title);
 		setColor(color);
 		setSeats(seats);
 		setWheelSide(wheelSide);
 		setTransmission(transmission);
 		setPrice(price);
+	}
+
+	public String getId() {
+		return id;
+	}
+	@XmlAttribute
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	public String getTitle() {

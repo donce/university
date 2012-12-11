@@ -1,29 +1,24 @@
 package rental_system;
 
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
+import Frame.CarsFrame;
+import Frame.OrdersFrame;
+import forms.InvoiceFrame;
+
 //import javax.swing.UIManager;
 //import javax.swing.UnsupportedLookAndFeelException;
 
 
 public class RentalSystemWindow extends JFrame {
-	protected RentalSystem system;
+	public RentalSystem system;
 	public CarsFrame carsFrame;
 	private OrdersFrame ordersFrame;
 	protected JTabbedPane pane;
-	
-	private final static String DATA_FILE = "data";
 	
 	public RentalSystemWindow() {
 		this(new RentalSystem());
@@ -41,7 +36,6 @@ public class RentalSystemWindow extends JFrame {
 //			e1.printStackTrace();
 //		}
 
-		addWindowListener(windowListener);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		pane = new JTabbedPane();
@@ -55,37 +49,6 @@ public class RentalSystemWindow extends JFrame {
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
-
-	private WindowListener windowListener = new WindowListener() {
-		
-		@Override
-		public void windowOpened(WindowEvent arg0) {
-			try {
-				loadSystem();
-			} catch (Exception e) {
-			}
-		}
-
-		@Override
-		public void windowClosing(WindowEvent arg0) {
-			try {
-				saveSystem();
-			} catch (IOException e) {
-				JOptionPane.showMessageDialog(null, "Can't save system state!");
-			}
-		}
-		
-		@Override
-		public void windowIconified(WindowEvent arg0) {}
-		@Override
-		public void windowDeiconified(WindowEvent arg0) {}
-		@Override
-		public void windowDeactivated(WindowEvent arg0) {}
-		@Override
-		public void windowClosed(WindowEvent arg0) {}
-		@Override
-		public void windowActivated(WindowEvent arg0) {}
-	};
 
 	public RentalSystem getSystem() {
 		return system;
@@ -140,18 +103,4 @@ public class RentalSystemWindow extends JFrame {
 		return true;
 	}
 	
-	private void saveSystem() throws IOException {
-		FileOutputStream fileStream = new FileOutputStream(DATA_FILE);
-		ObjectOutputStream stream = new ObjectOutputStream(fileStream);
-		stream.writeObject(system);
-		stream.close();
-	}
-	
-	private void loadSystem() throws IOException, ClassNotFoundException {
-		FileInputStream fileStream = new FileInputStream(DATA_FILE);
-		ObjectInputStream stream = new ObjectInputStream(fileStream);
-		system = (RentalSystem)stream.readObject();
-		stream.close();
-		updateData();
-	}
 }

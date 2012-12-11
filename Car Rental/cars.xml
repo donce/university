@@ -1,18 +1,27 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <cars>
-	<car title="Audi 90" color="White" seats="5" transmission="automatic" wheel_side="left" price="4999"/>
-	<car title="Audi R8" color="White" seats="5" transmission="manual" wheel_side="left" price="29999"/>
-	<car title="BMW 728" color="Blue" seats="5" transmission="manual" wheel_side="right" price="13999"/>
-	<car title="BMW 760" color="Black" seats="5" transmission="manual" wheel_side="left" price="15999"/>
-	<car title="Dodge Challenger" color="Red" seats="5" transmission="manual" wheel_side="right" price="29999"/>
-	<car title="Ferrari 512" color="Yellow" seats="2" transmission="manual" wheel_side="left" price="499999"/>
-	<car title="Ford Mondeo" color="Yellow" seats="5" transmission="manual" wheel_side="left" price="11999"/>
-	<car title="Mazda 626" color="Blue" seats="5" transmission="manual" wheel_side="left" price="7999"/>
-	<car title="Mazda RX-8" color="Red" seats="5" transmission="manual" wheel_side="left" price="12999"/>
-	<car title="Nissan Primera" color="Purple" seats="5" transmission="automatic" wheel_side="left" price="8999"/>
-	<car title="Opel Astra" color="Yellow" seats="5" transmission="automatic" wheel_side="left" price="4999"/>
-	<car title="Renault Laguna" color="Purple" seats="5" transmission="manual" wheel_side="left" price="6999"/>
-	<car title="Smart Fortwo" color="Green" seats="2" transmission="automatic" wheel_side="left" price="7999"/>
-	<car title="Volkswagen Golf" color="Blue" seats="5" transmission="automatic" wheel_side="left" price="8999"/>
-	<car title="Volkswagen Golf GTI" color="Green" seats="5" transmission="manual" wheel_side="left" price="10999"/>
+	<car id="ABC000" title="Audi 90" color="White" seats="5" transmission="automatic" wheel_side="left" price="4999"/>
+	<car id="ABC100" title="Audi 90" color="White" seats="5" transmission="automatic" wheel_side="left" price="4999"/>
+	<car id="ABC200" title="Audi 90" color="White" seats="5" transmission="automatic" wheel_side="left" price="4999"/>
+	<car id="ABC001" title="Audi R8" color="White" seats="5" transmission="manual" wheel_side="left" price="29999"/>
+	<car id="ABC002" title="BMW 728" color="Blue" seats="5" transmission="manual" wheel_side="right" price="13999"/>
+	<car id="ABC003" title="BMW 760" color="Black" seats="5" transmission="manual" wheel_side="left" price="15999"/>
+	<car id="ABC004" title="Dodge Challenger" color="Red" seats="5" transmission="manual" wheel_side="right" price="29999"/>
+	<car id="ABC005" title="Ferrari 512" color="Yellow" seats="2" transmission="manual" wheel_side="left" price="499999"/>
+	<car id="ABC006" title="Ford Mondeo" color="Yellow" seats="5" transmission="manual" wheel_side="left" price="11999"/>
+	<car id="ABC007" title="Mazda 626" color="Blue" seats="5" transmission="manual" wheel_side="left" price="7999"/>
+	<car id="ABC008" title="Mazda RX-8" color="Red" seats="5" transmission="manual" wheel_side="left" price="12999"/>
+	<car id="ABC009" title="Nissan Primera" color="Purple" seats="5" transmission="automatic" wheel_side="left" price="8999"/>
+	<car id="ABC010" title="Opel Astra" color="Yellow" seats="5" transmission="automatic" wheel_side="left" price="4999"/>
+	<car id="ABC011" title="Renault Laguna" color="Purple" seats="5" transmission="manual" wheel_side="left" price="6999"/>
+	<car id="ABC111" title="Renault Laguna" color="Purple" seats="5" transmission="manual" wheel_side="left" price="6999"/>
+	<car id="ABC211" title="Renault Laguna" color="Purple" seats="5" transmission="manual" wheel_side="left" price="6999"/>
+	<car id="ABC211" title="Renault Laguna" color="Purple" seats="5" transmission="manual" wheel_side="left" price="6999"/>
+	<car id="ABC012" title="Smart Fortwo" color="Green" seats="2" transmission="automatic" wheel_side="left" price="7999"/>
+	<car id="ABC013" title="Volkswagen Golf" color="Blue" seats="5" transmission="automatic" wheel_side="left" price="8999"/>
+	<car id="ABC113" title="Volkswagen Golf" color="Blue" seats="5" transmission="automatic" wheel_side="left" price="8999"/>
+	<car id="ABC213" title="Volkswagen Golf" color="Blue" seats="5" transmission="automatic" wheel_side="left" price="8999"/>
+	<car id="ABC313" title="Volkswagen Golf" color="Blue" seats="5" transmission="automatic" wheel_side="left" price="8999"/>
+	<car id="ABC413" title="Volkswagen Golf" color="Blue" seats="5" transmission="automatic" wheel_side="left" price="8999"/>
+	<car id="ABC014" title="Volkswagen Golf GTI" color="Green" seats="5" transmission="manual" wheel_side="left" price="10999"/>
 </cars>

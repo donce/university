@@ -1,4 +1,4 @@
-package rental_system;
+package forms;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,8 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 
+import rental_system.Customer;
+import rental_system.RentalSystemWindow;
 
-class CustomerForm extends JPanel {
+
+
+public class CustomerForm extends JPanel {
 	private RentalSystemWindow systemWindow;
 	public JSpinner inputDays;
 	public JComboBox<Customer> inputCustomer;

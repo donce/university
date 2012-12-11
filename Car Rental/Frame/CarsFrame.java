@@ -1,4 +1,4 @@
-package rental_system;
+package Frame;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,10 +9,19 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
+import forms.CarForm;
+import forms.CustomerForm;
+
+import rental_system.Car;
+import rental_system.Customer;
+import rental_system.FilterData;
+import rental_system.Money;
+import rental_system.RentalSystemWindow;
 import system_additions.RentalSystem3;
 import system_additions.RentalSystemWindow3;
 import system_additions.SortFrame;
@@ -35,7 +44,12 @@ public class CarsFrame extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			Car car = getSelectedCar();
-			if (car != null)
+			Customer customer = (Customer)customerForm.inputCustomer.getSelectedItem();
+			if (car == null)
+				JOptionPane.showMessageDialog(null, "No car is chosen!");
+			else if (customer == null)
+				JOptionPane.showMessageDialog(null, "No customer is chosen!");
+			else
 				systemWindow.order(car, (int)customerForm.inputDays.getValue(),
 						(Customer)customerForm.inputCustomer.getSelectedItem());
 		}
@@ -63,7 +77,22 @@ public class CarsFrame extends JPanel {
 			Car car = getSelectedCar();
 			if (car != null)
 				try {
-					systemWindow.add((Car)car.clone());
+					Car newCar = (Car)car.clone();
+					boolean finished = false;
+					while (!finished) {
+						String newId = JOptionPane.showInputDialog("Please enter new identifier", car.getId());
+						if (newId == null)
+							finished = true;
+						else {
+							newCar.setId(newId);
+							try {
+								systemWindow.add(newCar);
+								finished = true;
+							} catch (IllegalArgumentException e) {
+								JOptionPane.showMessageDialog(null, "This identifier is already used!", "ERROR", JOptionPane.ERROR_MESSAGE);
+							}
+						}
+					}
 				} catch (CloneNotSupportedException e) {
 					System.out.println("Car clone not implemented.");
 				}
@@ -117,7 +146,7 @@ public class CarsFrame extends JPanel {
 	
 	public void update() {
 		cars = systemWindow.getCars(filterData);
-		Object[][] data = new Object[cars.size()][6];
+		Object[][] data = new Object[cars.size()][7];
 		Iterator<Car> it = cars.iterator();
 		for (int i = 0; it.hasNext(); ++i) {
 			Car car = it.next();
@@ -126,9 +155,10 @@ public class CarsFrame extends JPanel {
 			data[i][2] = car.getTransmission();
 			data[i][3] = car.getSeats();
 			data[i][4] = car.getColor();
-			data[i][5] = Money.toString(car.getPrice());
+			data[i][5] = car.getId();
+			data[i][6] = Money.toString(car.getPrice());
 		}
-		tableCars = new JTable(data, new Object[] {"Title", "Wheel side", "Transmission", "Seats", "Color", "Price"});
+		tableCars = new JTable(data, new Object[] {"Title", "Wheel side", "Transmission", "Seats", "Color", "Identifier", "Price"});
 		
 		if (tablePane != null)
 			remove(tablePane);

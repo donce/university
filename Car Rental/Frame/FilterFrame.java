@@ -1,4 +1,4 @@
-package rental_system;
+package Frame;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,8 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 
+import rental_system.FilterData;
+import rental_system.RentalSystemWindow;
+import rental_system.Transmission;
+import rental_system.WheelSide;
 
-class FilterFrame extends JPanel {
+
+public class FilterFrame extends JPanel {
 	private JComboBox<String> inputWheel;
 	private JComboBox<String> inputTransmission;
 	private JSpinner inputMinSeats;

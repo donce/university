@@ -22,7 +22,7 @@ class Cars {
 }
 
 public class RentalSystem3 extends RentalSystem2 {
-
+	
 	class CarPriceComparator implements Comparator<Car> {
 		@Override
 		public int compare(Car c1, Car c2) {
@@ -57,4 +57,5 @@ public class RentalSystem3 extends RentalSystem2 {
 	public void sortByPrice() {
 		Collections.sort(cars, new CarPriceComparator());
 	}
+
 }

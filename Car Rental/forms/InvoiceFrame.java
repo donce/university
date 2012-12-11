@@ -1,4 +1,4 @@
-package rental_system;
+package forms;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,8 +10,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import rental_system.Money;
+import rental_system.Order;
+import rental_system.RentalSystemWindow;
 
-class InvoiceFrame extends JFrame {
+
+public class InvoiceFrame extends JFrame {
 	private Order order;
 	JButton button;
 	

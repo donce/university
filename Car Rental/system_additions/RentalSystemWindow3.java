@@ -2,15 +2,33 @@ package system_additions;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 
 import rental_system.RentalSystem;
 import system_statistics.RentalSystemWindow2;
+import threads.Consumer;
+import threads.Order;
+import threads.Orders;
+import threads.Producer;
 
 public class RentalSystemWindow3 extends RentalSystemWindow2 {
+	private final static String DATA_FILE = "data";
 	
 	public RentalSystemWindow3() {
 		this(new RentalSystem3());
@@ -18,16 +36,29 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 	
 	public RentalSystemWindow3(RentalSystem system) {
 		super(system);
+		try {
+			loadSystem();
+		} catch (FileNotFoundException e) {
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (system instanceof RentalSystem3) {
+			addWindowListener(windowListener);
+			
 			JPanel panel = new JPanel();
 			
 			JButton buttonXML = new JButton("Load cars from XML");
 			buttonXML.addActionListener(actionXML);
 			panel.add(buttonXML);
-			
-			JButton buttonGenerate = new JButton("Generate data");
+
+			JButton buttonGenerate = new JButton("Add default customers");
 			buttonGenerate.addActionListener(actionGenerate);
 			panel.add(buttonGenerate);
+			
+			JButton buttonLoadOrders = new JButton("Load orders");
+			buttonLoadOrders.addActionListener(actionLoadOrders);
+			panel.add(buttonLoadOrders);
 			
 			pane.add(panel, "Actions");
 		}
@@ -37,22 +68,35 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if (((RentalSystem3)system).loadCars("cars.xml")) {
-				updateData();
-				JOptionPane.showMessageDialog(null, "Cars were added successfully.");
+			try {
+				if (((RentalSystem3)system).loadCars("cars.xml")) {
+					updateData();
+					JOptionPane.showMessageDialog(null, "Cars were added successfully.");
+				}
+				else
+					JOptionPane.showMessageDialog(null, "Failed to load XML file!");
 			}
-			else
-				JOptionPane.showMessageDialog(null, "Failed to load XML file!");
+			catch (IllegalArgumentException e) {
+				JOptionPane.showMessageDialog(null, "Not all cars were loaded, because some identifiers were already used!");
+			}
 		}
 	};
-	
+
 	private ActionListener actionGenerate = new ActionListener() {
 		
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			system.generate();
+			system.generateCustomers();
 			updateData();
-			JOptionPane.showMessageDialog(null, "Random data added successfully.");
+			JOptionPane.showMessageDialog(null, "Customers added successfully.");
+		}
+	};
+
+	private ActionListener actionLoadOrders = new ActionListener() {
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			loadOrders();
 		}
 	};
 	
@@ -66,4 +110,73 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 		updateData();
 	}
 	
+	private List<Order> loadOrdersList() {
+		Unmarshaller unmarshaller;
+		try {
+			unmarshaller = JAXBContext.newInstance(Orders.class).createUnmarshaller();
+			Orders orders = (Orders)unmarshaller.unmarshal(new FileInputStream("orders.xml"));
+			return orders.getList();
+		} catch (JAXBException | FileNotFoundException e) {
+			return null;
+		}
+	}
+	
+	private void loadOrders() {
+		LinkedBlockingQueue<Order> queue = new LinkedBlockingQueue<>();
+		
+		List<Order> orders = loadOrdersList();
+		if (orders == null) {
+//			JOptionPane.showMessageDialog(null, "")
+			return;
+		}
+		
+		Producer producer = new Producer(queue, orders);
+		Consumer consumer = new Consumer(this, queue, orders.size());
+		producer.run();
+		consumer.run();
+	}
+
+	private WindowListener windowListener = new WindowListener() {
+		
+		@Override
+		public void windowOpened(WindowEvent arg0) {
+		}
+
+		@Override
+		public void windowClosing(WindowEvent arg0) {
+			try {
+				saveSystem();
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null, "Can't save system state!");
+			}
+		}
+		
+		@Override
+		public void windowIconified(WindowEvent arg0) {}
+		@Override
+		public void windowDeiconified(WindowEvent arg0) {}
+		@Override
+		public void windowDeactivated(WindowEvent arg0) {}
+		@Override
+		public void windowClosed(WindowEvent arg0) {}
+		@Override
+		public void windowActivated(WindowEvent arg0) {}
+	};
+
+	private void saveSystem() throws IOException {
+		System.out.println("save");
+		FileOutputStream fileStream = new FileOutputStream(DATA_FILE);
+		ObjectOutputStream stream = new ObjectOutputStream(fileStream);
+		stream.writeObject(system);
+		stream.close();
+	}
+	
+	private void loadSystem() throws IOException, ClassNotFoundException {
+		System.out.println("load");
+		FileInputStream fileStream = new FileInputStream(DATA_FILE);
+		ObjectInputStream stream = new ObjectInputStream(fileStream);
+		system = (RentalSystem)stream.readObject();
+		stream.close();
+		updateData();
+	}
 }

@@ -1,4 +1,4 @@
-package rental_system;
+package forms;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -11,7 +11,10 @@ import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
-class RegistrationWindow extends JFrame {
+import rental_system.Customer;
+import rental_system.RentalSystemWindow;
+
+public class RegistrationWindow extends JFrame {
 	private RentalSystemWindow systemWindow;
 	
 	private JTextField inputFirstName = new JTextField(20);

@@ -1,4 +1,4 @@
-package rental_system;
+package forms;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -9,11 +9,18 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
+import rental_system.Car;
+import rental_system.RentalSystemWindow;
+import rental_system.Transmission;
+import rental_system.WheelSide;
 
-class CarForm extends JFrame {
+
+public class CarForm extends JFrame {
+	private JTextField inputId;
 	private JTextField inputTitle;
 	private JTextField inputColor;
 	private JComboBox<String> inputWheel;
@@ -26,11 +33,16 @@ class CarForm extends JFrame {
 	private ActionListener buttonListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			String title, color;
+			String id, title, color;
+			id = inputId.getText();
 			title = inputTitle.getText();
 			color = inputColor.getText();
-			systemWindow.add((title.length() == 0) && (color.length() == 0) ? new Car() :new Car(title, color, (int)inputSeats.getValue(), WheelSide.values()[inputWheel.getSelectedIndex()], Transmission.values()[inputTransmission.getSelectedIndex()], (int)inputPrice.getValue()));
-			dispose();
+			try {
+				systemWindow.add((title.length() == 0) && (color.length() == 0) ? new Car() :new Car(id, title, color, (int)inputSeats.getValue(), WheelSide.values()[inputWheel.getSelectedIndex()], Transmission.values()[inputTransmission.getSelectedIndex()], (int)inputPrice.getValue()));
+				dispose();
+			} catch (IllegalArgumentException e) {
+				JOptionPane.showMessageDialog(null, "Car with this identifier is already in system.");
+			}
 		}
 	};
 	
@@ -46,6 +58,9 @@ class CarForm extends JFrame {
 		cb.fill = GridBagConstraints.HORIZONTAL;
 		cb.anchor = GridBagConstraints.WEST;
 
+		this.add(new JLabel("Identifier"), ca);
+		this.add(inputId = new JTextField(), cb);
+		
 		this.add(new JLabel("Title"), ca);
 		this.add(inputTitle = new JTextField(), cb);
 		

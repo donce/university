@@ -17,6 +17,7 @@ public class RentalSystem implements Serializable {
 	private List<Customer> customers;
 	
 	private Map<Customer, Set<Order>> customerOrders = new HashMap<Customer, Set<Order>>();
+	private Set<String> carIds = new HashSet<String>();
 	
 	public RentalSystem() {
 		cars = new ArrayList<Car>();
@@ -27,8 +28,11 @@ public class RentalSystem implements Serializable {
 	
 	public void add(Car car) {
 		if (car == null)
+			throw new NullPointerException();
+		if (carIds.contains(car.getId()))
 			throw new IllegalArgumentException();
 		cars.add(car);
+		carIds.add(car.getId());
 	}
 	public void remove(Car car) {
 		if (car == null)
@@ -89,10 +93,10 @@ public class RentalSystem implements Serializable {
 		int index = cars.indexOf(car);
 		if (index == -1)
 			throw new IllegalArgumentException("Car is not available.");
-		getCars().remove(index);
+		cars.remove(index);
 		orderedCars.add(car);
 		Order order = new Order(car, days, customer);
-		getOrders().add(order);
+		orders.add(order);
 		customerOrders.get(customer).add(order);
 	}
 	public void giveBack(Order order) {
@@ -118,20 +122,18 @@ public class RentalSystem implements Serializable {
 		}
 	}
 
-	public void generate() {
+	public void generateCustomers() {
 		String[] firstNames = {"Donatas", "Marius", "Rytis", "Vidmantas", "Karolis"};
 		String[] lastNames = {"Pavardenis", "Pavardžius", "Pavardienius", "Pavadžius", "Pavardenis"};
-		Random rand = new Random(System.currentTimeMillis());
-		
-		//customers
 		for (int i = 0; i < Math.min(firstNames.length, lastNames.length); ++i)
 			try {
 				add(new Customer(firstNames[i], lastNames[i], "Lithuania", "Vilnius", "Naugarduko", 10, 2));
 			}
 			catch (InvalidFormDataException e) {}
-		
-		List<Customer> customers = getCustomers();
-		//orders
+	}
+	
+	public void generateOrders() {
+		Random rand = new Random(System.currentTimeMillis());
 		for (int i = 0; i < 10; ++i) {
 			order(getCars(new FilterData()).get(rand.nextInt(getCars(new FilterData()).size())),
 					1+rand.nextInt(14),

@@ -10,18 +10,21 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
+import rental_system.RentalSystemWindow;
+
 
 public class PieChart extends ChartPanel {
-	private RentalSystem2 system;
+	private RentalSystemWindow window;
 	
-	public PieChart(RentalSystem2 system) {
+	public PieChart(RentalSystemWindow window) {
 		super(null);
-		this.system = system;
+		this.window = window;
 		update();
 	}
 
 	public void update() {
-		Set<Map.Entry<Integer, Integer>> set = system.getRentTimeStatistics();
+		Set<Map.Entry<Integer, Integer>> set = ((RentalSystem2)window.system).getRentTimeStatistics();
+		System.out.println(set.size());
 		PieDataset dataset = new DefaultPieDataset();
 		if (set != null) {
 			Iterator<Map.Entry<Integer, Integer>> it = set.iterator();

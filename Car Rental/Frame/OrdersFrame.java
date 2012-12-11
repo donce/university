@@ -1,4 +1,4 @@
-package rental_system;
+package Frame;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -15,8 +15,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import rental_system.Customer;
+import rental_system.Money;
+import rental_system.Order;
+import rental_system.RentalSystem;
+import rental_system.RentalSystemWindow;
 
-class OrdersFrame extends JPanel {
+
+public class OrdersFrame extends JPanel {
 	private Collection<Order> orders;
 	private JTable table = new JTable();
 	private JComboBox<String> comboBox;
