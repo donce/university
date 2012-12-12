@@ -1,4 +1,4 @@
-package Frame;
+package frames;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

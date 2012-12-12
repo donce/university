@@ -6,9 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
-import Frame.CarsFrame;
-import Frame.OrdersFrame;
 import forms.InvoiceFrame;
+import frames.CarsFrame;
+import frames.OrdersFrame;
 
 //import javax.swing.UIManager;
 //import javax.swing.UnsupportedLookAndFeelException;

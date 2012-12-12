@@ -1,11 +1,13 @@
-DIRS = "." "rental_system" "system_statistics"
+DIRS = "." "rental_system" "system_statistics" "orders" "frames" "forms"
 
 
-Main.class: Main.java
-	javac Main.java
+all: Main.class
+
+Main.class:
+	javac -cp lib/*:. Main.java
 
 run: Main.class
-	java Main
+	java -cp lib/*:. Main
 
 
 clean:
