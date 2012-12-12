@@ -41,8 +41,10 @@ public class RentalSystem implements Serializable {
 	public void add(Car car) {
 		if (car == null)
 			throw new NullPointerException();
-		if (carIds.containsKey(car.getId()))
+		if (carIds.containsKey(car.getId())) {
+			System.out.println("contains");
 			throw new IllegalArgumentException();
+		}
 		cars.add(car);
 		carIds.put(car.getId(), car);
 	}

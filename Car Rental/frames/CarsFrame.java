@@ -24,7 +24,6 @@ import rental_system.Money;
 import rental_system.RentalSystemWindow;
 import system_additions.RentalSystem3;
 import system_additions.RentalSystemWindow3;
-import system_additions.SortFrame;
 
 
 public class CarsFrame extends JPanel {

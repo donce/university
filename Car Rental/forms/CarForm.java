@@ -37,12 +37,15 @@ public class CarForm extends JFrame {
 			id = inputId.getText();
 			title = inputTitle.getText();
 			color = inputColor.getText();
-			try {
-				systemWindow.add((title.length() == 0) && (color.length() == 0) ? new Car() :new Car(id, title, color, (int)inputSeats.getValue(), WheelSide.values()[inputWheel.getSelectedIndex()], Transmission.values()[inputTransmission.getSelectedIndex()], (int)inputPrice.getValue()));
-				dispose();
-			} catch (IllegalArgumentException e) {
-				JOptionPane.showMessageDialog(null, "Car with this identifier is already in system.");
-			}
+			if (id.length() == 0 || title.length() == 0)
+				JOptionPane.showMessageDialog(null, "Car identifier and title cannot be empty");
+			else
+				try {
+					systemWindow.add(new Car(id, title, color, (int)inputSeats.getValue(), WheelSide.values()[inputWheel.getSelectedIndex()], Transmission.values()[inputTransmission.getSelectedIndex()], (int)inputPrice.getValue()));
+					dispose();
+				} catch (IllegalArgumentException e) {
+					JOptionPane.showMessageDialog(null, "Car with this identifier is already in system.");
+				}
 		}
 	};
 	

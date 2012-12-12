@@ -1,4 +1,4 @@
-package system_additions;
+package frames;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import system_additions.RentalSystemWindow3;
 
 
 public class SortFrame extends JPanel {
