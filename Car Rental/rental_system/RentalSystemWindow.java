@@ -10,10 +10,6 @@ import forms.InvoiceFrame;
 import frames.CarsFrame;
 import frames.OrdersFrame;
 
-//import javax.swing.UIManager;
-//import javax.swing.UnsupportedLookAndFeelException;
-
-
 public class RentalSystemWindow extends JFrame {
 	public RentalSystem system;
 	public CarsFrame carsFrame;
@@ -29,12 +25,6 @@ public class RentalSystemWindow extends JFrame {
 		if (system == null)
 			throw new IllegalArgumentException();
 		this.system = system;
-//		try {
-//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//		} catch (ClassNotFoundException | InstantiationException
-//				| IllegalAccessException | UnsupportedLookAndFeelException e1) {
-//			e1.printStackTrace();
-//		}
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -58,27 +48,18 @@ public class RentalSystemWindow extends JFrame {
 		carsFrame.setFilter(filterData);
 	}
 	
-	public List<Car> getCars(FilterData filterData) {
-		return system.getCars(filterData);
-	}
-	
 	public void order(Car car, int days, Customer customer) {
 		system.order(car, days, customer);
 		updateData();
 	}
 
-	public void showInvoice(Order order) {
-		new InvoiceFrame(order, this);
-	}
-	
-	protected void updateData() {
-		ordersFrame.update();
-		carsFrame.update();
-	}
-	
 	public void giveBack(Order order) {
 		system.giveBack(order);
 		updateData();
+	}
+
+	public void showInvoice(Order order) {
+		new InvoiceFrame(order, this);
 	}
 	
 	public void add(Car car) {
@@ -91,6 +72,10 @@ public class RentalSystemWindow extends JFrame {
 		updateData();
 	}
 	
+	public List<Car> getCars(FilterData filterData) {
+		return system.getCars(filterData);
+	}
+
 	public boolean add(Customer customer) {
 		try {
 			system.add(customer);
@@ -101,6 +86,11 @@ public class RentalSystemWindow extends JFrame {
 		}
 		updateData();
 		return true;
+	}
+
+	protected void updateData() {
+		ordersFrame.update();
+		carsFrame.update();
 	}
 	
 }

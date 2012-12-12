@@ -6,38 +6,39 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
 
-
+/**
+ * Rental system of cars. System has cars and registered customers.
+ * Customer can rent a car for some number of days.
+ * 
+ * @author Donatas Kučinskas <donce.lt@gmail.com>
+ *
+ */
 public class RentalSystem implements Serializable {
 	protected List<Car> cars;
 	private List<Car> orderedCars;
-	private List<Order> orders;
 	private List<Customer> customers;
+	private List<Order> orders;
 	
 	private Map<Customer, Set<Order>> customerOrders = new HashMap<Customer, Set<Order>>();
-	//private Set<String> carIds = new HashSet<String>();
 	private Map<String, Car> carIds = new HashMap<>();
 	
+	/**
+	 * Create empty rental system.
+	 */
 	public RentalSystem() {
 		cars = new ArrayList<Car>();
 		orderedCars = new ArrayList<Car>();
 		orders = new ArrayList<Order>();
 		customers = new ArrayList<Customer>();
 	}
-	
-	public Customer getCustomer(String firstName, String lastName) {
-		for (Customer c : customers)
-			if (c.getFirstName().equals(firstName) && c.getLastName().equals(lastName))
-				return c;
-		return null;
-	}
-	
-	public Car getCar(String id) {
-		return carIds.get(id);
-	}
-	
+
+	/**
+	 * Add car to the system.
+	 * 
+	 * @param car - car to be added
+	 */
 	public void add(Car car) {
 		if (car == null)
 			throw new NullPointerException();
@@ -48,6 +49,12 @@ public class RentalSystem implements Serializable {
 		cars.add(car);
 		carIds.put(car.getId(), car);
 	}
+	
+	/**
+	 * Remove car from the system.
+	 * 
+	 * @param car - Car to be removed
+	 */
 	public void remove(Car car) {
 		if (car == null)
 			throw new IllegalArgumentException();
@@ -55,9 +62,33 @@ public class RentalSystem implements Serializable {
 			throw new IllegalArgumentException("Car being removed does not exist.");
 		carIds.remove(car.getId());
 	}
+	
+	/**
+	 * Get car by it's id.
+	 * 
+	 * @param id - id of car the key whose associated value is to be returned
+	 * @return Car with specified id, null if no such car in found
+	 */
+	public Car getCar(String id) {
+		return carIds.get(id);
+	}
+	
+	/**
+	 * Get all cars in the system
+	 * 
+	 * @return list of cars in the system
+	 */
+
 	public List<Car> getCars() {
 		return getCars(new FilterData());
 	}
+	
+	/**
+	 * Get all cars in the system whose match the given filter
+	 * 
+	 * @param filterData - filter to be used for choosing cars
+	 * @return list of cars in the system matching the given filter
+	 */
 	public List<Car> getCars(FilterData filterData) {
 		List<Car> list = new ArrayList<Car>();
 		for (int i = 0; i < cars.size(); ++i) {
@@ -70,6 +101,12 @@ public class RentalSystem implements Serializable {
 		return list;
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @param customer
+	 * @throws InvalidFormDataException
+	 */
 	public void add(Customer customer) throws InvalidFormDataException {
 		if (customer == null)
 			throw new IllegalArgumentException();
@@ -92,12 +129,29 @@ public class RentalSystem implements Serializable {
 		customers.add(customer);
 		customerOrders.put(customer, new HashSet<Order>());
 	}
+	
 	public void remove(Customer customer) {
 		if (customer == null || !customers.contains(customer) || !customerOrders.containsKey(customer))
 			throw new IllegalArgumentException();
 		customers.remove(customer);
 		customerOrders.remove(customer);
 	}
+
+	/**
+	 * Get customer by it's first name and last name.
+	 * 
+	 * @param firstName - Customer first name
+	 * @param lastName - Customer last name
+	 * @return Customer with specified names if it exists in the system, otherwise null
+	 * 
+	 */
+	public Customer getCustomer(String firstName, String lastName) {
+		for (Customer c : customers)
+			if (c.getFirstName().equals(firstName) && c.getLastName().equals(lastName))
+				return c;
+		return null;
+	}
+
 	public List<Customer> getCustomers() {
 		return customers;
 	}
@@ -114,6 +168,7 @@ public class RentalSystem implements Serializable {
 		orders.add(order);
 		customerOrders.get(customer).add(order);
 	}
+	
 	public void giveBack(Order order) {
 		if (order == null)
 			throw new IllegalArgumentException();
@@ -121,22 +176,17 @@ public class RentalSystem implements Serializable {
 		getCars().add(order.getCar());
 		getOrders().remove(order);
 	}
+	
 	public List<Order> getOrders() {
 		return orders;
 	}
+	
 	public Set<Order> getOrders(Customer customer) {
 		if (customer == null)
 			throw new IllegalArgumentException();
 		return customerOrders.get(customer);
 	}
 	
-	public void println() {
-		System.out.println("All cars:");
-		for (int i = 0; i < getCars().size(); ++i) {
-			getCars().get(i).println();
-		}
-	}
-
 	public void generateCustomers() {
 		String[] firstNames = {"Donatas", "Marius", "Rytis", "Vidmantas", "Karolis"};
 		String[] lastNames = {"Pavardenis", "Pavardžius", "Pavardienius", "Pavadžius", "Pavardenis"};
@@ -146,15 +196,12 @@ public class RentalSystem implements Serializable {
 			}
 			catch (InvalidFormDataException e) {}
 	}
-	
-	public void generateOrders() {
-		Random rand = new Random(System.currentTimeMillis());
-		for (int i = 0; i < 10; ++i) {
-			order(getCars(new FilterData()).get(rand.nextInt(getCars(new FilterData()).size())),
-					1+rand.nextInt(14),
-					customers.get(rand.nextInt(customers.size())));
+
+	public void println() {
+		System.out.println("All cars:");
+		for (int i = 0; i < getCars().size(); ++i) {
+			getCars().get(i).println();
 		}
-		
 	}
 	
 }

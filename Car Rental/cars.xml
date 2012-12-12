@@ -16,7 +16,7 @@
 	<car id="ABC011" title="Renault Laguna" color="Purple" seats="5" transmission="manual" wheel_side="left" price="6999"/>
 	<car id="ABC111" title="Renault Laguna" color="Purple" seats="5" transmission="manual" wheel_side="left" price="6999"/>
 	<car id="ABC211" title="Renault Laguna" color="Purple" seats="5" transmission="manual" wheel_side="left" price="6999"/>
-	<car id="ABC211" title="Renault Laguna" color="Purple" seats="5" transmission="manual" wheel_side="left" price="6999"/>
+	<car id="ABC311" title="Renault Laguna" color="Purple" seats="5" transmission="manual" wheel_side="left" price="6999"/>
 	<car id="ABC012" title="Smart Fortwo" color="Green" seats="2" transmission="automatic" wheel_side="left" price="7999"/>
 	<car id="ABC013" title="Volkswagen Golf" color="Blue" seats="5" transmission="automatic" wheel_side="left" price="8999"/>
 	<car id="ABC113" title="Volkswagen Golf" color="Blue" seats="5" transmission="automatic" wheel_side="left" price="8999"/>

@@ -4,23 +4,19 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import rental_system.Car;
 import system_statistics.RentalSystem2;
 
-@XmlRootElement
-class Cars {
-	@XmlElement(name="car")
-	public List<Car> list;
-}
-
+/**
+ * 
+ * @author Donatas Kučinskas <donce.lt@gmail.com>
+ *
+ */
 public class RentalSystem3 extends RentalSystem2 {
 	
 	class CarPriceComparator implements Comparator<Car> {

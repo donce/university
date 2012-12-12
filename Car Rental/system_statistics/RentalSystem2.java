@@ -9,6 +9,11 @@ import java.util.Set;
 
 import rental_system.*;
 
+/**
+ * 
+ * @author Donatas Kučinskas <donce.lt@gmail.com>
+ *
+ */
 public class RentalSystem2 extends RentalSystem {
 	private Map<String, Integer> carTitles = new HashMap<String, Integer>();
 	private List<Integer> orderedDays;
@@ -18,9 +23,34 @@ public class RentalSystem2 extends RentalSystem {
 	}
 	
 	@Override
+	public void add(Car car) {
+		super.add(car);
+		Integer value = carTitles.get(car.getTitle());
+		if (value == null)
+			value = 0;
+		carTitles.put(car.getTitle(), value+1);
+	}
+
+	@Override
+	public void remove(Car car) {
+		super.remove(car);
+		String title = car.getTitle();
+		Integer value = carTitles.get(title);
+		value--;
+		if (value == 0)
+			carTitles.remove(title);
+		else
+			carTitles.put(title, value);
+	}
+
+	@Override
 	public void order(Car car, int days, Customer customer) {
 		super.order(car, days, customer);
 		orderedDays.add(days);
+	}
+
+	public Set<Map.Entry<String, Integer>> getCarStatistics() {
+		return carTitles.entrySet();
 	}
 	
 	public Set<Map.Entry<Integer, Integer>> getRentTimeStatistics() {
@@ -33,31 +63,6 @@ public class RentalSystem2 extends RentalSystem {
 			map.put(now,  value+1);
 		}
 		return map.entrySet();
-	}
-	
-	public Set<Map.Entry<String, Integer>> getCarStatistics() {
-		return carTitles.entrySet();
-	}
-
-	@Override
-	public void add(Car car) {
-		super.add(car);
-		Integer value = carTitles.get(car.getTitle());
-		if (value == null)
-			value = 0;
-		carTitles.put(car.getTitle(), value+1);
-	}
-	
-	@Override
-	public void remove(Car car) {
-		super.remove(car);
-		String title = car.getTitle();
-		Integer value = carTitles.get(title);
-		value--;
-		if (value == 0)
-			carTitles.remove(title);
-		else
-			carTitles.put(title, value);
 	}
 	
 }
