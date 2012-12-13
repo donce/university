@@ -43,37 +43,44 @@ public class Consumer extends Thread {
 			progressBar.setValue(progressBar.getValue() + 1);
 			progressBar.setString(Integer.toString(progressBar.getValue())
 					+ " / " + Integer.toString(length) + " orders");
+			Order order = null;
 			try {
-				Order order = queue.take();
-				System.out.println("Ordering " + order.getCar() + " "
-						+ order.getCustomer() + " "
-						+ Integer.toString(order.getDays()));
-				if (order.getCar() == null || order.getCustomer() == null) {
-					System.out.println("Not all data are supplied.");
-					return;
-				}
-				String[] words = order.getCustomer().split(" ");
-				if (words.length != 2) {
-					System.out.println("First name and last name are needed.");
-					return;
-				}
-				Customer customer = window.system.getCustomer(words[0],
-						words[1]);
-				if (customer == null) {
-					System.out.println("Customer not found.");
-					return;
-				}
-
-				Car car = window.system.getCar(order.getCar());
-				if (car == null) {
-					System.out.println("Car not found.");
-					return;
-				}
-
-				window.order(car, order.getDays(), customer);
+				order = queue.take();
 			} catch (InterruptedException exception) {
 				System.out.println("Consumer was interrupted");
+				return;
 			}
+			System.out.println("Ordering " + order.getCar() + " by "
+					+ order.getCustomer() + " for "
+					+ Integer.toString(order.getDays()) + " day(s).");
+			if (order.getCar() == null || order.getCustomer() == null) {
+				System.out.println("Not all data are supplied.");
+				return;
+			}
+			String[] words = order.getCustomer().split(" ");
+			if (words.length != 2) {
+				System.out.println("First name and last name are needed.");
+				return;
+			}
+			Customer customer = window.system.getCustomer(words[0], words[1]);
+			if (customer == null) {
+				System.out.println("Customer not found.");
+				return;
+			}
+
+			Car car = window.system.getCar(order.getCar());
+			if (car == null) {
+				System.out.println("Car not found.");
+				return;
+			}
+
+			try {
+				window.order(car, order.getDays(), customer);
+			} catch (IllegalArgumentException exception) {
+				System.out.println("Car is already rented.");
+				return;
+			}
+			System.out.println("Successfully finished.");
 		}
 	};
 
