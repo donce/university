@@ -11,19 +11,15 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-import rental_system.RentalSystemWindow;
 
 public class BarChart extends ChartPanel {
-	private RentalSystemWindow window;
-	
-	public BarChart(RentalSystemWindow window) {
+
+	public BarChart() {
 		super(null);
-		this.window = window;
-		update();
+		updateData(null);
 	}
 	
-	public void update() {
-		Set<Map.Entry<String, Integer>> set = ((RentalSystem2)window.system).getCarStatistics();
+	public void updateData(Set<Map.Entry<String, Integer>> set) {
 		CategoryDataset dataset = new DefaultCategoryDataset();
 		if (set != null) {
 			Iterator<Map.Entry<String, Integer>> it = set.iterator();

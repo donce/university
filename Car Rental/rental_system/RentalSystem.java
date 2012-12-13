@@ -37,7 +37,7 @@ public class RentalSystem implements Serializable {
 	/**
 	 * Add car to the system.
 	 * 
-	 * @param car - car to be added
+	 * @param car car to add
 	 */
 	public void add(Car car) {
 		if (car == null)
@@ -53,7 +53,7 @@ public class RentalSystem implements Serializable {
 	/**
 	 * Remove car from the system.
 	 * 
-	 * @param car - Car to be removed
+	 * @param car car to remove
 	 */
 	public void remove(Car car) {
 		if (car == null)
@@ -66,7 +66,7 @@ public class RentalSystem implements Serializable {
 	/**
 	 * Get car by it's id.
 	 * 
-	 * @param id - id of car the key whose associated value is to be returned
+	 * @param id id of car the key whose associated value is to be returned
 	 * @return Car with specified id, null if no such car in found
 	 */
 	public Car getCar(String id) {
@@ -86,7 +86,7 @@ public class RentalSystem implements Serializable {
 	/**
 	 * Get all cars in the system whose match the given filter
 	 * 
-	 * @param filterData - filter to be used for choosing cars
+	 * @param filterData filter to be used for choosing cars
 	 * @return list of cars in the system matching the given filter
 	 */
 	public List<Car> getCars(FilterData filterData) {
@@ -102,10 +102,10 @@ public class RentalSystem implements Serializable {
 	}
 	
 	/**
+	 * Add customer to the system.
 	 * 
-	 * 
-	 * @param customer
-	 * @throws InvalidFormDataException
+	 * @param customer customer to add
+	 * @throws InvalidFormDataException if customer information is invalid
 	 */
 	public void add(Customer customer) throws InvalidFormDataException {
 		if (customer == null)
@@ -130,6 +130,11 @@ public class RentalSystem implements Serializable {
 		customerOrders.put(customer, new HashSet<Order>());
 	}
 	
+	/**
+	 * Remove customer from the system.
+	 * 
+	 * @param customer
+	 */
 	public void remove(Customer customer) {
 		if (customer == null || !customers.contains(customer) || !customerOrders.containsKey(customer))
 			throw new IllegalArgumentException();
@@ -140,10 +145,9 @@ public class RentalSystem implements Serializable {
 	/**
 	 * Get customer by it's first name and last name.
 	 * 
-	 * @param firstName - Customer first name
-	 * @param lastName - Customer last name
+	 * @param firstName Customer first name
+	 * @param lastName Customer last name
 	 * @return Customer with specified names if it exists in the system, otherwise null
-	 * 
 	 */
 	public Customer getCustomer(String firstName, String lastName) {
 		for (Customer c : customers)
@@ -152,10 +156,21 @@ public class RentalSystem implements Serializable {
 		return null;
 	}
 
+	/**
+	 * Get all customers in the system
+	 * @return list of customers in the system
+	 */
 	public List<Customer> getCustomers() {
 		return customers;
 	}
 
+	/**
+	 * Order car for customer.
+	 * 
+	 * @param car car to order
+	 * @param days amount of days to order
+	 * @param customer customer who orders
+	 */
 	public void order(Car car, int days, Customer customer) {
 		if (car == null || days <= 0 || customer == null)
 			throw new IllegalArgumentException();
@@ -169,24 +184,42 @@ public class RentalSystem implements Serializable {
 		customerOrders.get(customer).add(order);
 	}
 	
-	public void giveBack(Order order) {
+	/**
+	 * Finish order made earlier.
+	 * 
+	 * @param order order to finish
+	 */
+	public void finish(Order order) {
 		if (order == null)
 			throw new IllegalArgumentException();
 		orderedCars.remove(order.getCar());
 		getCars().add(order.getCar());
 		getOrders().remove(order);
 	}
-	
+
+	/**
+	 * Get all orders in the system
+	 * @return list of orders in the system
+	 */
 	public List<Order> getOrders() {
 		return orders;
 	}
-	
+
+	/**
+	 * Get orders made by some customer.
+	 * 
+	 * @param customer customer which orders to get
+	 * @return list of orders made by customer
+	 */
 	public Set<Order> getOrders(Customer customer) {
 		if (customer == null)
 			throw new IllegalArgumentException();
 		return customerOrders.get(customer);
 	}
 	
+	/**
+	 * Generate some predefined customers.
+	 */
 	public void generateCustomers() {
 		String[] firstNames = {"Donatas", "Marius", "Rytis", "Vidmantas", "Karolis"};
 		String[] lastNames = {"Pavardenis", "Pavardžius", "Pavardienius", "Pavadžius", "Pavardenis"};
@@ -197,6 +230,9 @@ public class RentalSystem implements Serializable {
 			catch (InvalidFormDataException e) {}
 	}
 
+	/**
+	 * Print information about system to output.
+	 */
 	public void println() {
 		System.out.println("All cars:");
 		for (int i = 0; i < getCars().size(); ++i) {

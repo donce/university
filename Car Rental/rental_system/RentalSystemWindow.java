@@ -54,7 +54,7 @@ public class RentalSystemWindow extends JFrame {
 	}
 
 	public void giveBack(Order order) {
-		system.giveBack(order);
+		system.finish(order);
 		updateData();
 	}
 

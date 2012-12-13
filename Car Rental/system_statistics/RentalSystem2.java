@@ -10,6 +10,8 @@ import java.util.Set;
 import rental_system.*;
 
 /**
+ * Rental system with additional ability to collect statistics
+ * about cars and orders.
  * 
  * @author Donatas Kučinskas <donce.lt@gmail.com>
  *
@@ -18,10 +20,16 @@ public class RentalSystem2 extends RentalSystem {
 	private Map<String, Integer> carTitles = new HashMap<String, Integer>();
 	private List<Integer> orderedDays;
 	
+	/**
+	 * Create empty rental system.
+	 */
 	public RentalSystem2() {
 		orderedDays = new ArrayList<Integer>();
 	}
 	
+	/**
+	 * Add car to the system.
+	 */
 	@Override
 	public void add(Car car) {
 		super.add(car);

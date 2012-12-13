@@ -5,4 +5,29 @@
 		<car>ABC000</car>
 		<days>2</days>
 	</order>
+	<order>
+		<customer>Donatas Pavardenis</customer>
+		<car>ABC002</car>
+		<days>2</days>
+	</order>
+	<order>
+		<customer>Donatas Pavardenis</customer>
+		<car>ABC006</car>
+		<days>2</days>
+	</order>
+	<order>
+		<customer>Donatas Pavardenis</customer>
+		<car>ABC111</car>
+		<days>2</days>
+	</order>
+	<order>
+		<customer>Donatas Pavardenis</customer>
+		<car>ABC012</car>
+		<days>2</days>
+	</order>
+	<order>
+		<customer>Donatas Pavardenis</customer>
+		<car>ABC313</car>
+		<days>2</days>
+	</order>
 </orders>
