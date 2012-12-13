@@ -18,7 +18,6 @@ import rental_system.RentalSystemWindow;
 import rental_system.Transmission;
 import rental_system.WheelSide;
 
-
 public class CarForm extends JFrame {
 	private JTextField inputId;
 	private JTextField inputTitle;
@@ -27,7 +26,7 @@ public class CarForm extends JFrame {
 	private JComboBox<String> inputTransmission;
 	private JSpinner inputSeats;
 	private JSpinner inputPrice;
-	
+
 	private RentalSystemWindow systemWindow;
 
 	private ActionListener buttonListener = new ActionListener() {
@@ -38,17 +37,24 @@ public class CarForm extends JFrame {
 			title = inputTitle.getText();
 			color = inputColor.getText();
 			if (id.length() == 0 || title.length() == 0)
-				JOptionPane.showMessageDialog(null, "Car identifier and title cannot be empty");
+				JOptionPane.showMessageDialog(null,
+						"Car identifier and title cannot be empty");
 			else
 				try {
-					systemWindow.add(new Car(id, title, color, (int)inputSeats.getValue(), WheelSide.values()[inputWheel.getSelectedIndex()], Transmission.values()[inputTransmission.getSelectedIndex()], (int)inputPrice.getValue()));
+					systemWindow.add(new Car(id, title, color, (int) inputSeats
+							.getValue(), WheelSide.values()[inputWheel
+							.getSelectedIndex()],
+							Transmission.values()[inputTransmission
+									.getSelectedIndex()], (int) inputPrice
+									.getValue()));
 					dispose();
 				} catch (IllegalArgumentException e) {
-					JOptionPane.showMessageDialog(null, "Car with this identifier is already in system.");
+					JOptionPane.showMessageDialog(null,
+							"Car with this identifier is already in system.");
 				}
 		}
 	};
-	
+
 	public CarForm(RentalSystemWindow systemWindow) {
 		super("Add car");
 		this.setLayout(new GridBagLayout());
@@ -63,18 +69,20 @@ public class CarForm extends JFrame {
 
 		this.add(new JLabel("Identifier"), ca);
 		this.add(inputId = new JTextField(), cb);
-		
+
 		this.add(new JLabel("Title"), ca);
 		this.add(inputTitle = new JTextField(), cb);
-		
+
 		this.add(new JLabel("Color"), ca);
 		this.add(inputColor = new JTextField(), cb);
-		
+
 		this.add(new JLabel("Wheel on"), ca);
-		this.add(inputWheel = new JComboBox<String>(new String[] {"Left", "Right"}), cb);
+		this.add(inputWheel = new JComboBox<String>(new String[] { "Left",
+				"Right" }), cb);
 
 		this.add(new JLabel("Transmission"), ca);
-		this.add(inputTransmission = new JComboBox<String>(new String[] {"Manual", "Automatic"}), cb);
+		this.add(inputTransmission = new JComboBox<String>(new String[] {
+				"Manual", "Automatic" }), cb);
 
 		this.add(new JLabel("Seats"), ca);
 		this.add(inputSeats = new JSpinner(), cb);

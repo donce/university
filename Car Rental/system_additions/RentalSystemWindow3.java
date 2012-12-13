@@ -30,11 +30,11 @@ import system_statistics.RentalSystemWindow2;
 
 public class RentalSystemWindow3 extends RentalSystemWindow2 {
 	private final static String DATA_FILE = "data";
-	
+
 	public RentalSystemWindow3() {
 		this(new RentalSystem3());
 	}
-	
+
 	public RentalSystemWindow3(RentalSystem system) {
 		super(system);
 		try {
@@ -46,9 +46,9 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 		}
 		if (system instanceof RentalSystem3) {
 			addWindowListener(windowListener);
-			
+
 			JPanel panel = new JPanel();
-			
+
 			JButton buttonXML = new JButton("Load cars from XML");
 			buttonXML.addActionListener(actionXMLLoad);
 			panel.add(buttonXML);
@@ -56,81 +56,86 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 			JButton buttonGenerate = new JButton("Add default customers");
 			buttonGenerate.addActionListener(actionGenerateCustomers);
 			panel.add(buttonGenerate);
-			
+
 			JButton buttonLoadOrders = new JButton("Load orders");
 			buttonLoadOrders.addActionListener(actionLoadOrders);
 			panel.add(buttonLoadOrders);
-			
+
 			pane.add(panel, "Actions");
 		}
 	}
-	
+
 	private ActionListener actionXMLLoad = new ActionListener() {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			try {
-				if (((RentalSystem3)system).loadCars("cars.xml")) {
+				if (((RentalSystem3) system).loadCars("cars.xml")) {
 					updateData();
-					JOptionPane.showMessageDialog(null, "Cars were added successfully.");
-				}
-				else
-					JOptionPane.showMessageDialog(null, "Failed to load XML file!");
-			}
-			catch (IllegalArgumentException e) {
-				JOptionPane.showMessageDialog(null, "Not all cars were loaded, because some identifiers were already used!");
+					JOptionPane.showMessageDialog(null,
+							"Cars were added successfully.");
+				} else
+					JOptionPane.showMessageDialog(null,
+							"Failed to load XML file!");
+			} catch (IllegalArgumentException e) {
+				JOptionPane
+						.showMessageDialog(null,
+								"Not all cars were loaded, because some identifiers were already used!");
 			}
 		}
 	};
 
 	private ActionListener actionGenerateCustomers = new ActionListener() {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			system.generateCustomers();
 			updateData();
-			JOptionPane.showMessageDialog(null, "Customers added successfully.");
+			JOptionPane
+					.showMessageDialog(null, "Customers added successfully.");
 		}
 	};
 
 	private ActionListener actionLoadOrders = new ActionListener() {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			loadOrders();
 		}
 	};
-	
+
 	public void sortByTitle() {
-		((RentalSystem3)system).sortByTitle();
+		((RentalSystem3) system).sortByTitle();
 		updateData();
 	}
-	
+
 	public void sortByPrice() {
-		((RentalSystem3)system).sortByPrice();
+		((RentalSystem3) system).sortByPrice();
 		updateData();
 	}
-	
+
 	private List<Order> loadOrdersList() {
 		Unmarshaller unmarshaller;
 		try {
-			unmarshaller = JAXBContext.newInstance(Orders.class).createUnmarshaller();
-			Orders orders = (Orders)unmarshaller.unmarshal(new FileInputStream("orders.xml"));
+			unmarshaller = JAXBContext.newInstance(Orders.class)
+					.createUnmarshaller();
+			Orders orders = (Orders) unmarshaller
+					.unmarshal(new FileInputStream("orders.xml"));
 			return orders.getList();
 		} catch (JAXBException | FileNotFoundException e) {
 			return null;
 		}
 	}
-	
+
 	private void loadOrders() {
 		LinkedBlockingQueue<Order> queue = new LinkedBlockingQueue<>();
-		
+
 		List<Order> orders = loadOrdersList();
 		if (orders == null) {
-//			JOptionPane.showMessageDialog(null, "")
+			// JOptionPane.showMessageDialog(null, "")
 			return;
 		}
-		
+
 		Producer producer = new Producer(queue, orders);
 		Consumer consumer = new Consumer(this, queue, orders.size());
 		producer.run();
@@ -138,7 +143,7 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 	}
 
 	private WindowListener windowListener = new WindowListener() {
-		
+
 		@Override
 		public void windowOpened(WindowEvent arg0) {
 		}
@@ -151,17 +156,26 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 				JOptionPane.showMessageDialog(null, "Can't save system state!");
 			}
 		}
-		
+
 		@Override
-		public void windowIconified(WindowEvent arg0) {}
+		public void windowIconified(WindowEvent arg0) {
+		}
+
 		@Override
-		public void windowDeiconified(WindowEvent arg0) {}
+		public void windowDeiconified(WindowEvent arg0) {
+		}
+
 		@Override
-		public void windowDeactivated(WindowEvent arg0) {}
+		public void windowDeactivated(WindowEvent arg0) {
+		}
+
 		@Override
-		public void windowClosed(WindowEvent arg0) {}
+		public void windowClosed(WindowEvent arg0) {
+		}
+
 		@Override
-		public void windowActivated(WindowEvent arg0) {}
+		public void windowActivated(WindowEvent arg0) {
+		}
 	};
 
 	private void saveSystem() throws IOException {
@@ -170,11 +184,11 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 		stream.writeObject(system);
 		stream.close();
 	}
-	
+
 	private void loadSystem() throws IOException, ClassNotFoundException {
 		FileInputStream fileStream = new FileInputStream(DATA_FILE);
 		ObjectInputStream stream = new ObjectInputStream(fileStream);
-		system = (RentalSystem)stream.readObject();
+		system = (RentalSystem) stream.readObject();
 		stream.close();
 		updateData();
 	}

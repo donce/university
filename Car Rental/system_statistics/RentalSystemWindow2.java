@@ -2,12 +2,11 @@ package system_statistics;
 
 import rental_system.*;
 
-
 public class RentalSystemWindow2 extends RentalSystemWindow {
-	
+
 	private PieChart rentTimeChart = null;
 	private BarChart myBarChart = null;
-	
+
 	public RentalSystemWindow2() {
 		this(new RentalSystem2());
 	}
@@ -21,15 +20,16 @@ public class RentalSystemWindow2 extends RentalSystemWindow {
 			pane.add("Cars chart", myBarChart);
 		}
 	}
-	
+
 	@Override
 	protected void updateData() {
 		super.updateData();
-		if (system instanceof RentalSystem2 && rentTimeChart != null && myBarChart != null) {
-			RentalSystem2 system2 = (RentalSystem2)system;
+		if (system instanceof RentalSystem2 && rentTimeChart != null
+				&& myBarChart != null) {
+			RentalSystem2 system2 = (RentalSystem2) system;
 			rentTimeChart.updateData(system2.getRentTimeStatistics());
 			myBarChart.updateData(system2.getCarStatistics());
 		}
 	}
-	
+
 }

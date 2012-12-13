@@ -15,11 +15,11 @@ public class RentalSystemWindow extends JFrame {
 	public CarsFrame carsFrame;
 	private OrdersFrame ordersFrame;
 	protected JTabbedPane pane;
-	
+
 	public RentalSystemWindow() {
 		this(new RentalSystem());
 	}
-	
+
 	public RentalSystemWindow(RentalSystem system) {
 		super("Car rental system");
 		if (system == null)
@@ -27,14 +27,14 @@ public class RentalSystemWindow extends JFrame {
 		this.system = system;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		pane = new JTabbedPane();
 		carsFrame = new CarsFrame(this);
 		pane.add("Cars", carsFrame);
 		ordersFrame = new OrdersFrame(this);
 		pane.add("Orders", ordersFrame);
 		add(pane);
-		
+
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -43,11 +43,11 @@ public class RentalSystemWindow extends JFrame {
 	public RentalSystem getSystem() {
 		return system;
 	}
-	
+
 	public void filter(FilterData filterData) {
 		carsFrame.setFilter(filterData);
 	}
-	
+
 	public void order(Car car, int days, Customer customer) {
 		system.order(car, days, customer);
 		updateData();
@@ -61,17 +61,17 @@ public class RentalSystemWindow extends JFrame {
 	public void showInvoice(Order order) {
 		new InvoiceFrame(order, this);
 	}
-	
+
 	public void add(Car car) {
 		system.add(car);
 		updateData();
 	}
-	
+
 	public void remove(Car car) {
 		system.remove(car);
 		updateData();
 	}
-	
+
 	public List<Car> getCars(FilterData filterData) {
 		return system.getCars(filterData);
 	}
@@ -79,8 +79,7 @@ public class RentalSystemWindow extends JFrame {
 	public boolean add(Customer customer) {
 		try {
 			system.add(customer);
-		}
-		catch (InvalidFormDataException e) {
+		} catch (InvalidFormDataException e) {
 			JOptionPane.showMessageDialog(null, e.getUserMessage());
 			return false;
 		}
@@ -92,5 +91,5 @@ public class RentalSystemWindow extends JFrame {
 		ordersFrame.update();
 		carsFrame.update();
 	}
-	
+
 }

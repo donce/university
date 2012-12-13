@@ -25,7 +25,6 @@ import rental_system.RentalSystemWindow;
 import system_additions.RentalSystem3;
 import system_additions.RentalSystemWindow3;
 
-
 public class CarsFrame extends JPanel {
 	private List<Car> cars;
 	private JScrollPane tablePane;
@@ -43,17 +42,20 @@ public class CarsFrame extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			Car car = getSelectedCar();
-			Customer customer = (Customer)customerForm.inputCustomer.getSelectedItem();
+			Customer customer = (Customer) customerForm.inputCustomer
+					.getSelectedItem();
 			if (car == null)
 				JOptionPane.showMessageDialog(null, "No car is chosen!");
 			else if (customer == null)
 				JOptionPane.showMessageDialog(null, "No customer is chosen!");
 			else
-				systemWindow.order(car, (int)customerForm.inputDays.getValue(),
-						(Customer)customerForm.inputCustomer.getSelectedItem());
+				systemWindow
+						.order(car, (int) customerForm.inputDays.getValue(),
+								(Customer) customerForm.inputCustomer
+										.getSelectedItem());
 		}
 	};
-	
+
 	private ActionListener addListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -69,17 +71,18 @@ public class CarsFrame extends JPanel {
 				systemWindow.remove(car);
 		}
 	};
-	
+
 	private ActionListener cloneListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			Car car = getSelectedCar();
 			if (car != null)
 				try {
-					Car newCar = (Car)car.clone();
+					Car newCar = (Car) car.clone();
 					boolean finished = false;
 					while (!finished) {
-						String newId = JOptionPane.showInputDialog("Please enter new identifier", car.getId());
+						String newId = JOptionPane.showInputDialog(
+								"Please enter new identifier", car.getId());
 						if (newId == null)
 							finished = true;
 						else {
@@ -88,7 +91,9 @@ public class CarsFrame extends JPanel {
 								systemWindow.add(newCar);
 								finished = true;
 							} catch (IllegalArgumentException e) {
-								JOptionPane.showMessageDialog(null, "This identifier is already used!", "ERROR", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(null,
+										"This identifier is already used!",
+										"ERROR", JOptionPane.ERROR_MESSAGE);
 							}
 						}
 					}
@@ -97,18 +102,17 @@ public class CarsFrame extends JPanel {
 				}
 		}
 	};
-	
+
 	public CarsFrame(RentalSystemWindow systemWindow) {
 		super(new GridBagLayout());
 		this.systemWindow = systemWindow;
-		
+
 		JPanel filterFrame = new FilterFrame(systemWindow);
 		customerForm = new CustomerForm(systemWindow);
-		
-		JButton buttonOrder = new JButton("Order"),
-				buttonAdd = new JButton("Add"),
-				buttonRemove = new JButton("Remove"),
-				buttonClone = new JButton("Dublicate");
+
+		JButton buttonOrder = new JButton("Order"), buttonAdd = new JButton(
+				"Add"), buttonRemove = new JButton("Remove"), buttonClone = new JButton(
+				"Dublicate");
 		buttonOrder.addActionListener(orderListener);
 		buttonAdd.addActionListener(addListener);
 		buttonRemove.addActionListener(removeListener);
@@ -119,22 +123,23 @@ public class CarsFrame extends JPanel {
 		panel.add(buttonAdd);
 		panel.add(buttonRemove);
 		panel.add(buttonClone);
-		
+
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.WEST;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weighty = 0.1;
 		c.gridx = 0;
 		c.anchor = GridBagConstraints.NORTH;
-		
+
 		add(filterFrame, c);
-		if (systemWindow instanceof RentalSystemWindow3 && systemWindow.system instanceof RentalSystem3)
-			add(new SortFrame((RentalSystemWindow3)systemWindow), c);
+		if (systemWindow instanceof RentalSystemWindow3
+				&& systemWindow.system instanceof RentalSystem3)
+			add(new SortFrame((RentalSystemWindow3) systemWindow), c);
 		add(customerForm, c);
-		
+
 		c.anchor = GridBagConstraints.SOUTH;
 		add(panel, c);
-		
+
 		update();
 	}
 
@@ -142,7 +147,7 @@ public class CarsFrame extends JPanel {
 		this.filterData = filterData;
 		update();
 	}
-	
+
 	public void update() {
 		cars = systemWindow.getCars(filterData);
 		Object[][] data = new Object[cars.size()][7];
@@ -157,8 +162,9 @@ public class CarsFrame extends JPanel {
 			data[i][5] = car.getId();
 			data[i][6] = Money.toString(car.getPrice());
 		}
-		tableCars = new JTable(data, new Object[] {"Title", "Wheel side", "Transmission", "Seats", "Color", "Identifier", "Price"});
-		
+		tableCars = new JTable(data, new Object[] { "Title", "Wheel side",
+				"Transmission", "Seats", "Color", "Identifier", "Price" });
+
 		if (tablePane != null)
 			remove(tablePane);
 		tablePane = new JScrollPane();

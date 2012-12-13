@@ -13,12 +13,20 @@ import rental_system.Car;
 import system_statistics.RentalSystem2;
 
 /**
+ * Rental system with additional ability to load cars from XML file and to sort
+ * cars by title and price.
  * 
  * @author Donatas Kučinskas <donce.lt@gmail.com>
- *
+ * 
  */
 public class RentalSystem3 extends RentalSystem2 {
-	
+
+	/**
+	 * Comparator to compare cars by price
+	 * 
+	 * @author donatas
+	 * 
+	 */
 	class CarPriceComparator implements Comparator<Car> {
 		@Override
 		public int compare(Car c1, Car c2) {
@@ -26,7 +34,14 @@ public class RentalSystem3 extends RentalSystem2 {
 			return (p1 > p2 ? 1 : (p1 < p2 ? -1 : 0));
 		}
 	}
-	
+
+	/**
+	 * Add cars from XML file.
+	 * 
+	 * @param filename
+	 *            XML file with cars to load
+	 * @return true if loading succeeded
+	 */
 	public boolean loadCars(String filename) {
 		Unmarshaller u;
 		try {
@@ -34,22 +49,28 @@ public class RentalSystem3 extends RentalSystem2 {
 		} catch (JAXBException e) {
 			return false;
 		}
-		
+
 		Cars cars;
 		try {
-			cars = (Cars)u.unmarshal(new FileReader(filename));
-		} catch (FileNotFoundException|JAXBException e) {
+			cars = (Cars) u.unmarshal(new FileReader(filename));
+		} catch (FileNotFoundException | JAXBException e) {
 			return false;
 		}
 		for (Car car : cars.list)
 			add(car);
 		return true;
 	}
-	
+
+	/**
+	 * Sort system cars by title
+	 */
 	public void sortByTitle() {
 		Collections.sort(cars);
 	}
-	
+
+	/**
+	 * Sort system cars by price
+	 */
 	public void sortByPrice() {
 		Collections.sort(cars, new CarPriceComparator());
 	}

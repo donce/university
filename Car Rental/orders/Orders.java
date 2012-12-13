@@ -7,11 +7,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
 public class Orders {
-	@XmlElement(name="order")
+	@XmlElement(name = "order")
 	private List<Order> list;
-	
+
 	public List<Order> getList() {
 		return list;
 	}
 }
-

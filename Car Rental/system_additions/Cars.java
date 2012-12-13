@@ -9,7 +9,7 @@ import rental_system.Car;
 
 @XmlRootElement
 class Cars {
-	@XmlElement(name="car")
+	@XmlElement(name = "car")
 	public List<Car> list;
 
 }

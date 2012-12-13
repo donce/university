@@ -16,27 +16,25 @@ import javax.swing.JSpinner;
 import rental_system.Customer;
 import rental_system.RentalSystemWindow;
 
-
-
 public class CustomerForm extends JPanel {
 	private RentalSystemWindow systemWindow;
 	public JSpinner inputDays;
 	public JComboBox<Customer> inputCustomer;
-	
+
 	public void update() {
 		inputCustomer.removeAllItems();
 		Iterator<Customer> it = systemWindow.system.getCustomers().iterator();
 		while (it.hasNext())
 			inputCustomer.addItem(it.next());
 	}
-	
+
 	private ActionListener registerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			new RegistrationWindow(systemWindow);
 		}
 	};
-	
+
 	public CustomerForm(RentalSystemWindow systemWindow) {
 		super(new GridBagLayout());
 		this.systemWindow = systemWindow;
@@ -49,7 +47,7 @@ public class CustomerForm extends JPanel {
 		cb.anchor = GridBagConstraints.WEST;
 		cb.ipadx = 0;
 		cb.gridx = 1;
-		
+
 		this.add(new JLabel("Days"), ca);
 		inputDays = new JSpinner();
 		inputDays.setValue(1);
@@ -57,7 +55,7 @@ public class CustomerForm extends JPanel {
 		this.add(new JLabel("Customer"), ca);
 		inputCustomer = new JComboBox<Customer>();
 		this.add(inputCustomer, cb);
-		
+
 		JButton buttonAdd = new JButton("Add");
 		buttonAdd.addActionListener(registerListener);
 		cb.gridx = 2;

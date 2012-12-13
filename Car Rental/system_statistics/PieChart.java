@@ -11,7 +11,7 @@ import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
 public class PieChart extends ChartPanel {
-	
+
 	public PieChart() {
 		super(null);
 		updateData(null);
@@ -23,11 +23,14 @@ public class PieChart extends ChartPanel {
 			Iterator<Map.Entry<Integer, Integer>> it = set.iterator();
 			while (it.hasNext()) {
 				Map.Entry<Integer, Integer> entry = it.next();
-				((DefaultPieDataset)dataset).setValue(entry.getKey() + " " + (entry.getKey() > 1 ? "days" : "day"), entry.getValue());
+				((DefaultPieDataset) dataset).setValue(entry.getKey() + " "
+						+ (entry.getKey() > 1 ? "days" : "day"),
+						entry.getValue());
 			}
 		}
-		JFreeChart chart = ChartFactory.createPieChart3D("Rent duration", dataset, false, true, false);
-		chart.getPlot().setForegroundAlpha((float)0.8);
+		JFreeChart chart = ChartFactory.createPieChart3D("Rent duration",
+				dataset, false, true, false);
+		chart.getPlot().setForegroundAlpha((float) 0.8);
 		this.setChart(chart);
 	}
 }

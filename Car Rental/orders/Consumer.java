@@ -19,15 +19,16 @@ public class Consumer extends Thread {
 	private JProgressBar progressBar;
 	private JFrame frame;
 	private Timer timer;
-	
-	public Consumer(RentalSystemWindow3 window, LinkedBlockingQueue<Order> queue, int length) {
+
+	public Consumer(RentalSystemWindow3 window,
+			LinkedBlockingQueue<Order> queue, int length) {
 		this.window = window;
 		this.queue = queue;
 		this.length = length;
 		progressBar = new JProgressBar(0, length);
 		progressBar.setValue(0);
 	}
-	
+
 	private ActionListener orderListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -38,12 +39,15 @@ public class Consumer extends Thread {
 				System.out.println("Job finished.");
 				return;
 			}
-			
-			progressBar.setValue(progressBar.getValue()+1);
-			progressBar.setString(Integer.toString(progressBar.getValue()) + " / " + Integer.toString(length) + " orders");
+
+			progressBar.setValue(progressBar.getValue() + 1);
+			progressBar.setString(Integer.toString(progressBar.getValue())
+					+ " / " + Integer.toString(length) + " orders");
 			try {
 				Order order = queue.take();
-				System.out.println("Ordering " + order.getCar() + " " + order.getCustomer() + " " + Integer.toString(order.getDays()));
+				System.out.println("Ordering " + order.getCar() + " "
+						+ order.getCustomer() + " "
+						+ Integer.toString(order.getDays()));
 				if (order.getCar() == null || order.getCustomer() == null) {
 					System.out.println("Not all data are supplied.");
 					return;
@@ -53,12 +57,13 @@ public class Consumer extends Thread {
 					System.out.println("First name and last name are needed.");
 					return;
 				}
-				Customer customer = window.system.getCustomer(words[0], words[1]);
+				Customer customer = window.system.getCustomer(words[0],
+						words[1]);
 				if (customer == null) {
 					System.out.println("Customer not found.");
 					return;
 				}
-				
+
 				Car car = window.system.getCar(order.getCar());
 				if (car == null) {
 					System.out.println("Car not found.");
@@ -71,7 +76,7 @@ public class Consumer extends Thread {
 			}
 		}
 	};
-	
+
 	@Override
 	public void run() {
 		frame = new JFrame();
@@ -85,5 +90,5 @@ public class Consumer extends Thread {
 		timer = new Timer(1000, orderListener);
 		timer.start();
 	}
-	
+
 }

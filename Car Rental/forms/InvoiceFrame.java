@@ -14,13 +14,12 @@ import rental_system.Money;
 import rental_system.Order;
 import rental_system.RentalSystemWindow;
 
-
 public class InvoiceFrame extends JFrame {
 	private Order order;
 	JButton button;
-	
+
 	RentalSystemWindow systemWindow;
-	
+
 	private ActionListener buttonListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -28,7 +27,7 @@ public class InvoiceFrame extends JFrame {
 			dispose();
 		}
 	};
-	
+
 	public InvoiceFrame(Order _order, RentalSystemWindow systemWindow) {
 		super("Invoice");
 		this.systemWindow = systemWindow;
@@ -45,11 +44,12 @@ public class InvoiceFrame extends JFrame {
 
 		Date now = new Date();
 		long diff = now.getTime() - order.getDate().getTime();
-		float payDays = (float)diff / (1000*60*60*24);
+		float payDays = (float) diff / (1000 * 60 * 60 * 24);
 		if (payDays < order.getDays())
 			payDays = order.getDays();
-		int additionalPrice = (int)((payDays - order.getDays()) * order.getCar().getPrice());
-		
+		int additionalPrice = (int) ((payDays - order.getDays()) * order
+				.getCar().getPrice());
+
 		add(new JLabel("Car"), ca);
 		add(new JLabel(order.getCar().getTitle()), cb);
 		add(new JLabel("Base price"), ca);
@@ -61,7 +61,7 @@ public class InvoiceFrame extends JFrame {
 		button = new JButton("OK");
 		button.addActionListener(buttonListener);
 		add(button, cb);
-		
+
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);

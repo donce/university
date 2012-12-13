@@ -16,7 +16,7 @@ import rental_system.RentalSystemWindow;
 
 public class RegistrationWindow extends JFrame {
 	private RentalSystemWindow systemWindow;
-	
+
 	private JTextField inputFirstName = new JTextField(20);
 	private JTextField inputLastName = new JTextField(20);
 	private JTextField inputCountry = new JTextField(20);
@@ -24,19 +24,19 @@ public class RegistrationWindow extends JFrame {
 	private JTextField inputStreet = new JTextField(20);
 	private JSpinner inputNumberA = new JSpinner();
 	private JSpinner inputNumberB = new JSpinner();
-	
+
 	private ActionListener registerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			if (systemWindow.add(new Customer(
-					inputFirstName.getText(), inputLastName.getText(),
-					inputCountry.getText(), inputCity.getText(), inputStreet.getText(),
-					(int)inputNumberA.getValue(), (int)inputNumberB.getValue()
-			)))
+			if (systemWindow.add(new Customer(inputFirstName.getText(),
+					inputLastName.getText(), inputCountry.getText(), inputCity
+							.getText(), inputStreet.getText(),
+					(int) inputNumberA.getValue(), (int) inputNumberB
+							.getValue())))
 				dispose();
 		}
 	};
-	
+
 	public RegistrationWindow(RentalSystemWindow systemWindow) {
 		super("Registration");
 		this.systemWindow = systemWindow;
@@ -73,11 +73,11 @@ public class RegistrationWindow extends JFrame {
 		cb.gridwidth = 3;
 		cb.gridy = -1;
 		cb.gridx = 1;
-		
+
 		JButton buttonCreate = new JButton("Register");
 		buttonCreate.addActionListener(registerListener);
 		add(buttonCreate, cb);
-		
+
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);

@@ -5,13 +5,13 @@ import java.io.Serializable;
 public class Customer implements Cloneable, Serializable {
 	private String firstName;
 	private String lastName;
-	
+
 	private String country;
 	private String city;
 	private String street;
 	private int numberA;
 	private int numberB;
-	
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -68,7 +68,8 @@ public class Customer implements Cloneable, Serializable {
 		this.numberB = numberB;
 	}
 
-	public Customer(String firstName, String lastName, String country, String city, String street, int numberA, int numberB) {
+	public Customer(String firstName, String lastName, String country,
+			String city, String street, int numberA, int numberB) {
 		setFirstName(firstName);
 		setLastName(lastName);
 		setCountry(country);
@@ -77,7 +78,7 @@ public class Customer implements Cloneable, Serializable {
 		setNumberA(numberA);
 		setNumberB(numberB);
 	}
-	
+
 	@Override
 	public String toString() {
 		return getFirstName() + " " + getLastName();
@@ -85,6 +86,6 @@ public class Customer implements Cloneable, Serializable {
 
 	@Override
 	public Customer clone() throws CloneNotSupportedException {
-		return (Customer)super.clone();
+		return (Customer) super.clone();
 	}
 }
