@@ -2,6 +2,7 @@ package system_additions;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.FileInputStream;
@@ -131,10 +132,8 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 		LinkedBlockingQueue<Order> queue = new LinkedBlockingQueue<>();
 
 		List<Order> orders = loadOrdersList();
-		if (orders == null) {
-			// JOptionPane.showMessageDialog(null, "")
+		if (orders == null)
 			return;
-		}
 
 		Producer producer = new Producer(queue, orders);
 		Consumer consumer = new Consumer(this, queue, orders.size());
@@ -142,11 +141,7 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 		consumer.run();
 	}
 
-	private WindowListener windowListener = new WindowListener() {
-
-		@Override
-		public void windowOpened(WindowEvent arg0) {
-		}
+	private WindowListener windowListener = new WindowAdapter() {
 
 		@Override
 		public void windowClosing(WindowEvent arg0) {
@@ -157,25 +152,6 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 			}
 		}
 
-		@Override
-		public void windowIconified(WindowEvent arg0) {
-		}
-
-		@Override
-		public void windowDeiconified(WindowEvent arg0) {
-		}
-
-		@Override
-		public void windowDeactivated(WindowEvent arg0) {
-		}
-
-		@Override
-		public void windowClosed(WindowEvent arg0) {
-		}
-
-		@Override
-		public void windowActivated(WindowEvent arg0) {
-		}
 	};
 
 	private void saveSystem() throws IOException {
