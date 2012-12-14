@@ -11,9 +11,9 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-public class BarChart extends ChartPanel {
+public class CarsChart extends ChartPanel {
 
-	public BarChart() {
+	public CarsChart() {
 		super(null);
 		updateData(null);
 	}

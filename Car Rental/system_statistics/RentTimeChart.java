@@ -10,9 +10,9 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
 
-public class PieChart extends ChartPanel {
+public class RentTimeChart extends ChartPanel {
 
-	public PieChart() {
+	public RentTimeChart() {
 		super(null);
 		updateData(null);
 	}
