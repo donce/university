@@ -64,11 +64,24 @@ public class Main {
 		loadDriver();
 		Connection connection = getConnection();
 		if (connection != null) {
-			Shop shop = new Shop(connection);
+			Shop shop;
+			try {
+				shop = new Shop(connection);
+			} catch (SQLException e) {
+				System.out.println("Error while initializing statements");
+				return;
+			}
 			InputStreamReader streamReader = new InputStreamReader(System.in);
 			bufferedReader = new BufferedReader(streamReader);
 			scanner = new Scanner(bufferedReader);
 			while (true) {
+				try {
+					shop.printComponents();
+					shop.printComputers();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				System.out.println("Available commands:");
 				for (int i = 0; i < actions.length; ++i)
 					System.out.println(Integer.toString(i+1) + ") " + actions[i]);
@@ -115,6 +128,7 @@ public class Main {
 					
 					continue;
 				}
+				shop.close();
 			}
 			
 //			try {
