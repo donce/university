@@ -109,15 +109,24 @@ public class Main {
 		}
 	}
 	
+	private static boolean readBoolean() {
+		//TODO: implement
+		return false;
+	}
+	
 	private static List<Object> readInput(String[] titles, Class<?>[] types) {
 		if (titles.length != types.length)
 			throw new RuntimeException("Different sizes of argument arrays.");
 		List<Object> list = new ArrayList<>();
 		for (int i = 0; i < titles.length; ++i) {
 			Class<?> t = types[i];
+			System.out.print(titles[i]);
 			if (t == Date.class)
 				System.out.print("(YYYY-MM-DD)");
-			System.out.print(titles[i] + ":");
+			else if (t == boolean.class)
+				System.out.print("?(y/n)");
+			System.out.print(": ");
+//			TODO: try/catch InputMismatchException, replay reading
 			Object obj = Integer.class;
 			if (t == int.class)
 				obj = readInt();
@@ -148,24 +157,20 @@ public class Main {
 		String address;
 		BigDecimal price;
 		
-//		String[] titles;
-//		Class[]
 		List<Object> r;
 		
 		switch (number) {
 		case 0:
-//			readInput(titles, types)
 			//add component
-			System.out.print("Title:");
-			title = readString();
-			System.out.print("Manufacturer:");
-			manufacturer = readString();
-			System.out.print("Price:");
-			price = readBigDecimal();
-			shop.addComponent(title, manufacturer, price);
+			r = readInput(new String[] {"Title", "Manufacturer", "Price"},
+					new Class<?>[] {String.class, String.class, BigDecimal.class});
+			shop.addComponent((String) r.get(0), (String) r.get(1), (BigDecimal) r.get(2));
 			break;
 		case 1:
+			//TODO
 			//add computer
+//			r = readInput(
+//					);
 			System.out.print("Title:");
 			title = readString();
 			System.out.print("Description:");
@@ -187,25 +192,15 @@ public class Main {
 			
 			break;
 		case 2:
+			//register user
 			r = readInput(
 					new String[] {"First name", "Last name", "Identification code", "Birthday", "Address"},
 					new Class<?>[] {String.class, String.class, long.class, Date.class, String.class});
-			shop.register((String)r.get(0), (String)r.get(1), (long)r.get(2), (Date)r.get(3), (String)r.get(4));
+			shop.register((String) r.get(0), (String) r.get(1), (long) r.get(2), (Date) r.get(3), (String) r.get(4));
 			System.out.println(r);
-			//register user
-//			System.out.print("First name:");
-//			firstName = readString();
-//			System.out.print("Last name:");
-//			lastName = readString();
-//			System.out.print("Identification code:");
-//			identificationCode = readLong();
-//			System.out.print("Birthday(YYYY-MM-DD):");
-//			birthday = readDate();
-//			System.out.print("Address:");
-//			address = readString();
-//			shop.register(firstName, lastName, identificationCode, birthday, address);
 			break;
 		case 3:
+			//TODO: convert, finish deliver
 			//buy
 			shop.printCustomers();
 			System.out.print("Customer:");
