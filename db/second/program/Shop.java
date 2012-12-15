@@ -1,10 +1,11 @@
 import java.io.Closeable;
+import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 /*
@@ -26,43 +27,58 @@ customer first/last name, with his purchases
 */
 
 public class Shop implements Closeable {
-	PreparedStatement statementInsertComponent;
-	PreparedStatement statementSelectComponents;
-	PreparedStatement statementSelectComputers;
+	private PreparedStatement
+		stInsertComponent,
+		stInsertCustomer,
+		stInsertPurchase,
+		stSelectComponents,
+		stSelectComputers,
+		stSelectCustomers;
+	//TODO: sort
 
 	public Shop(Connection connection) throws SQLException {
-		statementInsertComponent = connection.prepareStatement("INSERT INTO Component(Title, Manufacturer, Price) VALUES (?, ?, ?);");
-		statementSelectComponents = connection.prepareStatement("SELECT id, title, manufacturer, price FROM Component;");
-		statementSelectComputers = connection.prepareStatement("SELECT id, title, description, price FROM ComputerPrice;");
+		stInsertComponent = connection.prepareStatement("INSERT INTO Component(Title, Manufacturer, Price) VALUES (?, ?, ?);");
+		stSelectComponents = connection.prepareStatement("SELECT * FROM Component;");
+		stSelectComputers = connection.prepareStatement("SELECT id, title, description, price FROM ComputerPrice;");//TODO: *?
+		stSelectComputers = connection.prepareStatement("SELECT * FROM Customers;");
+		stInsertCustomer = connection.prepareStatement("INSERT INTO Customer(First_name, Last_name, Identification_code, Birthday, Address) VALUES (?, ?, ?, ?, ?);");
+		stInsertPurchase = connection.prepareStatement("INSERT INTO Purchase(Computer, Customer, Is_deliver) VALUES (?, ?, ?);");
 	}
 	
 	public void close() {
 		try {
-			statementInsertComponent.close();
-			statementSelectComponents.close();
-			statementSelectComputers.close();
+			//TODO: add all
+			stInsertComponent.close();
+			stSelectComponents.close();
+			stSelectComputers.close();
 		} catch (SQLException e) {
 			System.out.println("Failed closing prepared statements.");
 			e.printStackTrace();
 		}
 	}
 
-	public void buy() {
-//		ResultSet rs = executeQuery("SELECT * FROM Component;");
-//		if (rs != null) {
-//			try {
-//				rs.close();
-//			} catch (SQLException e) {
-//				System.out.println("Error while closing result set!");
-//			}
-//		}
+	public void buy(int computer, int customer, boolean deliver) throws SQLException {
+		stInsertPurchase.setInt(1,  computer);
+		stInsertPurchase.setInt(2,  customer);
+		stInsertPurchase.setBoolean(3, deliver);
+		stInsertPurchase.executeUpdate();
 	}
 	
-	public void addComponent(String title, String manufacturer, int price) {
-		
+	public void addComponent(String title, String manufacturer, BigDecimal price) throws SQLException {
+		stInsertComponent.setString(1, title);
+		stInsertComponent.setString(2, manufacturer);
+		stInsertComponent.setBigDecimal(3, price);
+		stInsertComponent.executeUpdate();
 	}
-	
-//	public void register(String firstName, String lastName, Number identification_code?, Birthday?, Address?)
+
+	public void register(String firstName, String lastName, long identificationCode, Date birthday, String address) throws SQLException {
+		stInsertCustomer.setString(1, firstName);
+		stInsertCustomer.setString(2, lastName);
+		stInsertCustomer.setLong(3, identificationCode);
+		stInsertCustomer.setDate(4, birthday);
+		stInsertCustomer.setString(5, address);
+		stInsertCustomer.executeUpdate();
+	}
 	
 	public void findCustomer(String firstName, String lastName) {
 		
@@ -71,13 +87,17 @@ public class Shop implements Closeable {
 	public void addComputer(String title, String description, int additionalPrice) {
 		
 	}
-	
+
 	public void printComponents() throws SQLException {
-		printResultSet(statementSelectComponents.executeQuery());
+		printResultSet(stSelectComponents.executeQuery());
+	}
+	
+	public void printCustomers() throws SQLException {
+		printResultSet(stSelectCustomers.executeQuery());
 	}
 	
 	public void printComputers() throws SQLException {
-		printResultSet(statementSelectComputers.executeQuery());
+		printResultSet(stSelectComputers.executeQuery());
 	}
 	
 	private void printResultSet(ResultSet resultSet) throws SQLException {
