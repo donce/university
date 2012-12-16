@@ -6,14 +6,11 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.InputMismatchException;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import javax.management.RuntimeErrorException;
 
 
 public class Main {
@@ -54,7 +51,8 @@ public class Main {
 		
 	}
 	
-	private static String readString() {
+	private static String readString(String title) {
+		System.out.print(title + ": ");
 		try {
 			return bufferedReader.readLine();
 		} catch (IOException e) {
@@ -62,7 +60,8 @@ public class Main {
 		}
 	}
 
-	private static int readInt() {
+	private static int readInt(String title) {
+		System.out.print(title + ": ");
 		try {
 			return scanner.nextInt();
 		} catch (NoSuchElementException | IllegalStateException e) {
@@ -70,7 +69,8 @@ public class Main {
 		}
 	}
 
-	private static long readLong() {
+	private static long readLong(String title) {
+		System.out.print(title + ": ");
 		try {
 			return scanner.nextLong();
 		} catch (NoSuchElementException | IllegalStateException e) {
@@ -78,7 +78,8 @@ public class Main {
 		}
 	}
 	
-	private static BigDecimal readBigDecimal() {
+	private static BigDecimal readBigDecimal(String title) {
+		System.out.print(title + ": ");
 		try {
 			return scanner.nextBigDecimal();
 		} catch (NoSuchElementException | IllegalStateException e) {
@@ -87,7 +88,8 @@ public class Main {
 	}
 	
 	//TODO: wrong result in database
-	private static Date readDate() {
+	private static Date readDate(String title) {
+		System.out.print(title + "(YYYY-MM-DD): ");
 		try {
 			String line = bufferedReader.readLine();
 			String[] parts = line.split("-");
@@ -109,110 +111,45 @@ public class Main {
 		}
 	}
 	
-	private static boolean readBoolean() {
+	private static boolean readBoolean(String title) {
+		System.out.println(title + "(y/n): ");
 		//TODO: implement
 		return false;
 	}
-	
-	private static List<Object> readInput(String[] titles, Class<?>[] types) {
-		if (titles.length != types.length)
-			throw new RuntimeException("Different sizes of argument arrays.");
-		List<Object> list = new ArrayList<>();
-		for (int i = 0; i < titles.length; ++i) {
-			Class<?> t = types[i];
-			System.out.print(titles[i]);
-			if (t == Date.class)
-				System.out.print("(YYYY-MM-DD)");
-			else if (t == boolean.class)
-				System.out.print("?(y/n)");
-			System.out.print(": ");
-//			TODO: try/catch InputMismatchException, replay reading
-			Object obj = Integer.class;
-			if (t == int.class)
-				obj = readInt();
-			else if (t == long.class)
-				obj = readLong();
-			else if (t == String.class)
-				obj = readString();
-			else if (t == Date.class)
-				obj = readDate();
-			else if (t == BigDecimal.class)
-				obj = readBigDecimal();
-			else
-				throw new RuntimeException("Unknown class asked for input");
-			list.add(obj);
-		}
-		return list;
-	}
-	
-	
+
 	private static void executeTask(int number) throws SQLException {
 		System.out.println("==========================");
 		System.out.println(actions[number+1]);
 		System.out.println("==========================");
 		
-		String title, manufacturer, firstName, lastName;
-		Date birthday;
-		long identificationCode;
-		String address;
-		BigDecimal price;
-		
-		List<Object> r;
-		
 		switch (number) {
 		case 0:
 			//add component
-			r = readInput(new String[] {"Title", "Manufacturer", "Price"},
-					new Class<?>[] {String.class, String.class, BigDecimal.class});
-			shop.addComponent((String) r.get(0), (String) r.get(1), (BigDecimal) r.get(2));
+			shop.addComponent(readString("Title"), readString("Manufacturer"), readBigDecimal("Price"));
 			break;
 		case 1:
-			//TODO
 			//add computer
-//			r = readInput(
-//					);
-			System.out.print("Title:");
-			title = readString();
-			System.out.print("Description:");
-			String description = readString();
-			System.out.print("Additional price:");
-			price = readBigDecimal();
-			
-			//print list
-			int id;
-			
-			List<Integer> list = new ArrayList<Integer>();
-			do {
-				System.out.print("Enter component ID to add (0 to finish):");
-				id = readInt();
-				if (id != 0)
-					list.add(id);
-			}
-			while (id != 0);
-			
+			shop.addComputer(readString("Title"), readString("Description"), readBigDecimal("Additional price"));
 			break;
 		case 2:
 			//register user
-			r = readInput(
-					new String[] {"First name", "Last name", "Identification code", "Birthday", "Address"},
-					new Class<?>[] {String.class, String.class, long.class, Date.class, String.class});
-			shop.register((String) r.get(0), (String) r.get(1), (long) r.get(2), (Date) r.get(3), (String) r.get(4));
-			System.out.println(r);
+			shop.register(readString("First name"), readString("Last name"), readLong("Identification code"), readDate("Birthday"), readString("Address"));
 			break;
 		case 3:
-			//TODO: convert, finish deliver
 			//buy
 			shop.printCustomers();
-			System.out.print("Customer:");
-			int customer = readInt();
+			int customer = readInt("Customer");
 			shop.printComputers();
-			System.out.print("Computer:");
-			int computer = readInt();
-//			System.out.println("Deliver?(y/n):");
-//			shop.buy(computer, customer);
+			shop.buy(customer, readInt("Computer"), readBoolean("Deliver"));
+		case 4:
+			//change components in computer
+			shop.printComputers();
+			int computer = readInt("Computer");
+			shop.printComputerComponents(computer);
+//			TODO: modify components count in computer
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		loadDriver();
 		Connection connection = getConnection();
@@ -240,7 +177,7 @@ public class Main {
 					try {
 						executeTask(number-1);
 					} catch (SQLException e) {
-						System.out.println("Database error occured while executing task.");
+						System.out.println(e.getMessage());
 					}
 			}
 			shop.close();

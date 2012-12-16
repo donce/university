@@ -33,16 +33,21 @@ public class Shop implements Closeable {
 		stInsertPurchase,
 		stSelectComponents,
 		stSelectComputers,
-		stSelectCustomers;
+		stSelectCustomers,
+		stInsertComputer,
+		stSelectComputerComponents;
 	//TODO: sort
 
 	public Shop(Connection connection) throws SQLException {
-		stInsertComponent = connection.prepareStatement("INSERT INTO Component(Title, Manufacturer, Price) VALUES (?, ?, ?);");
 		stSelectComponents = connection.prepareStatement("SELECT * FROM Component;");
 		stSelectComputers = connection.prepareStatement("SELECT id, title, description, price FROM ComputerPrice;");//TODO: *?
-		stSelectComputers = connection.prepareStatement("SELECT * FROM Customers;");
+		stSelectCustomers = connection.prepareStatement("SELECT * FROM Customers;");
+
 		stInsertCustomer = connection.prepareStatement("INSERT INTO Customer(First_name, Last_name, Identification_code, Birthday, Address) VALUES (?, ?, ?, ?, ?);");
 		stInsertPurchase = connection.prepareStatement("INSERT INTO Purchase(Computer, Customer, Is_deliver) VALUES (?, ?, ?);");
+		stInsertComponent = connection.prepareStatement("INSERT INTO Component(Title, Manufacturer, Price) VALUES (?, ?, ?);");
+		stInsertComputer = connection.prepareStatement("INSERT INTO Computer(Title, Description, Additional_price) VALUES (?, ?, ?);");
+		stSelectComputerComponents = connection.prepareStatement("SELECT Component_id AS ID, Component as Title, Component_manufacturer AS Manufacturer, Count, Total_price FROM ComputerComponent WHERE Computer_id = ?;");
 	}
 	
 	public void close() {
@@ -84,12 +89,24 @@ public class Shop implements Closeable {
 		
 	}
 	
-	public void addComputer(String title, String description, int additionalPrice) {
+	public void addComputer(String title, String description, BigDecimal additionalPrice) throws SQLException {
+		stInsertComputer.setString(1, title);
+		stInsertComputer.setString(2, description);
+		stInsertComputer.setBigDecimal(3, additionalPrice);
+		stInsertComputer.executeUpdate();
+	}
+	
+	public void addComponent() {
 		
 	}
 
 	public void printComponents() throws SQLException {
 		printResultSet(stSelectComponents.executeQuery());
+	}
+	
+	public void printComputerComponents(int computer) throws SQLException {
+		stSelectComputerComponents.setInt(1, computer);
+		printResultSet(stSelectComputerComponents.executeQuery());
 	}
 	
 	public void printCustomers() throws SQLException {

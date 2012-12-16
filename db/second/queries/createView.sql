@@ -5,7 +5,7 @@ CREATE VIEW ComputerComponent AS
 	JOIN Computer ON (Belonging.Computer = Computer.ID);
  
 CREATE VIEW ComputerPrice AS
-	SELECT id, Title, Description, Sum as Components_price, Additional_price, Sum+Additional_price AS Price
+	SELECT ID, Title, Description, Sum as Components_price, Additional_price, Sum+Additional_price AS Price
 	FROM (
 		SELECT Computer, SUM(Price*Count)
 		FROM Belonging
