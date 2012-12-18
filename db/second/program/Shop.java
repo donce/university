@@ -27,35 +27,61 @@ customer first/last name, with his purchases
 */
 
 public class Shop implements Closeable {
+	private Connection connection;
 	private PreparedStatement
-		stInsertComponent,
-		stInsertCustomer,
-		stInsertPurchase,
 		stSelectComponents,
 		stSelectComputers,
+		stSelectCustomer,
 		stSelectCustomers,
+		stSelectComputerComponents,
+	
+		stInsertCustomer,
+		stInsertPurchase,
+		stInsertComponent,
 		stInsertComputer,
-		stSelectComputerComponents;
-	//TODO: sort
+		
+		stSelectBelonging,
+		stUpdateBelonging,
+		stDeleteBelonging,
+		stInsertBelonging;
 
 	public Shop(Connection connection) throws SQLException {
-		stSelectComponents = connection.prepareStatement("SELECT * FROM Component;");
-		stSelectComputers = connection.prepareStatement("SELECT id, title, description, price FROM ComputerPrice;");//TODO: *?
-		stSelectCustomers = connection.prepareStatement("SELECT * FROM Customers;");
-
-		stInsertCustomer = connection.prepareStatement("INSERT INTO Customer(First_name, Last_name, Identification_code, Birthday, Address) VALUES (?, ?, ?, ?, ?);");
-		stInsertPurchase = connection.prepareStatement("INSERT INTO Purchase(Computer, Customer, Is_deliver) VALUES (?, ?, ?);");
-		stInsertComponent = connection.prepareStatement("INSERT INTO Component(Title, Manufacturer, Price) VALUES (?, ?, ?);");
-		stInsertComputer = connection.prepareStatement("INSERT INTO Computer(Title, Description, Additional_price) VALUES (?, ?, ?);");
-		stSelectComputerComponents = connection.prepareStatement("SELECT Component_id AS ID, Component as Title, Component_manufacturer AS Manufacturer, Count, Total_price FROM ComputerComponent WHERE Computer_id = ?;");
+		stSelectComponents = connection.prepareStatement("SELECT * FROM Component");
+		stSelectComputers = connection.prepareStatement("SELECT ID, Title, Description, Price FROM ComputerPrice");
+		stSelectCustomer = connection.prepareStatement("SELECT ID FROM Customer WHERE First_name=? AND Last_name=?");
+		stSelectCustomers = connection.prepareStatement("SELECT * FROM Customer");
+		stSelectComputerComponents = connection.prepareStatement("SELECT Component_id AS ID, Component as Title, Component_manufacturer AS Manufacturer, Count, Total_price FROM ComputerComponent WHERE Computer_id = ?");
+		
+		stInsertCustomer = connection.prepareStatement("INSERT INTO Customer(First_name, Last_name, Identification_code, Birthday, Address) VALUES (?, ?, ?, ?, ?)");
+		stInsertPurchase = connection.prepareStatement("INSERT INTO Purchase(Computer, Customer, Is_deliver) VALUES (?, ?, ?)");
+		stInsertComponent = connection.prepareStatement("INSERT INTO Component(Title, Manufacturer, Price) VALUES (?, ?, ?)");
+		stInsertComputer = connection.prepareStatement("INSERT INTO Computer(Title, Description, Additional_price) VALUES (?, ?, ?)");
+		
+		stSelectBelonging = connection.prepareStatement("SELECT count FROM Belonging WHERE Computer=? AND Component=?");
+		stUpdateBelonging = connection.prepareStatement("UPDATE Belonging SET Count=? WHERE Computer=? AND Component=?");
+		stDeleteBelonging = connection.prepareStatement("DELETE FROM Belonging WHERE Computer=? AND Component=?");
+		stInsertBelonging = connection.prepareStatement("INSERT INTO Belonging(Computer, Component, Count) VALUES(?, ?, ?)");
+		
+		this.connection = connection;
 	}
-	
+
 	public void close() {
 		try {
-			//TODO: add all
-			stInsertComponent.close();
 			stSelectComponents.close();
 			stSelectComputers.close();
+			stSelectCustomer.close();
+			stSelectCustomers.close();
+			stSelectComputerComponents.close();
+		
+			stInsertCustomer.close();
+			stInsertPurchase.close();
+			stInsertComponent.close();
+			stInsertComputer.close();
+			
+			stSelectBelonging.close();
+			stUpdateBelonging.close();
+			stDeleteBelonging.close();
+			stInsertBelonging.close();
 		} catch (SQLException e) {
 			System.out.println("Failed closing prepared statements.");
 			e.printStackTrace();
@@ -85,8 +111,66 @@ public class Shop implements Closeable {
 		stInsertCustomer.executeUpdate();
 	}
 	
-	public void findCustomer(String firstName, String lastName) {
-		
+	public void changeComputerComponent(int computer, int component, int amount) throws SQLException {
+		if (amount == 0)
+			return;
+		connection.setAutoCommit(false);
+
+		try {
+			stSelectBelonging.setInt(1, computer);
+			stSelectBelonging.setInt(2, component);
+			ResultSet rs = stSelectBelonging.executeQuery();
+			
+			if (rs.next()) {
+				//exists
+				int old = rs.getInt(1);
+				int now = old + amount;
+				System.out.println(now);
+				if (now > 0) {
+					//update
+					System.out.println("update");
+					System.out.println(amount);
+					System.out.println(computer);
+					System.out.println(component);
+					stUpdateBelonging.setInt(1, now);
+					stUpdateBelonging.setInt(2, computer);
+					stUpdateBelonging.setInt(3, component);
+					stUpdateBelonging.executeUpdate();
+				}
+				else {
+					//delete
+					stDeleteBelonging.setInt(1, computer);
+					stDeleteBelonging.setInt(2, component);
+					stDeleteBelonging.executeUpdate();
+				}
+			}
+			else {
+				//create new
+				if (amount > 0) {
+					System.out.println("create");
+					stInsertBelonging.setInt(1, computer);
+					stInsertBelonging.setInt(2, component);
+					stInsertBelonging.setInt(3, amount);
+					stInsertBelonging.executeUpdate();
+				}
+		}
+		} catch (SQLException e) {
+			connection.rollback();
+			throw e;
+		}
+		connection.setAutoCommit(true);
+	}
+	
+	public void findCustomer(String firstName, String lastName) throws SQLException {
+		stSelectCustomer.setString(1, firstName);
+		stSelectCustomer.setString(2, lastName);
+		ResultSet rs = stSelectCustomer.executeQuery();
+		if (rs.next()) {
+			System.out.print("Customer id: ");
+			System.out.println(rs.getInt(1));
+		}
+		else
+			System.out.println("Customer not found");
 	}
 	
 	public void addComputer(String title, String description, BigDecimal additionalPrice) throws SQLException {

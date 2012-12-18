@@ -22,8 +22,9 @@ public class Main {
 		"Add component",
 		"Add computer",
 		"Register customer",
+		"Change components in computer",
 		"Find customer",
-		"Buy",
+		"Buy"
 		};
 
 	
@@ -87,7 +88,6 @@ public class Main {
 		}
 	}
 	
-	//TODO: wrong result in database
 	private static Date readDate(String title) {
 		System.out.print(title + "(YYYY-MM-DD): ");
 		try {
@@ -98,12 +98,12 @@ public class Main {
 			int[] values = new int[3];
 			for (int i = 0; i < 3; ++i)
 				try {
-					Integer.parseInt(parts[i]);
+					values[i] = Integer.parseInt(parts[i]);
 				} catch (NumberFormatException e) {
 					throw new IOException();
 				}
 			Calendar calendar = Calendar.getInstance();
-			calendar.set(values[0], values[1], values[2]);
+			calendar.set(values[0], values[1]-1, values[2]);
 			return new Date(calendar.getTime().getTime());
 			
 		} catch (IOException e) {
@@ -113,8 +113,19 @@ public class Main {
 	
 	private static boolean readBoolean(String title) {
 		System.out.println(title + "(y/n): ");
-		//TODO: implement
-		return false;
+		try {
+			String line = bufferedReader.readLine();
+			if (line.length() != 1)
+				throw new IOException();
+			char c = line.charAt(0);
+			if (c == 'y')
+				return true;
+			else if (c == 'n')
+				return false;
+			throw new IOException();
+		} catch (IOException e) {
+			throw new InputMismatchException("String expected!");
+		}
 	}
 
 	private static void executeTask(int number) throws SQLException {
@@ -136,17 +147,24 @@ public class Main {
 			shop.register(readString("First name"), readString("Last name"), readLong("Identification code"), readDate("Birthday"), readString("Address"));
 			break;
 		case 3:
-			//buy
-			shop.printCustomers();
-			int customer = readInt("Customer");
-			shop.printComputers();
-			shop.buy(customer, readInt("Computer"), readBoolean("Deliver"));
-		case 4:
 			//change components in computer
 			shop.printComputers();
-			int computer = readInt("Computer");
+			int computer = readInt("Computer ID");
+			shop.printComponents();
 			shop.printComputerComponents(computer);
-//			TODO: modify components count in computer
+			shop.changeComputerComponent(computer, readInt("Component ID"), readInt("Change amount of this component in computer by"));
+			break;
+		case 4:
+			//find customer
+			shop.findCustomer(readString("First name"), readString("Last name"));
+			break;
+		case 5:
+			//buy
+			shop.printCustomers();
+			int customer = readInt("Customer ID");
+			shop.printComputers();
+			shop.buy(customer, readInt("Computer ID"), readBoolean("Deliver"));
+			break;
 		}
 	}
 
@@ -165,7 +183,8 @@ public class Main {
 			scanner = new Scanner(bufferedReader);
 			int number = 1;
 			while (number != 0) {
-				System.out.println("Available commands:");
+				System.out.println("==========================");
+				System.out.println("Available actions:");
 				for (int i = 0; i < actions.length; ++i)
 					System.out.println(Integer.toString(i) + ") " + actions[i]);
 				System.out.print("Selection:");
