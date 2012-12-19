@@ -88,7 +88,7 @@ public class Shop implements Closeable {
 		}
 	}
 
-	public void buy(int computer, int customer, boolean deliver) throws SQLException {
+	public void buy(int customer, int computer, boolean deliver) throws SQLException {
 		stInsertPurchase.setInt(1,  computer);
 		stInsertPurchase.setInt(2,  customer);
 		stInsertPurchase.setBoolean(3, deliver);
