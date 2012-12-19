@@ -208,7 +208,7 @@ public class Shop implements Closeable {
 		int[] len = new int[columns];
 		for (int i = 0; i < columns; ++i)
 			len[i] = metaData.getColumnLabel(i+1).length();
-		ArrayList<String[]> values = new ArrayList<>();
+		ArrayList<String[]> values = new ArrayList<String[]>();
 		while (resultSet.next()) {
 			String[] row = new String[columns];
 			for (int i = 0; i < columns; ++i) {

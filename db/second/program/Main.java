@@ -28,6 +28,7 @@ public class Main {
 		};
 
 	
+	private static final String HOST = "jdbc:postgresql://pgsql2.mif/studentu";
 	private static final String DB_USER = "doku9900";
 	
 	private static void loadDriver() {
@@ -43,7 +44,7 @@ public class Main {
 	private static Connection getConnection() {
 		Connection connection = null;
 		try {
-			connection = DriverManager.getConnection("jdbc:postgresql://localhost/studentu", DB_USER, DB_USER);
+			connection = DriverManager.getConnection(HOST, DB_USER, DB_USER);
 		} catch (SQLException e) {
 			System.out.println("Can't connect to server!");
 			return null;
@@ -65,7 +66,9 @@ public class Main {
 		System.out.print(title + ": ");
 		try {
 			return scanner.nextInt();
-		} catch (NoSuchElementException | IllegalStateException e) {
+		} catch (NoSuchElementException e) {
+			throw new InputMismatchException("Int expected!");
+		} catch (IllegalStateException e) {
 			throw new InputMismatchException("Int expected!");
 		}
 	}
@@ -74,7 +77,9 @@ public class Main {
 		System.out.print(title + ": ");
 		try {
 			return scanner.nextLong();
-		} catch (NoSuchElementException | IllegalStateException e) {
+		} catch (NoSuchElementException e) {
+			throw new InputMismatchException("Long expected!");
+		} catch (IllegalStateException e) {
 			throw new InputMismatchException("Long expected!");
 		}
 	}
@@ -83,7 +88,9 @@ public class Main {
 		System.out.print(title + ": ");
 		try {
 			return scanner.nextBigDecimal();
-		} catch (NoSuchElementException | IllegalStateException e) {
+		} catch (NoSuchElementException e) {
+			throw new InputMismatchException("Float expected!");
+		} catch (IllegalStateException e) {
 			throw new InputMismatchException("Float expected!");
 		}
 	}

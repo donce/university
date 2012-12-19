@@ -1,4 +1,4 @@
 #!/bin/sh
-export CLASSPATH=$CLASSPATH:postgresql.jar
+export CLASSPATH=$CLASSPATH:/usr/share/java/postgresql.jar
 javac Main.java
 java Main
