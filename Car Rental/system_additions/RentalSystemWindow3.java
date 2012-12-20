@@ -51,7 +51,7 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 			JPanel panel = new JPanel();
 
 			JButton buttonXML = new JButton("Load cars from XML");
-			buttonXML.addActionListener(actionXMLLoad);
+			buttonXML.addActionListener(actionLoadXML);
 			panel.add(buttonXML);
 
 			JButton buttonGenerate = new JButton("Add default customers");
@@ -66,7 +66,7 @@ public class RentalSystemWindow3 extends RentalSystemWindow2 {
 		}
 	}
 
-	private ActionListener actionXMLLoad = new ActionListener() {
+	private ActionListener actionLoadXML = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
