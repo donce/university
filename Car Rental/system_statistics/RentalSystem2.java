@@ -16,7 +16,13 @@ import rental_system.*;
  * 
  */
 public class RentalSystem2 extends RentalSystem {
+	/**
+	 * Number of specific car title count in the system
+	 */
 	private Map<String, Integer> carTitles = new HashMap<String, Integer>();
+	/**
+	 * List of orders time duration
+	 */
 	private List<Integer> orderedDays;
 
 	/**
@@ -26,6 +32,12 @@ public class RentalSystem2 extends RentalSystem {
 		orderedDays = new ArrayList<Integer>();
 	}
 
+	/**
+	 * Add car to the system.
+	 * 
+	 * @param car
+	 *            car to add
+	 */
 	@Override
 	public void add(Car car) {
 		super.add(car);
@@ -35,6 +47,12 @@ public class RentalSystem2 extends RentalSystem {
 		carTitles.put(car.getTitle(), value + 1);
 	}
 
+	/**
+	 * Remove car from the system.
+	 * 
+	 * @param car
+	 *            car to remove
+	 */
 	@Override
 	public void remove(Car car) {
 		super.remove(car);
@@ -47,6 +65,16 @@ public class RentalSystem2 extends RentalSystem {
 			carTitles.put(title, value);
 	}
 
+	/**
+	 * Order car for customer.
+	 * 
+	 * @param car
+	 *            car to order
+	 * @param days
+	 *            amount of days to order
+	 * @param customer
+	 *            customer who orders
+	 */
 	@Override
 	public void order(Car car, int days, Customer customer) {
 		super.order(car, days, customer);

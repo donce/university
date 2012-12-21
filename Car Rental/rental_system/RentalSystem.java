@@ -16,12 +16,30 @@ import java.util.Set;
  * 
  */
 public class RentalSystem implements Serializable {
+	/**
+	 * List of cars in the system
+	 */
 	protected List<Car> cars;
+	/**
+	 * List of ordered cars in the system
+	 */
 	private List<Car> orderedCars;
+	/**
+	 * List of customers in the system
+	 */
 	private List<Customer> customers;
+	/**
+	 * List of orders in the system
+	 */
 	private List<Order> orders;
 
+	/**
+	 * Orders of each customer
+	 */
 	private Map<Customer, Set<Order>> customerOrders = new HashMap<Customer, Set<Order>>();
+	/**
+	 * Map of cars by id
+	 */
 	private Map<String, Car> carIds = new HashMap<>();
 
 	/**
