@@ -157,8 +157,9 @@ public class Shop implements Closeable {
 		} catch (SQLException e) {
 			connection.rollback();
 			throw e;
+		} final {
+			connection.setAutoCommit(true);
 		}
-		connection.setAutoCommit(true);
 	}
 	
 	public void findCustomer(String firstName, String lastName) throws SQLException {
